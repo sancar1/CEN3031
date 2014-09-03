@@ -5,7 +5,7 @@
 var init = require('./config/init')(),
 	config = require('./config/config'),
 	mongoose = require('mongoose');
-	//var uriUtil = require('mongodb-uri');
+	var uriUtil = require('mongodb-uri');
 
 /* 
  * Mongoose by default sets the auto_reconnect option to true.
@@ -13,9 +13,9 @@ var init = require('./config/init')(),
  * We recommend a 30 second connection timeout because it allows for 
  * plenty of time in most operating environments.
  */
-/*	var options = { server: { socketOptions: { keepAlive: 1, connectTimeoutMS: 30000 } }, 
+	var options = { server: { socketOptions: { keepAlive: 1, connectTimeoutMS: 30000 } }, 
                 replset: { socketOptions: { keepAlive: 1, connectTimeoutMS : 30000 } } };  
-*/
+
 /**
  * Main application entry file.
  * Please note that the order of loading is important.
@@ -26,21 +26,20 @@ var init = require('./config/init')(),
  * Use the mongodb-uri library to help you convert from the standard format to
  * Mongoose's format.
  */
- /*
 var mongodbUri = 'mongodb://dev:dev@ds035270.mongolab.com:35270/dev';
 var mongooseUri = uriUtil.formatMongoose(mongodbUri);
 
  mongoose.connect(mongooseUri, options);
 
 	var db = mongoose.connection;
-*/
+
 // Bootstrap db connection
-var db = mongoose.connect(config.db, function(err) {
+/*var db = mongoose.connect(config.db, function(err) {
 	if (err) {
 		console.error('\x1b[31m', 'Could not connect to MongoDB!');
 		console.log(err);
 	}
-});
+});*/
 
 // Init the express application
 var app = require('./config/express')(db);
