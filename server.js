@@ -26,7 +26,7 @@ var init = require('./config/init')(),
  * Use the mongodb-uri library to help you convert from the standard format to
  * Mongoose's format.
  */
-var mongodbUri = 'mongodb://dev:dev@ds035270.mongolab.com:35270/dev';
+var mongodbUri = 'mongodb://master:master@ds035270.mongolab.com:35270/cen3031';
 var mongooseUri = uriUtil.formatMongoose(mongodbUri);
 
  mongoose.connect(mongooseUri, options);
