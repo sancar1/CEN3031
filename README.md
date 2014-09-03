@@ -9,4 +9,4 @@ Team:
 6. Zachary Burke - zburke1
 
 Project description:
-No project yet.
+Faculty Committee Project (assigned by Alin Dobra)
