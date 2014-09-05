@@ -1,7 +1,8 @@
 'use strict';
 
 module.exports = {
-	db: 'mongodb://master:master@ds035270.mongolab.com:35270/cen3031',
+	db: 'mongodb://master:master12345@ds035270.mongolab.com:35270/master',
+
 	assets: {
 		lib: {
 			css: [
