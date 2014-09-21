@@ -10,3 +10,6 @@ Team:
 
 Project description:
 Faculty Committee Project (assigned by Alin Dobra)
+
+Trello User Stories Board:
+https://trello.com/b/vqyJDPmN/user-stories
