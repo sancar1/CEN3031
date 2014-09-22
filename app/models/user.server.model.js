@@ -54,6 +54,11 @@ var UserSchema = new Schema({
 		required: 'Please fill in a username',
 		trim: true
 	},
+	position: {
+		type: String,
+		required: 'Please fill in a position',
+		trim: true
+	},
 	password: {
 		type: String,
 		default: '',
