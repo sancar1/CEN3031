@@ -14,29 +14,23 @@ var validateLocalStrategyProperty = function(property) {
 	return ((this.provider !== 'local' && !this.updated) || property.length);
 };
 
-/**
- * A Validation function for local strategy password
- */
-var validateLocalStrategyPassword = function(password) {
-	return (this.provider !== 'local' || (password && password.length > 6));
-};
 
 /**
- * User Schema
+ * Committee Schema
  */
 var CommitteeSchema = new Schema({
-	committeeName: {
+	name: {
 		type: String,
 		trim: true,
 		default: '',
-		validate: [validateLocalStrategyProperty, 'Please fill in Comittee Name']
+		validate: [validateLocalStrategyProperty, 'Please fill in Committee Name']
 	},
-	committeeDescription: {
+	description: {
 		type: String,
 		trim: true,
 		default: ''
 	},
-	CommitteeChair: {
+	chair: {
 		 user: {
 		 	type: Schema.ObjectId, 
 		 	ref: 'UserSchema'
@@ -46,17 +40,13 @@ var CommitteeSchema = new Schema({
 		{
 			user: {
 				type: Schema.ObjectId, 
-				ref: 'UserSchema'
+				ref: 'User'
 			}
 		}
 	],
-	 
-	roles: {
-		type: [{
-			type: String,
-			enum: ['user', 'admin']
-		}],
-		default: ['user']
+	user: {
+		type: Schema.ObjectId,
+		ref: 'User'
 	},
 	updated: {
 		type: Date

@@ -1,0 +1,32 @@
+<section data-ng-controller="CommitteesController" data-ng-init="findOne()">
+	<div class="page-header">
+		<h1>Edit Committee</h1>
+	</div>
+	<div class="col-md-12">
+		<form name="committeeForm" class="form-horizontal" data-ng-submit="update(committeeForm.$valid)" novalidate>
+			<fieldset>
+				<div class="form-group" ng-class="{ 'has-error' : submitted && committeeForm.name.$invalid}">
+					<label class="control-label" for="name">Name</label>
+					<div class="controls">
+						<input name="name" type="text" data-ng-model="committee.name" id="name" class="form-control" placeholder="Name" required>
+					</div>
+					<div ng-show="submitted && committeeForm.name.$invalid" class="help-block">
+						<p ng-show="committeeForm.title.$error.required" class="text-danger">Name is required</p>
+					</div>
+				</div>
+				<div class="form-group" ng-class="{ 'has-error' : submitted && committeeForm.content.$invalid}">
+					<label class="control-label" for="content">Description</label>
+					<div class="controls">
+						<textarea name="content" data-ng-model="committee.content" id="content" class="form-control" cols="30" rows="10" placeholder="Content" required></textarea>
+					</div>
+				</div>
+				<div class="form-group">
+					<input type="submit" value="Update" class="btn btn-default">
+				</div>
+				<div data-ng-show="error" class="text-danger">
+					<strong data-ng-bind="error"></strong>
+				</div>
+			</fieldset>
+		</form>
+	</div>
+</section>
