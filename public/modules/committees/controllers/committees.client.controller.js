@@ -43,6 +43,10 @@ angular.module('committees').controller('CommitteesController', ['$scope', '$sta
 			});
 		};
 
+		$scope.addMember = function (){
+    		location.path = ('#/users/list');
+		};
+
 		$scope.find = function() {
 			$scope.committees = Committees.query();
 		};

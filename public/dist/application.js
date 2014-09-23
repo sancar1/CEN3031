@@ -635,6 +635,70 @@ angular.module('users').controller('SettingsController', [
     };
   }
 ]);'use strict';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+angular.module('users').controller('UsersController', [
+  '$scope',
+  '$stateParams',
+  '$location',
+  'Users',
+  'Authentication',
+  function ($scope, $stateParams, $location, Users, Authentication) {
+    $scope.user = Authentication.user;
+    // If user is not signed in then redirect back home
+    if (!$scope.user)
+      $location.path('/');
+    // Check if there are additional accounts 
+    
+    $scope.find = function() {
+      $scope.users = Users.query();
+    };
+    $scope.findOne = function() {
+      $scope.user = Users.get({
+        userId: $stateParams.userId
+      });
+    };
+
+    /**
+    * List of Users
+     */
+    exports.list = function(req, res) {
+      console.log('trying to list users');
+      User.find().sort('-created').populate('name', 'fullName').exec(function(err, users) {
+        if (err) {
+          return res.status(400).send({
+            message: errorHandler.getErrorMessage(err)
+          });
+        } else {
+          res.jsonp(users);
+        }
+      });
+    };
+    
+  }
+]);'use strict';
+
+
+
+
+
+
+
+
+
+
 // Authentication service for user variables
 angular.module('users').factory('Authentication', [function () {
     var _this = this;
