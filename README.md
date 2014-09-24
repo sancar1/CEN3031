@@ -13,3 +13,6 @@ Faculty Committee Project (assigned by Alin Dobra)
 
 Trello User Stories Board:
 https://trello.com/b/vqyJDPmN/user-stories
+
+Trello Sprint 1 Board:
+https://trello.com/b/pW8p2UDQ/sprint-1
