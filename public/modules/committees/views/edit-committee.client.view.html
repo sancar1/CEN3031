@@ -20,6 +20,12 @@
 						<textarea name="description" data-ng-model="committee.description" id="description" class="form-control" cols="30" rows="10" placeholder="Description" required></textarea>
 					</div>
 				</div>
+				<div class="form-group" ng-class="{ 'has-error' : submitted && committeeForm.content.$invalid}">
+					<label class="control-label" for="description">Users In Committee</label>
+					<div class="controls">
+						<textarea name="description" data-ng-model="committee.description" id="description" class="form-control" cols="30" rows="10" placeholder="Description" required></textarea>
+					</div>
+				</div>
 				<div class="form-group">
 					<input type="submit" value="Update" class="btn btn-default">
 				</div>
@@ -28,5 +34,19 @@
 				</div>
 			</fieldset>
 		</form>
+	</div>
+</section>
+<section data-ng-controller="CommitteesController" data-ng-init="listMembers()">
+	<div class="page-header">
+		<h1>View Members</h1>
+	</div>
+	<div class="list-group">
+		<a data-ng-repeat="member in members" class="list-group-item">
+			<small class="list-group-item-text">
+				<span data-ng-bind="member.firstName"></span>
+			</small>
+			<h4 class="list-group-item-heading" data-ng-bind="user.lastName"></h4>
+			<p class="list-group-item-text" data-ng-bind="user.role"></p>
+		</a>
 	</div>
 </section>

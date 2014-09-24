@@ -50,6 +50,9 @@ angular.module('committees').controller('CommitteesController', ['$scope', '$sta
 		$scope.find = function() {
 			$scope.committees = Committees.query();
 		};
+		$scope.listMembers = function(){
+			$scope.members = Committees.members;
+		};
 		$scope.findOne = function() {
 			$scope.committee = Committees.get({
 				committeeId: $stateParams.committeeId

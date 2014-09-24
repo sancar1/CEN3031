@@ -7,6 +7,7 @@ var _ = require('lodash'),
 	errorHandler = require('../errors'),
 	mongoose = require('mongoose'),
 	passport = require('passport'),
+	Article = mongoose.model('Article'),
 	User = mongoose.model('User');
 
 /**
@@ -66,7 +67,7 @@ exports.list = function(req, res) {
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			console.log(users.length);
+			console.log(users);
 			res.jsonp(users);
 		}
 	});
