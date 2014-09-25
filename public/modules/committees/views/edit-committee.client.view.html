@@ -1,52 +1,32 @@
 <section data-ng-controller="CommitteesController" data-ng-init="findOne()">
-	<div class="page-header">
-		<h1>Edit Committee</h1>
-	</div>
-	<div class="col-md-12">
-		<form name="committeeForm" class="form-horizontal" data-ng-submit="update(committeeForm.$valid)" novalidate>
-			<fieldset>
-				<div class="form-group" ng-class="{ 'has-error' : submitted && committeeForm.name.$invalid}">
-					<label class="control-label" for="name">Name</label>
-					<div class="controls">
-						<input name="name" type="text" data-ng-model="committee.name" id="name" class="form-control" placeholder="Name" required>
-					</div>
-					<div ng-show="submitted && committeeForm.name.$invalid" class="help-block">
-						<p ng-show="committeeForm.title.$error.required" class="text-danger">Name is required</p>
-					</div>
-				</div>
-				<div class="form-group" ng-class="{ 'has-error' : submitted && committeeForm.content.$invalid}">
-					<label class="control-label" for="description">Description</label>
-					<div class="controls">
-						<textarea name="description" data-ng-model="committee.description" id="description" class="form-control" cols="30" rows="10" placeholder="Description" required></textarea>
-					</div>
-				</div>
-				<div class="form-group" ng-class="{ 'has-error' : submitted && committeeForm.content.$invalid}">
-					<label class="control-label" for="description">Users In Committee</label>
-					<div class="controls">
-						<textarea name="description" data-ng-model="committee.description" id="description" class="form-control" cols="30" rows="10" placeholder="Description" required></textarea>
-					</div>
-				</div>
-				<div class="form-group">
-					<input type="submit" value="Update" class="btn btn-default">
-				</div>
+    <div class="page-header">
+        <h1>Edit Committee</h1>
+    </div>
+    <div class="col-md-12">
+        <form name="articleForm" class="form-horizontal" data-ng-submit="update()" novalidate>
+            <fieldset>
+                <div class="form-group">
+                    <label class="control-label" for="name">Name</label>
+                    <div class="controls">
+                        <input type="text" data-ng-model="committee.name" id="name" class="form-control" placeholder="Name" required>
+                    </div>
+                </div>
+                <div class="form-group" ng-class="{ 'has-error' : submitted && committeeForm.content.$invalid}">
+                    <label class="control-label" for="content">Committee Description</label>
+                    <div class="controls">
+                        <textarea name="description" data-ng-model="committee.description" id="description" class="form-control" cols="30" rows="10" placeholder="Committee Description" required></textarea>
+                    </div>
+                    <div ng-show="submitted && committeeForm.content.$invalid" class="help-block">
+                        <p ng-show="committeeForm.content.$error.required" class="text-danger">Content is required</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Update" class="btn btn-default">
+                </div>
 				<div data-ng-show="error" class="text-danger">
 					<strong data-ng-bind="error"></strong>
 				</div>
-			</fieldset>
-		</form>
-	</div>
-</section>
-<section data-ng-controller="CommitteesController" data-ng-init="listMembers()">
-	<div class="page-header">
-		<h1>View Members</h1>
-	</div>
-	<div class="list-group">
-		<a data-ng-repeat="member in members" class="list-group-item">
-			<small class="list-group-item-text">
-				<span data-ng-bind="member.firstName"></span>
-			</small>
-			<h4 class="list-group-item-heading" data-ng-bind="user.lastName"></h4>
-			<p class="list-group-item-text" data-ng-bind="user.role"></p>
-		</a>
-	</div>
+            </fieldset>
+        </form>
+    </div>
 </section>

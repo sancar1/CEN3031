@@ -1,16 +1,19 @@
 <section data-ng-controller="CommitteesController" data-ng-init="find()">
-	<div class="page-header">
-		<h1>Committees</h1>
-	</div>
-	<div class="list-group">
-		<a data-ng-repeat="committee in committees" data-ng-href="#!/committees/{{committee._id}}" class="list-group-item">
+    <div class="page-header">
+        <h1>Committees</h1>
+    </div>
+    <div class="list-group">
+        <a data-ng-repeat="committee in committees" data-ng-href="#!/committees/{{committee._id}}" class="list-group-item">
 			<small class="list-group-item-text">
-				<span data-ng-bind="committee.name"></span>
+				Posted on
+				<span data-ng-bind="committee.created | date:'medium'"></span>
+				by
+				<span data-ng-bind="committee.user.displayName"></span>
 			</small>
-			<h4 class="list-group-item-heading" data-ng-bind="committe.name"></h4>
-		</a>
-	</div>
-	<div class="alert alert-warning text-center" data-ng-if="articles.$resolved && !articles.length">
-		No committees yet, why don't you <a href="/#!/committees/create">create one</a>?
-	</div>
+			<h4 class="list-group-item-heading" data-ng-bind="committee.name"></h4>
+        </a>
+    </div>
+    <div class="alert alert-warning text-center" data-ng-hide="!committees.$resolved || committees.length">
+    	No Committees yet, why don't you <a href="/#!/committees/create">create one</a>?
+    </div>
 </section>

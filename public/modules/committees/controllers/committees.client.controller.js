@@ -1,28 +1,34 @@
 'use strict';
 
+// Committees controller
 angular.module('committees').controller('CommitteesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Committees',
-	function($scope, $stateParams, $location, Authentication, Committees) {
+	function($scope, $stateParams, $location, Authentication, Committees ) {
 		$scope.authentication = Authentication;
 
+		// Create new Committee
 		$scope.create = function() {
-			var committee = new Committees({
+			// Create new Committee object
+			var committee = new Committees ({
 				name: this.name
 			});
-			committee.$save(function(response) {
-				$location.path('committees' + response._id);
 
+			// Redirect after save
+			committee.$save(function(response) {
+				$location.path('committees/' + response._id);
+
+				// Clear form fields
 				$scope.name = '';
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
 			});
 		};
 
-		$scope.remove = function(committee) {
-			if (committee) {
-				committee.$remove();
+		// Remove existing Committee
+		$scope.remove = function( committee ) {
+			if ( committee ) { committee.$remove();
 
-				for (var i in $scope.committees) {
-					if ($scope.committees[i] === committee) {
+				for (var i in $scope.committees ) {
+					if ($scope.committees [i] === committee ) {
 						$scope.committees.splice(i, 1);
 					}
 				}
@@ -33,8 +39,9 @@ angular.module('committees').controller('CommitteesController', ['$scope', '$sta
 			}
 		};
 
+		// Update existing Committee
 		$scope.update = function() {
-			var committee = $scope.committee;
+			var committee = $scope.committee ;
 
 			committee.$update(function() {
 				$location.path('committees/' + committee._id);
@@ -43,18 +50,14 @@ angular.module('committees').controller('CommitteesController', ['$scope', '$sta
 			});
 		};
 
-		$scope.addMember = function (){
-    		location.path = ('#/users/list');
-		};
-
+		// Find a list of Committees
 		$scope.find = function() {
 			$scope.committees = Committees.query();
 		};
-		$scope.listMembers = function(){
-			$scope.members = Committees.members;
-		};
+
+		// Find existing Committee
 		$scope.findOne = function() {
-			$scope.committee = Committees.get({
+			$scope.committee = Committees.get({ 
 				committeeId: $stateParams.committeeId
 			});
 		};

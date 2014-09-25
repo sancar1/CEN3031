@@ -1,6 +1,6 @@
 'use strict';
 
-// Configuring the Committees module
+// Configuring the Articles module
 angular.module('committees').run(['Menus',
 	function(Menus) {
 		// Set top bar menu items

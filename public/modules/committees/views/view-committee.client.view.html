@@ -15,8 +15,7 @@
 			Posted on
 			<span data-ng-bind="committee.created | date:'mediumDate'"></span>
 			by
-			<span data-ng-bind="committee.chair.firstName"></span>
+			<span data-ng-bind="committee.user.displayName"></span>
 		</em>
 	</small>
-	<p class="lead" data-ng-bind="committee.description"></p>
 </section>

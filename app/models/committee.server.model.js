@@ -14,7 +14,6 @@ var validateLocalStrategyProperty = function(property) {
 	return ((this.provider !== 'local' && !this.updated) || property.length);
 };
 
-
 /**
  * Committee Schema
  */

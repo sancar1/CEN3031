@@ -1,6 +1,6 @@
 'use strict';
 
-// Setting up route
+//Setting up route
 angular.module('committees').config(['$stateProvider',
 	function($stateProvider) {
 		// Committees state routing
@@ -23,4 +23,3 @@ angular.module('committees').config(['$stateProvider',
 		});
 	}
 ]);
-
