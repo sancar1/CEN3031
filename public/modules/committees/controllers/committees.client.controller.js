@@ -18,7 +18,7 @@ angular.module('committees').controller('CommitteesController', ['$scope', '$sta
 
 				// Clear form fields
 				$scope.name = '';
-			}, function(errorResponse) {
+			}, function(errorResponse) { 
 				$scope.error = errorResponse.data.message;
 			});
 		};
