@@ -50,6 +50,17 @@ angular.module('committees').controller('CommitteesController', ['$scope', '$sta
 			});
 		};
 
+		//Add member to committee
+		$scope.addMember = function(committee, user){
+			console.log('looking to add member');
+			console.log('committees/' + committee._id+'/'+user._id);
+			committee.$update(function(){
+				$location.path('committees/' + committee._id+'/:'+user._id);	
+			}, function(errorResponse){
+				$scope.error = errorResponse.data.message;
+			});
+		};
+
 		// Find a list of Committees
 		$scope.find = function() {
 			$scope.committees = Committees.query();
