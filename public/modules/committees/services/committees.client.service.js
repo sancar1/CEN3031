@@ -9,5 +9,6 @@ angular.module('committees').factory('Committees', ['$resource',
 				method: 'PUT'
 			}
 		});
-	}
+	},
+
 ]);

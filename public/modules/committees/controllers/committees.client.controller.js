@@ -51,11 +51,21 @@ angular.module('committees').controller('CommitteesController', ['$scope', '$sta
 		};
 
 		//Add member to committee
-		$scope.addMember = function(committee, user){
-			console.log('looking to add member');
-			console.log('committees/' + committee._id+'/'+user._id);
+		$scope.addMember = function(user){
+			var committee = $scope.committee;
+			committee.members.push(user);
 			committee.$update(function(){
-				$location.path('committees/' + committee._id+'/:'+user._id);	
+				$location.path('committees/'+committee._id);	
+			}, function(errorResponse){
+				$scope.error = errorResponse.data.message;
+			});
+		};
+
+		$scope.removeMember = function(user){
+			var committee = $scope.committee;
+			committee.members.remove(user);
+			committee.$update(function(){
+				$location.path('committees/'+committee._id);	
 			}, function(errorResponse){
 				$scope.error = errorResponse.data.message;
 			});

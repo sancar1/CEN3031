@@ -23,7 +23,7 @@ angular.module('committees').config(['$stateProvider',
 		}).
 		state('addMember',{
 			url:'committees/:committeeId/:userId',
-			templateUrl: 'modules/committees/views/edit-committee.client.view.html'
+			templateUrl: 'modules/committees/views/create-committee.client.view.html'
 		});
 	}
 ]);
