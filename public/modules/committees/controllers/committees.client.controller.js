@@ -71,14 +71,6 @@ angular.module('committees').controller('CommitteesController', ['$scope', '$sta
 			});
 		};
 
-		$scope.usersInCommittee = function(){
-			var committee = $scope.committee;
-			console.log(committee);
-			//console.log(Committees.get({committeeId: $stateParams.committeeId}), function(name));
-			//console.log(committee.get('user'));
-			
-		};
-
 		// Find a list of Committees
 		$scope.find = function() {
 			$scope.committees = Committees.query();

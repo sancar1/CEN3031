@@ -12,8 +12,21 @@ angular.module('users').controller('UsersController', ['$scope', '$stateParams',
 				userId: $stateParams.userId
 			});
 		};
+		$scope.usersInCommittee = function(committee){
+			console.log(committee.members);
+			$scope.members = committee.members;
+			/*for(var i = 0; i < committee.members.length; i++){
+				var temp = committee.members[i]._id;
+				console.log(temp);
+				//console.log(Users.get({userId: $stateParams.userId});
+				console.log(Users.get({
+					 temp: $stateParams.userId
+				}));
+			}*/		
+		};
 	}
 ]);
+
 
 
 
