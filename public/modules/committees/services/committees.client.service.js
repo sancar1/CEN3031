@@ -7,7 +7,8 @@ angular.module('committees').factory('Committees', ['$resource',
 		}, {
 			update: {
 				method: 'PUT'
-			}
+			},
+			query: {method: 'GET', isArray: true}
 		});
 	},
 

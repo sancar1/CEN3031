@@ -61,14 +61,22 @@ angular.module('committees').controller('CommitteesController', ['$scope', '$sta
 			});
 		};
 
-		$scope.removeMember = function(user){
+		$scope.removeMember = function(index){
 			var committee = $scope.committee;
-			committee.members.remove(user);
+			committee.members.splice(index, 1);
 			committee.$update(function(){
 				$location.path('committees/'+committee._id);	
 			}, function(errorResponse){
 				$scope.error = errorResponse.data.message;
 			});
+		};
+
+		$scope.usersInCommittee = function(){
+			var committee = $scope.committee;
+			console.log(committee);
+			//console.log(Committees.get({committeeId: $stateParams.committeeId}), function(name));
+			//console.log(committee.get('user'));
+			
 		};
 
 		// Find a list of Committees
