@@ -12,9 +12,22 @@ angular.module('users').controller('UsersController', ['$scope', '$stateParams',
 				userId: $stateParams.userId
 			});
 		};
-		$scope.usersInCommittee = function(committee){
-			console.log(committee.members);
-			$scope.members = committee.members;
+		$scope.inCommittee = function(user){
+			//console.log($scope.committee.members);
+			//console.log($scope.committee._id);
+			//console.log(user);
+			if(typeof $scope.committee !== 'undefined'){
+				for(var i = 0; i < $scope.committee.members.length; i++){
+					if(user._id === $scope.committee.members[i]._id){
+						return true;
+					}
+				}
+				return false;
+			}
+			return false;
+			
+
+
 			/*for(var i = 0; i < committee.members.length; i++){
 				var temp = committee.members[i]._id;
 				console.log(temp);
