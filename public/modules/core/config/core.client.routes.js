@@ -12,6 +12,10 @@ angular.module('core').config(['$stateProvider', '$urlRouterProvider',
 			url: '/',
 			templateUrl: 'modules/core/views/home.client.view.html'
 		}).
+		state('edit', {
+			url: '/committee/edit',
+			templateUrl: 'modules/committees/views/edit-committee.client.view.html'
+		}).
 		state('attendance', {
 			url: '/committee/attendance',
 			templateUrl: 'modules/committees/views/attendance.client.view.html'
