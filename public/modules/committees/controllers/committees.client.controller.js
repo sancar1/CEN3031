@@ -18,7 +18,7 @@ angular.module('committees').controller('CommitteesController', ['$scope', '$sta
 
 				// Clear form fields
 				$scope.name = '';
-			}, function(errorResponse) {
+			}, function(errorResponse) { 
 				$scope.error = errorResponse.data.message;
 			});
 		};
@@ -46,6 +46,27 @@ angular.module('committees').controller('CommitteesController', ['$scope', '$sta
 			committee.$update(function() {
 				$location.path('committees/' + committee._id);
 			}, function(errorResponse) {
+				$scope.error = errorResponse.data.message;
+			});
+		};
+
+		//Add member to committee
+		$scope.addMember = function(user){
+			var committee = $scope.committee;
+			committee.members.push(user);
+			committee.$update(function(){
+				$location.path('committees/'+committee._id);	
+			}, function(errorResponse){
+				$scope.error = errorResponse.data.message;
+			});
+		};
+
+		$scope.removeMember = function(index){
+			var committee = $scope.committee;
+			committee.members.splice(index, 1);
+			committee.$update(function(){
+				$location.path('committees/'+committee._id);	
+			}, function(errorResponse){
 				$scope.error = errorResponse.data.message;
 			});
 		};

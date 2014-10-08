@@ -6,6 +6,7 @@
 var mongoose = require('mongoose'),
 	errorHandler = require('./errors'),
 	Committee = mongoose.model('Committee'),
+	User = mongoose.model('User'),
 	_ = require('lodash');
 
 /**
@@ -56,7 +57,7 @@ exports.update = function(req, res) {
  * Delete an Committee
  */
 exports.delete = function(req, res) {
-	var committee = req.committee ;
+	var committee = req.committee;
 
 	committee.remove(function(err) {
 		if (err) {
@@ -72,7 +73,8 @@ exports.delete = function(req, res) {
 /**
  * List of Committees
  */
-exports.list = function(req, res) { Committee.find().sort('-created').populate('user', 'displayName').exec(function(err, committees) {
+exports.list = function(req, res) { 
+	Committee.find().sort('-created').populate('user', 'displayName').exec(function(err, committees) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
@@ -81,6 +83,25 @@ exports.list = function(req, res) { Committee.find().sort('-created').populate('
 			res.jsonp(committees);
 		}
 	});
+};
+
+exports.addMember = function(req,res){
+	console.log('In here adding member');
+	var committee = req.committee;
+
+	/*committee.put(function(err){
+		if(err){
+			return res.status(400).send({
+				message: errorHandler.getErrorMessage(err)
+			});
+		} else{
+			res.jsonp(committee);
+		}
+	});*/
+};
+
+exports.deleteMember = function(req,res){
+
 };
 
 /**
