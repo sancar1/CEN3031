@@ -11,6 +11,22 @@ angular.module('core').config(['$stateProvider', '$urlRouterProvider',
 		state('home', {
 			url: '/',
 			templateUrl: 'modules/core/views/home.client.view.html'
+		}).
+		state('edit', {
+			url: '/committee/edit',
+			templateUrl: 'modules/committees/views/edit-committee.client.view.html'
+		}).
+		state('attendance', {
+			url: '/committee/attendance',
+			templateUrl: 'modules/committees/views/attendance.client.view.html'
+		}).
+		state('schedule', {
+			url: '/committee/schedule',
+			templateUrl: 'modules/committees/views/schedule.client.view.html'
+		}).
+		state('resources', {
+			url: '/committee/resources',
+			templateUrl: 'modules/committees/views/resources.client.view.html'
 		});
 	}
 ]);
