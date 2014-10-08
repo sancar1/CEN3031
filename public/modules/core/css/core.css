@@ -33,11 +33,14 @@ background-image: linear-gradient(to bottom, #ff4a00 0%, #FF4A00 100%);
 }
 
 .sidebar{
-	position: relative;
+	position: fixed;
 	max-width: 200px;
 	padding:10px;
+}
 
-	
+.workspace{
+	position: relative;
+	padding-left: 300px;
 }
 
 .nav-pills > li.active > a, .nav-pills > li.active > a:hover, .nav-pills > li.active > a:focus {
