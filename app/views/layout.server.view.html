@@ -44,12 +44,20 @@
 
 <body class="ng-cloak">
 	<header data-ng-include="'/modules/core/views/header.client.view.html'" class="navbar navbar-fixed-top navbar-inverse"></header>
-	<section class="content">
-		<section class="container">
-			{% block content %}{% endblock %}
-		</section>
-	</section>
 
+	<div class="content">
+
+		<div data-ng-include="'/modules/core/views/home.client.view.html'" class="sidebar"></div>
+
+		<section class="workspace">
+			<section class="container">
+				{% block content %}{% endblock %}
+			</section>
+		</section> 
+
+	</div>
+	
+	
 	<!--Embedding The User Object-->
 	<script type="text/javascript">
 		var user = {{ user | json | safe }};
@@ -57,7 +65,7 @@
 
 	<!--Application JavaScript Files-->
 	{% for jsFile in jsFiles %}<script type="text/javascript" src="{{jsFile}}"></script>
-	{% endfor %} 
+	{% endfor %}
 
 	{% if process.env.NODE_ENV === 'development' %}
 	<!--Livereload script rendered -->
