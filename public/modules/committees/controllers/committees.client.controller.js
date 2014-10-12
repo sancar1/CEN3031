@@ -1,8 +1,8 @@
 'use strict';
 
 // Committees controller
-angular.module('committees').controller('CommitteesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Committees',
-	function($scope, $stateParams, $location, Authentication, Committees ) {
+angular.module('committees').controller('CommitteesController', ['$q', '$scope', '$stateParams', '$location', 'Authentication', 'Committees',
+	function($q, $scope, $stateParams, $location, Authentication, Committees ) {
 		$scope.authentication = Authentication;
 
 		// Create new Committee
@@ -78,9 +78,38 @@ angular.module('committees').controller('CommitteesController', ['$scope', '$sta
 
 		// Find existing Committee
 		$scope.findOne = function() {
-			$scope.committee = Committees.get({ 
+			Committees.get({
 				committeeId: $stateParams.committeeId
+			}).$promise.then(function(data) {
+				$scope.committee = data;
 			});
+
+
+			// var test = function() {
+				
+			// 	return Committees.get({
+			// 		committeeId: $stateParams.committeeId
+			// 	}).$promise.then(function(data) {
+			// 		$scope.committee = data;
+			// 		//return data;
+			// 	});
+
+			// };
+
+
+			// test().then(function(data) {
+
+			// 	console.log("data:");
+			// 	console.log(data);
+
+			// 	console.log("$scope.committee:");
+			// 	console.log($scope.committee);
+			// 	console.log("$scope.committee.members:")
+			// 	console.log($scope.committee.members);
+			// 	console.log("$scope.committee.name:");
+			// 	console.log($scope.committee.name);
+
+			// });
 		};
 	}
 ]);

@@ -17,12 +17,14 @@ angular.module('core').config(['$stateProvider', '$urlRouterProvider',
 			templateUrl: 'modules/core/views/test.client.view.html'
 		}).
 		state('edit', {
-			url: '/committee/edit',
+			url: '/committees/:committeeId/edit',
 			templateUrl: 'modules/committees/views/edit-committee.client.view.html'
+			// controller: 'CommitteesController'
 		}).
 		state('attendance', {
 			url: '/committee/attendance',
 			templateUrl: 'modules/committees/views/attendance.client.view.html'
+			// controller: 'CommitteesController'
 		}).
 		state('schedule', {
 			url: '/committee/schedule',

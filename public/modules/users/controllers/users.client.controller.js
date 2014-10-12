@@ -16,6 +16,7 @@ angular.module('users').controller('UsersController', ['$scope', '$stateParams',
 			//console.log($scope.committee.members);
 			//console.log($scope.committee._id);
 			//console.log(user);
+
 			if(typeof $scope.committee !== 'undefined'){
 				for(var i = 0; i < $scope.committee.members.length; i++){
 					if(user._id === $scope.committee.members[i]._id){

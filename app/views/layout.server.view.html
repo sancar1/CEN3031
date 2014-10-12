@@ -47,13 +47,30 @@
 
 	<div class="content">
 
-		<div data-ng-include="'/modules/core/views/home.client.view.html'" class="sidebar"></div>
+		<!-- <div data-ng-include="'/modules/core/views/home.client.view.html'" class="sidebar"></div> -->
 
-		<section class="workspace">
+		<div data-ng-controller="HomeController">
+			<div class ="sidebar">
+				<ul class="nav nav-pills nav-stacked" data-ng-show="authentication.user">
+				  	<li class="active"><a ui-sref="home">Home</a></li>
+				  	<li><a ui-sref="edit">Edit Committee</a></li>
+				  	<li><a ui-sref="attendance">Attendance</a></li>
+				  	<li><a ui-sref="schedule">Schedule</a></li>
+				  	<li><a ui-sref="resources">Resources</a></li>
+			  	</ul>
+		  	</div>
+		  	<div class="workspace">
+		  		<div class="container">
+		  			{% block content %}{% endblock %}
+		  		</div>
+		  	</div>
+		</div>
+
+		<!-- <section class="workspace">
 			<section class="container">
 				{% block content %}{% endblock %}
 			</section>
-		</section> 
+		</section>  -->
 
 	</div>
 	
