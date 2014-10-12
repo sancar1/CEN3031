@@ -32,7 +32,7 @@ background-color: #15197E;
 background-image: linear-gradient(to bottom, #ff4a00 0%, #FF4A00 100%);
 }
 
-.sidebar{
+/*.sidebar{
 	position: fixed;
 	max-width: 200px;
 	padding:10px;
@@ -41,6 +41,26 @@ background-image: linear-gradient(to bottom, #ff4a00 0%, #FF4A00 100%);
 .workspace{
 	position: relative;
 	padding-left: 300px;
+}*/
+
+.app-content {
+	margin-top: 50px;
+}
+
+.app-content .app-sidebar {
+	min-width: 170px;
+	max-width: 200px;
+	padding: 10px;
+	width: 20%;
+	float: left;
+	display: inline;
+}
+
+.app-content .app-workspace {
+	min-width: 700px;
+	width: 80%;
+	float: right;
+	display: inline;
 }
 
 .nav-pills > li.active > a, .nav-pills > li.active > a:hover, .nav-pills > li.active > a:focus {
