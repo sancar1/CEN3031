@@ -22,6 +22,7 @@ var CommitteeSchema = new Schema({
 		type: String,
 		trim: true,
 		default: '',
+		required: 'Name cannot be blank',
 		validate: [validateLocalStrategyProperty, 'Please fill in Committee Name']
 	},
 	description: {
