@@ -52,11 +52,11 @@
 		<div data-ng-controller="HomeController">
 			<div class ="sidebar">
 				<ul class="nav nav-pills nav-stacked" data-ng-show="authentication.user">
-				  	<li class="active"><a ui-sref="home">Home</a></li>
-				  	<li><a ui-sref="edit">Edit Committee</a></li>
-				  	<li><a ui-sref="attendance">Attendance</a></li>
-				  	<li><a ui-sref="schedule">Schedule</a></li>
-				  	<li><a ui-sref="resources">Resources</a></li>
+				  	<li ui-sref-active="active"><a ui-sref="home">Home</a></li>
+				  	<li ui-sref-active="active"><a ui-sref="edit">Edit Committee</a></li>
+				  	<li ui-sref-active="active"><a ui-sref="attendance">Attendance</a></li>
+				  	<li ui-sref-active="active"><a ui-sref="schedule">Schedule</a></li>
+				  	<li ui-sref-active="active"><a ui-sref="resources">Resources</a></li>
 			  	</ul>
 		  	</div>
 		  	<div class="workspace">
