@@ -53,7 +53,7 @@
 			<div class ="app-sidebar">
 				<ul class="nav nav-pills nav-stacked" data-ng-show="authentication.user">
 				  	<li ui-sref-active="active"><a ui-sref="home">Home</a></li>
-				  	<li ui-sref-active="active"><a ui-sref="edit">Edit Committee</a></li>
+				  	<li ui-sref-active="active"><a ui-sref="edit({committeeId: committee._id})">Edit Committee</a></li>
 				  	<li ui-sref-active="active"><a ui-sref="attendance">Attendance</a></li>
 				  	<li ui-sref-active="active"><a ui-sref="schedule">Schedule</a></li>
 				  	<li ui-sref-active="active"><a ui-sref="resources">Resources</a></li>

@@ -1,8 +1,8 @@
 'use strict';
 
 // Committees controller
-angular.module('committees').controller('CommitteesController', ['$q', '$scope', '$stateParams', '$location', 'Authentication', 'Committees',
-	function($q, $scope, $stateParams, $location, Authentication, Committees ) {
+angular.module('committees').controller('CommitteesController', ['$rootScope', '$scope', '$stateParams', '$location', 'Authentication', 'Committees', '$q', '$log',
+	function($rootScope, $scope, $stateParams, $location, Authentication, Committees, $q, $log) {
 		$scope.authentication = Authentication;
 
 		// Create new Committee
@@ -73,7 +73,18 @@ angular.module('committees').controller('CommitteesController', ['$q', '$scope',
 
 		// Find a list of Committees
 		$scope.find = function() {
-			$scope.committees = Committees.query();
+			// $scope.committees = Committees.query();
+
+			Committees.query().$promise.then(function(data) {
+				$scope.committees = data;
+
+				// $log.debug('data: ');
+				// $log.debug(data);
+
+				// $log.debug('$scope.committees: ');
+				// $log.debug($scope.committees);
+			});
+
 		};
 
 		// Find existing Committee
@@ -81,23 +92,29 @@ angular.module('committees').controller('CommitteesController', ['$q', '$scope',
 			Committees.get({
 				committeeId: $stateParams.committeeId
 			}).$promise.then(function(data) {
-				$scope.committee = data;
+				//TEMPORARY SOLUTION FOR SPRINT 1
+				$rootScope.committee = data;
+				
+				// $log.debug('$scope.committee: ');
+				// $log.debug($scope.committee);
+				// $log.debug('$scope.committee._id');
+				// $log.debug($scope.committee._id);
 			});
 
 
-			// var test = function() {
-				
-			// 	return Committees.get({
+			// $scope.test =
+
+			// 	Committees.get({
 			// 		committeeId: $stateParams.committeeId
 			// 	}).$promise.then(function(data) {
 			// 		$scope.committee = data;
-			// 		//return data;
+			// 		return data;
 			// 	});
 
-			// };
 
+			// test.then(function(data) {
 
-			// test().then(function(data) {
+			// 	// $log.debug( $state.href('edit', {data._id}) );
 
 			// 	console.log("data:");
 			// 	console.log(data);
@@ -111,5 +128,21 @@ angular.module('committees').controller('CommitteesController', ['$q', '$scope',
 
 			// });
 		};
+
+		// // Show edit button
+		// $scope.showEdit = function($stateParams) {
+
+		// 	$log.debug('$stateParams:');
+		// 	$log.debug($stateParams.committeeId);
+		// 	$log.debug('$scope.committee._id:');
+		// 	$log.debug($scope.committee._id);
+
+		// 	if($stateParams.committeeId === $scope.committee._id){
+		// 		return true;
+		// 	}
+
+		// 	return false;
+
+		// };
 	}
 ]);

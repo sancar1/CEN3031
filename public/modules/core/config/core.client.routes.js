@@ -10,7 +10,8 @@ angular.module('core').config(['$stateProvider', '$urlRouterProvider',
 		$stateProvider.
 		state('home', {
 			url: '/',
-			templateUrl: 'modules/core/views/test.client.view.html'
+			templateUrl: 'modules/committees/views/list-committees.client.view.html'
+			// templateUrl: 'modules/core/views/test.client.view.html'
 		}).
 		state('edit', {
 			url: '/committees/:committeeId/edit',

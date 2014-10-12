@@ -3,6 +3,11 @@
 		<h1 data-ng-bind="committee.name"></h1>
 	</div>
 	<div class="pull-right" data-ng-show="authentication.user._id == committee.user._id">
+
+		<!-- <a class="btn btn-primary" ui-sref="edit({committeeId: committee._id})">
+			<i class="glyphicon glyphicon-edit"></i>
+		</a> -->
+
 		<a class="btn btn-primary" href="/#!/committees/{{committee._id}}/edit">
 			<i class="glyphicon glyphicon-edit"></i>
 		</a>
