@@ -53,14 +53,14 @@ background-image: linear-gradient(to bottom, #ff4a00 0%, #FF4A00 100%);
 	padding: 10px;
 	width: 20%;
 	float: left;
-	display: inline;
+	/*display: inline;*/
 }
 
 .app-content .app-workspace {
 	min-width: 700px;
 	width: 80%;
 	float: right;
-	display: inline;
+	/*display: inline;*/
 }
 
 .nav-pills > li.active > a, .nav-pills > li.active > a:hover, .nav-pills > li.active > a:focus {
