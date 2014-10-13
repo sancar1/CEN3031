@@ -1,15 +1,17 @@
 'use strict';
 
 // Committees controller
-angular.module('committees').controller('CommitteesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Committees',
-	function($scope, $stateParams, $location, Authentication, Committees ) {
+angular.module('committees').controller('CommitteesController', ['$rootScope', '$scope', '$stateParams', '$location', 'Authentication', 'Users', 'Committees', '$q', '$log',
+	function($rootScope, $scope, $stateParams, $location, Authentication,Users, Committees, $q, $log) {
 		$scope.authentication = Authentication;
+		$scope.currentUser = Authentication.user;
 
 		// Create new Committee
 		$scope.create = function() {
 			// Create new Committee object
 			var committee = new Committees ({
-				name: this.name
+				name: this.name,
+				chair: this.chair
 			});
 
 			// Redirect after save
@@ -73,14 +75,135 @@ angular.module('committees').controller('CommitteesController', ['$scope', '$sta
 
 		// Find a list of Committees
 		$scope.find = function() {
-			$scope.committees = Committees.query();
+			// $scope.committees = Committees.query();
+
+			Committees.query().$promise.then(function(data) {
+				$scope.committees = data;
+
+				// $log.debug('data: ');
+				// $log.debug(data);
+
+				// $log.debug('$scope.committees: ');
+				// $log.debug($scope.committees);
+			});
+
 		};
 
+		$scope.checkAdmin = function(){
+			var user = new Users($scope.currentUser);
+			if(user.role === 'Admin'){
+				return true;
+			}
+			else{
+				return false;
+			};
+		};
+		
+		$scope.checkLoggedIn = function(){
+			var user = new Users($scope.currentUser);
+			if(!$scope.currentUser){
+				return false;
+			}
+			else{
+				return true;
+			};
+		};
+		
+		$scope.checkOwner = function(committee){
+		//	var user = new Users($scope.currentUser);
+		//	var committee = $scope.committee;
+			if($scope.currentUser.displayName===committee.user.displayName){
+				return true;
+			}
+			else{
+				return false;
+			};
+		};
+		
+		$scope.userInCommittee = function(committee){
+			//console.log($scope.committee.members);
+			//console.log($scope.committee._id);
+			//console.log(user);
+
+			if(typeof committee !== 'undefined'){
+				for(var i = 0; i < committee.members.length; i++){
+					if($scope.currentUser._id === committee.members[i]._id){
+						return true;
+					}
+				}
+				return false;
+			}
+			return false;
+			
+
+
+			/*for(var i = 0; i < committee.members.length; i++){
+				var temp = committee.members[i]._id;
+				console.log(temp);
+				//console.log(Users.get({userId: $stateParams.userId});
+				console.log(Users.get({
+					 temp: $stateParams.userId
+				}));
+			}*/		
+		};
+		
+			
 		// Find existing Committee
 		$scope.findOne = function() {
-			$scope.committee = Committees.get({ 
+			Committees.get({
 				committeeId: $stateParams.committeeId
+			}).$promise.then(function(data) {
+				//TEMPORARY SOLUTION FOR SPRINT 1
+				$rootScope.committee = data;
+				
+				// $log.debug('$scope.committee: ');
+				// $log.debug($scope.committee);
+				// $log.debug('$scope.committee._id');
+				// $log.debug($scope.committee._id);
 			});
+
+
+			// $scope.test =
+
+			// 	Committees.get({
+			// 		committeeId: $stateParams.committeeId
+			// 	}).$promise.then(function(data) {
+			// 		$scope.committee = data;
+			// 		return data;
+			// 	});
+
+
+			// test.then(function(data) {
+
+			// 	// $log.debug( $state.href('edit', {data._id}) );
+
+			// 	console.log("data:");
+			// 	console.log(data);
+
+			// 	console.log("$scope.committee:");
+			// 	console.log($scope.committee);
+			// 	console.log("$scope.committee.members:")
+			// 	console.log($scope.committee.members);
+			// 	console.log("$scope.committee.name:");
+			// 	console.log($scope.committee.name);
+
+			// });
 		};
+
+		// // Show edit button
+		// $scope.showEdit = function($stateParams) {
+
+		// 	$log.debug('$stateParams:');
+		// 	$log.debug($stateParams.committeeId);
+		// 	$log.debug('$scope.committee._id:');
+		// 	$log.debug($scope.committee._id);
+
+		// 	if($stateParams.committeeId === $scope.committee._id){
+		// 		return true;
+		// 	}
+
+		// 	return false;
+
+		// };
 	}
 ]);
