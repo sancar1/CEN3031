@@ -55,7 +55,17 @@ angular.module('committees').controller('CommitteesController', ['$rootScope', '
 		//Add member to committee
 		$scope.addMember = function(user){
 			var committee = $scope.committee;
-			committee.members.push(user);
+			var check = 1;
+			for(var i = 0; i < committee.members.length; i++){
+				if($scope.currentUser._id === committee.members[i]._id){
+					check = 0;
+				}
+			}
+			if(check===1){
+			committee.members.push(user);}
+			else{
+				console.log("NOPE!");
+			}
 			committee.$update(function(){
 				$location.path('committees/'+committee._id+'/edit');	
 			}, function(errorResponse){
