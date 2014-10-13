@@ -15,9 +15,32 @@
 			<i class="glyphicon glyphicon-trash"></i>
 		</a>
 	</div>
+	<div>
+		<h3>Description:</h3>
+		<p>
+				<span data-ng-bind="committee.description"></span>
+			
+			</div>
+			
+   <section data-ng-controller="UsersController"  data-ng-init= "find()">
+       <form name="userForm" class="form-horizontal" novalidate>
+          <div class = "list-group" class = "list-group-item">
+                   <h3 class = "list-group-item-text">Committee Members</h3>
+           <div class="list-group"> 
+                   <a data-ng-repeat="user in users" data-ng-show = "inCommittee(user)" class="list-group-item">
+                   <small class="list-group-item-text">
+                       <span data-ng-bind="user.displayName | date:'medium'"></span>
+                   </small>
+               </a>
+           </div>
+        </div>
+       </form>
+   </section>
+	
+	
 	<small>
 		<em class="text-muted">
-			Posted on
+			Created on
 			<span data-ng-bind="committee.created | date:'mediumDate'"></span>
 			by
 			<span data-ng-bind="committee.user.displayName"></span>

@@ -4,6 +4,7 @@
     </div>
     <div class="col-md-12">
         <form name="committeeForm" class="form-horizontal" data-ng-submit="update()" novalidate>
+			  <div ng-show="checkOwner(committee)">
             <fieldset>
                 <div class="form-group">
                     <label class="control-label" for="name">Name</label>
@@ -27,6 +28,7 @@
 					<strong data-ng-bind="error"></strong>
 				</div>
             </fieldset>
+			</div>
 
         <section data-ng-controller="UsersController"  data-ng-init= "find()">
             <form name="userForm" class="form-horizontal" novalidate>

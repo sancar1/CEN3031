@@ -1,9 +1,14 @@
 <section data-ng-controller="CommitteesController" data-ng-init="find()">
-    <div class="page-header">
+<section data-ng-controller="UsersController"  data-ng-init= "find()">
+    <div ng-show="checkLoggedIn()" class="page-header">
         <h1>Committees</h1>
     </div>
-    <div class="list-group">
-        <a data-ng-repeat="committee in committees" data-ng-href="#!/committees/{{committee._id}}" class="list-group-item">
+	 
+	 <div ng-hide="checkLoggedIn()" class="page-header">
+		 <h1>Please Login</h1>
+	 </div>
+    <div class="list-group" ng-show="checkLoggedIn()" >
+        <a data-ng-repeat="committee in committees" data-ng-href="#!/committees/{{committee._id}}" class="list-group-item" ng-show="userInCommittee(committee) || checkAdmin()">
 			<small class="list-group-item-text">
 				Posted on
 				<span data-ng-bind="committee.created | date:'medium'"></span>
@@ -13,7 +18,7 @@
 			<h4 class="list-group-item-heading" data-ng-bind="committee.name"></h4>
         </a>
     </div>
-    <div class="alert alert-warning text-center" data-ng-hide="!committees.$resolved || committees.length">
+    <div class="alert alert-warning text-center"  data-ng-hide="!committees.$resolved || committees.length">
     	No Committees yet, why don't you <a href="/#!/committees/create">create one</a>?
     </div>
 </section>

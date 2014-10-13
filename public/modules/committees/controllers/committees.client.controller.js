@@ -1,15 +1,17 @@
 'use strict';
 
 // Committees controller
-angular.module('committees').controller('CommitteesController', ['$rootScope', '$scope', '$stateParams', '$location', 'Authentication', 'Committees', '$q', '$log',
-	function($rootScope, $scope, $stateParams, $location, Authentication, Committees, $q, $log) {
+angular.module('committees').controller('CommitteesController', ['$rootScope', '$scope', '$stateParams', '$location', 'Authentication', 'Users', 'Committees', '$q', '$log',
+	function($rootScope, $scope, $stateParams, $location, Authentication,Users, Committees, $q, $log) {
 		$scope.authentication = Authentication;
+		$scope.currentUser = Authentication.user;
 
 		// Create new Committee
 		$scope.create = function() {
 			// Create new Committee object
 			var committee = new Committees ({
-				name: this.name
+				name: this.name,
+				chair: this.chair
 			});
 
 			// Redirect after save
@@ -87,6 +89,65 @@ angular.module('committees').controller('CommitteesController', ['$rootScope', '
 
 		};
 
+		$scope.checkAdmin = function(){
+			var user = new Users($scope.currentUser);
+			if(user.role === 'Admin'){
+				return true;
+			}
+			else{
+				return false;
+			};
+		};
+		
+		$scope.checkLoggedIn = function(){
+			var user = new Users($scope.currentUser);
+			if(!$scope.currentUser){
+				return false;
+			}
+			else{
+				return true;
+			};
+		};
+		
+		$scope.checkOwner = function(committee){
+		//	var user = new Users($scope.currentUser);
+		//	var committee = $scope.committee;
+			if($scope.currentUser.displayName===committee.user.displayName){
+				return true;
+			}
+			else{
+				return false;
+			};
+		};
+		
+		$scope.userInCommittee = function(committee){
+			//console.log($scope.committee.members);
+			//console.log($scope.committee._id);
+			//console.log(user);
+
+			if(typeof committee !== 'undefined'){
+				for(var i = 0; i < committee.members.length; i++){
+					if($scope.currentUser._id === committee.members[i]._id){
+						return true;
+					}
+				}
+				return false;
+			}
+			return false;
+			
+
+
+			/*for(var i = 0; i < committee.members.length; i++){
+				var temp = committee.members[i]._id;
+				console.log(temp);
+				//console.log(Users.get({userId: $stateParams.userId});
+				console.log(Users.get({
+					 temp: $stateParams.userId
+				}));
+			}*/		
+		};
+		
+			
 		// Find existing Committee
 		$scope.findOne = function() {
 			Committees.get({
