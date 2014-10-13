@@ -40,7 +40,6 @@ describe('Committee Model Unit Tests:', function() {
 
 		user.save(function() { 
 			committee.user = user;
-			
 			done();
 		});
 	});

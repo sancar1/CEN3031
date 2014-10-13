@@ -4,7 +4,8 @@
 	// Committees Controller Spec
 	describe('Committees Controller Tests', function() {
 		// Initialize global variables
-		var CommitteesController,
+		var CommitteesController, 
+		UsersController,
 		scope,
 		$httpBackend,
 		$stateParams,
@@ -120,6 +121,49 @@
 		}));
 
 		it('$scope.update() should update a valid Committee', inject(function(Committees) {
+			// Define a sample Committee put data
+			var sampleCommitteePutData = new Committees({
+				_id: '525cf20451979dea2c000001',
+				name: 'New Committee'
+			});
+
+			// Mock Committee in scope
+			scope.committee = sampleCommitteePutData;
+
+			// Set PUT response
+			$httpBackend.expectPUT(/committees\/([0-9a-fA-F]{24})$/).respond();
+
+			// Run controller functionality
+			scope.update();
+			$httpBackend.flush();
+
+			// Test URL location to new object
+			expect($location.path()).toBe('/committees/' + sampleCommitteePutData._id);
+		}));
+
+		it('$scope.addMember() should update a valid Committee', inject(function(Committees) {
+			// Define a sample Committee put data
+			var sampleCommitteePutData = new Committees({
+				_id: '525cf20451979dea2c000001',
+				name: 'New Committee'
+			});
+
+			// Mock Committee in scope
+			scope.committee = sampleCommitteePutData;
+
+			// Set PUT response
+			$httpBackend.expectPUT(/committees\/([0-9a-fA-F]{24})$/).respond();
+
+			// Run controller functionality
+			scope.update();
+			$httpBackend.flush();
+
+			// Test URL location to new object
+			expect($location.path()).toBe('/committees/' + sampleCommitteePutData._id);
+		}));
+
+
+		it('$scope.removeMember() should update a valid Committee', inject(function(Committees) {
 			// Define a sample Committee put data
 			var sampleCommitteePutData = new Committees({
 				_id: '525cf20451979dea2c000001',
