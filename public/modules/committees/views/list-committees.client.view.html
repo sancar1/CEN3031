@@ -3,19 +3,19 @@
     <div ng-show="checkLoggedIn()" class="page-header">
         <h1>Committees</h1>
     </div>
+	 
 	 <div ng-hide="checkLoggedIn()" class="page-header">
 		 <h1>Please Login</h1>
 	 </div>
     <div class="list-group" ng-show="checkLoggedIn()" >
         <a data-ng-repeat="committee in committees" data-ng-href="#!/committees/{{committee._id}}" class="list-group-item" ng-show="userInCommittee(committee) || checkAdmin() || checkOwner(committee)">
 			<small class="list-group-item-text">
-			<small>
-				Created on
+				Posted on
 				<span data-ng-bind="committee.created | date:'medium'"></span>
 				by
 				<span data-ng-bind="committee.user.displayName"></span>
 			</small>
-			</small>
+			<h4 class="list-group-item-heading" data-ng-bind="committee.name"></h4>
         </a>
     </div>
     <div class="alert alert-warning text-center"  data-ng-hide="!committees.$resolved || committees.length">
