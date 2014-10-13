@@ -106,7 +106,7 @@ angular.module('committees').controller('CommitteesController', ['$rootScope', '
 			}
 			else{
 				return false;
-			};
+			}
 		};
 		
 		$scope.checkLoggedIn = function(){
@@ -116,7 +116,7 @@ angular.module('committees').controller('CommitteesController', ['$rootScope', '
 			}
 			else{
 				return true;
-			};
+			}
 		};
 		
 		$scope.checkOwner = function(committee){
@@ -127,7 +127,7 @@ angular.module('committees').controller('CommitteesController', ['$rootScope', '
 			}
 			else{
 				return false;
-			};
+			}
 		};
 		
 		$scope.userInCommittee = function(committee){

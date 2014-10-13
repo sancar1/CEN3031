@@ -1,12 +1,11 @@
-'use strict';
-
 (function() {
 	// Committees Controller Spec
 	describe('Committees Controller Tests', function() {
 		// Initialize global variables
-		var CommitteesController, 
-		UsersController,
-		scope,
+		var UsersController,
+			CommitteesController,
+			userScope,
+			committeeScope,
 		$httpBackend,
 		$stateParams,
 		$location;
@@ -38,7 +37,8 @@
 		// with the same name as the service.
 		beforeEach(inject(function($controller, $rootScope, _$location_, _$stateParams_, _$httpBackend_) {
 			// Set a new global scope
-			scope = $rootScope.$new();
+			userScope = $rootScope.$new();
+			committeeScope = $rootScope.$new();
 
 			// Point global variables to injected services
 			$stateParams = _$stateParams_;
@@ -46,8 +46,11 @@
 			$location = _$location_;
 
 			// Initialize the Committees controller.
+			UsersController = $controller('UsersController', {
+				$scope: userScope
+			});
 			CommitteesController = $controller('CommitteesController', {
-				$scope: scope
+				$scope: committeeScope
 			});
 		}));
 
@@ -64,11 +67,11 @@
 			$httpBackend.expectGET('committees').respond(sampleCommittees);
 
 			// Run controller functionality
-			scope.find();
+			committeeScope.find();
 			$httpBackend.flush();
 
 			// Test scope value
-			expect(scope.committees).toEqualData(sampleCommittees);
+			expect(committeeScope.committees).toEqualData(sampleCommittees);
 		}));
 
 		it('$scope.findOne() should create an array with one Committee object fetched from XHR using a committeeId URL parameter', inject(function(Committees) {
@@ -84,11 +87,11 @@
 			$httpBackend.expectGET(/committees\/([0-9a-fA-F]{24})$/).respond(sampleCommittee);
 
 			// Run controller functionality
-			scope.findOne();
+			committeeScope.findOne();
 			$httpBackend.flush();
 
 			// Test scope value
-			expect(scope.committee).toEqualData(sampleCommittee);
+			expect(committeeScope.committee).toEqualData(sampleCommittee);
 		}));
 
 		it('$scope.create() with valid form data should send a POST request with the form input values and then locate to new object URL', inject(function(Committees) {
@@ -104,17 +107,17 @@
 			});
 
 			// Fixture mock form input values
-			scope.name = 'New Committee';
+			committeeScope.name = 'New Committee';
 
 			// Set POST response
 			$httpBackend.expectPOST('committees', sampleCommitteePostData).respond(sampleCommitteeResponse);
 
 			// Run controller functionality
-			scope.create();
+			committeeScope.create();
 			$httpBackend.flush();
 
 			// Test form inputs are reset
-			expect(scope.name).toEqual('');
+			expect(committeeScope.name).toEqual('');
 
 			// Test URL redirection after the Committee was created
 			expect($location.path()).toBe('/committees/' + sampleCommitteeResponse._id);
@@ -128,13 +131,13 @@
 			});
 
 			// Mock Committee in scope
-			scope.committee = sampleCommitteePutData;
+			committeeScope.committee = sampleCommitteePutData;
 
 			// Set PUT response
 			$httpBackend.expectPUT(/committees\/([0-9a-fA-F]{24})$/).respond();
 
 			// Run controller functionality
-			scope.update();
+			committeeScope.update();
 			$httpBackend.flush();
 
 			// Test URL location to new object
@@ -149,13 +152,13 @@
 			});
 
 			// Mock Committee in scope
-			scope.committee = sampleCommitteePutData;
+			committeeScope.committee = sampleCommitteePutData;
 
 			// Set PUT response
 			$httpBackend.expectPUT(/committees\/([0-9a-fA-F]{24})$/).respond();
 
 			// Run controller functionality
-			scope.update();
+			committeeScope.update();
 			$httpBackend.flush();
 
 			// Test URL location to new object
@@ -171,13 +174,13 @@
 			});
 
 			// Mock Committee in scope
-			scope.committee = sampleCommitteePutData;
+			committeeScope.committee = sampleCommitteePutData;
 
 			// Set PUT response
 			$httpBackend.expectPUT(/committees\/([0-9a-fA-F]{24})$/).respond();
 
 			// Run controller functionality
-			scope.update();
+			committeeScope.update();
 			$httpBackend.flush();
 
 			// Test URL location to new object
@@ -191,17 +194,125 @@
 			});
 
 			// Create new Committees array and include the Committee
-			scope.committees = [sampleCommittee];
+			committeeScope.committees = [sampleCommittee];
 
 			// Set expected DELETE response
 			$httpBackend.expectDELETE(/committees\/([0-9a-fA-F]{24})$/).respond(204);
 
 			// Run controller functionality
-			scope.remove(sampleCommittee);
+			committeeScope.remove(sampleCommittee);
 			$httpBackend.flush();
 
 			// Test array after successful delete
-			expect(scope.committees.length).toBe(0);
+			expect(committeeScope.committees.length).toBe(0);
 		}));
+
+		it('$scope.checkAdmin() should return true if user is an Admin', inject(function(Committees, Users) {
+			// Create new Committee object
+			var sampleCommittee = new Committees({
+				_id: '525a8422f6d0f87f0e407a33',
+			});
+			var sampleUser = new Committees({
+				userName: 'userName',
+				role: 'Admin'
+			});
+			committeeScope.currentUser = sampleUser;
+
+			// Run controller functionality
+			committeeScope.checkAdmin();
+
+			// Test array after successful delete
+			expect(committeeScope.checkAdmin()).toBe(true);
+		}));
+		it('$scope.checkAdmin() should return false if user is not an Admin', inject(function(Committees, Users) {
+			// Create new Committee object
+			var sampleCommittee = new Committees({
+				_id: '525a8422f6d0f87f0e407a33',
+			});
+			var sampleUser = new Committees({
+				userName: 'userName',
+				role: 'Student'
+			});
+			committeeScope.currentUser = sampleUser;
+
+			// Run controller functionality
+			committeeScope.checkAdmin();
+
+			// Test array after successful delete
+			expect(committeeScope.checkAdmin()).toBe(false);
+		}));
+		it('$scope.checkLoggedIn() should return true if user is logged in', inject(function(Committees, Users) {
+			// Create new Committee object
+			var sampleCommittee = new Committees({
+				_id: '525a8422f6d0f87f0e407a33',
+			});
+			var sampleUser = new Committees({
+				userName: 'userName',
+				role: 'Student'
+			});
+			committeeScope.currentUser = sampleUser;
+
+			// Run controller functionality
+			committeeScope.checkLoggedIn();
+
+			// Test array after successful delete
+			expect(committeeScope.checkLoggedIn()).toBe(true);
+		}));
+		it('$scope.checkLoggedIn() should return false if nobody is logged in', inject(function(Committees, Users) {
+			// Create new Committee object
+			var sampleCommittee = new Committees({
+				_id: '525a8422f6d0f87f0e407a33',
+			});
+			var sampleUser = new Committees({
+				userName: 'userName',
+				role: 'Student'
+			});
+			committeeScope.currentUser = null;
+
+			// Run controller functionality
+			committeeScope.checkLoggedIn();
+
+			// Test array after successful delete
+			expect(committeeScope.checkLoggedIn()).toBe(false);
+		}));
+		it('$scope.userInCommittee() should return true if the user is in the committee', inject(function(Committees, Users) {
+			// Create new Committee object
+			var sampleUser = new Users({
+				userName: 'userName'
+			});
+			sampleUser._id = '123456789';
+			committeeScope.currentUser = sampleUser;
+			var sampleCommittee = new Committees({
+				name : 'testCommitte',
+				currentUser : sampleUser._id,
+				members: [sampleUser]
+			});
+
+			// Run controller functionality
+			committeeScope.userInCommittee(sampleCommittee);
+
+			// Test array after successful delete
+			expect(committeeScope.userInCommittee(sampleCommittee)).toBe(true);
+		}));
+		it('$scope.userInCommittee() should return false if the user is not the committee', inject(function(Committees, Users) {
+			// Create new Committee object
+			var sampleUser = new Users({
+				userName: 'userName'
+			});
+			sampleUser._id = '123456789';
+			committeeScope.currentUser = sampleUser;
+			var sampleCommittee = new Committees({
+				name : 'testCommitte',
+				currentUser : '12345678987654321',
+				members: ['123456789']
+			});
+
+			// Run controller functionality
+			committeeScope.userInCommittee(sampleCommittee);
+
+			// Test array after successful delete
+			expect(committeeScope.userInCommittee(sampleCommittee)).toBe(false);
+		}));
+		
 	});
 }());
