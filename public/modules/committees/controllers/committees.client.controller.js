@@ -64,7 +64,7 @@ angular.module('committees').controller('CommitteesController', ['$rootScope', '
 			if(check===1){
 			committee.members.push(user);}
 			else{
-				console.log("NOPE!");
+				console.log('NOPE!');
 			}
 			committee.$update(function(){
 				$location.path('committees/'+committee._id+'/edit');	
@@ -73,9 +73,9 @@ angular.module('committees').controller('CommitteesController', ['$rootScope', '
 			});
 		};
 
-		$scope.removeMember = function(index){
+		$scope.removeMember = function(){
 			var committee = $scope.committee;
-			committee.members.splice(index, 1);
+			committee.members.splice(committee.members.indexOf($scope.user), 1);
 			committee.$update(function(){
 				$location.path('committees/'+committee._id+'/edit');	
 			}, function(errorResponse){
