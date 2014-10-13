@@ -55,7 +55,7 @@
 				userName: 'userName'
 			});
 
-			// Create a sample Committees array that includes the new Committee
+			// Create a sample Userss array that includes the new User
 			var sampleUsers = [sampleUser];
 
 			// Set GET response
@@ -82,6 +82,23 @@
 
 			// Test scope value
 			expect(userScope.inCommittee(sampleUser)).toEqualData(false);
+		}));
+
+		it('$scope.inCommittee() should return true if member is in the committee', inject(function(Users, Committees){
+			// Define a sample Committee object
+			var sampleUser = new Users({
+				userName: 'userName'
+			});
+			sampleUser._Id = '123456789';
+
+			var sampleCommittee = new Committees({
+				name : 'testCommitte',
+				members : [sampleUser._Id]
+			});
+			userScope.committee = sampleCommittee;
+			userScope.inCommittee(sampleUser);
+			// Test scope value
+			expect(userScope.inCommittee(sampleUser)).toEqualData(true);
 		}));
 	});
 }());
