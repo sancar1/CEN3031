@@ -85,24 +85,8 @@ exports.list = function(req, res) {
 	});
 };
 
-exports.addMember = function(req,res){
-	console.log('In here adding member');
-	var committee = req.committee;
 
-	/*committee.put(function(err){
-		if(err){
-			return res.status(400).send({
-				message: errorHandler.getErrorMessage(err)
-			});
-		} else{
-			res.jsonp(committee);
-		}
-	});*/
-};
 
-exports.deleteMember = function(req,res){
-
-};
 
 /**
  * Committee middleware

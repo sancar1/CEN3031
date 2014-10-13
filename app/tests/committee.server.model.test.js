@@ -11,7 +11,7 @@ var should = require('should'),
 /**
  * Globals
  */
-var user, committee;
+var user, user2, committee;
 
 /**
  * Unit tests
@@ -26,13 +26,20 @@ describe('Committee Model Unit Tests:', function() {
 			username: 'username',
 			password: 'password'
 		});
+		user2 = new User({
+			firstName: 'Full2',
+			lastName: 'Name2',
+			displayName: 'Full Name2',
+			email: 'test@test.com',
+			username: 'username',
+			password: 'password'
+		});
+		committee = new Committee({
+				name: 'Committee Name', 
+		});
 
 		user.save(function() { 
-			committee = new Committee({
-				name: 'Committee Name',
-				user: user
-			});
-
+			committee.user = user;
 			done();
 		});
 	});
@@ -50,6 +57,13 @@ describe('Committee Model Unit Tests:', function() {
 
 			return committee.save(function(err) {
 				should.exist(err);
+				done();
+			});
+		});
+		it('should be able to add member without problems', function(done){
+			committee.members[0] = user2._Id;
+			return committee.save(function(err) {
+				should.not.exist(err);
 				done();
 			});
 		});

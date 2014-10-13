@@ -9,10 +9,6 @@ module.exports = function(app) {
 		.get(committees.list)
 		.post(users.requiresLogin, committees.create);
 
-	app.route('committees/:committeeId/:userId')
-		.put(committees.addMember)
-		.delete(users.requiresLogin, committees.hasAuthorization, committees.deleteMember);
-
 	app.route('/committees/:committeeId')
 		.get(committees.read)
 		.put(users.requiresLogin, committees.hasAuthorization, committees.update)
