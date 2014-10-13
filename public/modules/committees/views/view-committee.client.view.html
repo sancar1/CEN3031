@@ -2,6 +2,10 @@
 	<div class="page-header">
 		<h1 data-ng-bind="committee.name"></h1>
 	</div>
+	<div class="text">
+		<h4 data-ng-bind="committee.description"></h4>
+	</div>
+	<br>
 	<div class="pull-right" data-ng-show="authentication.user._id == committee.user._id">
 		<a class="btn btn-primary" href="/#!/committees/{{committee._id}}/edit">
 			<i class="glyphicon glyphicon-edit"></i>
@@ -10,12 +14,12 @@
 			<i class="glyphicon glyphicon-trash"></i>
 		</a>
 	</div>
-	<small>
+	<small><small>
 		<em class="text-muted">
-			Posted on
+			Created on
 			<span data-ng-bind="committee.created | date:'mediumDate'"></span>
 			by
 			<span data-ng-bind="committee.user.displayName"></span>
 		</em>
-	</small>
+	</small></small>
 </section>
