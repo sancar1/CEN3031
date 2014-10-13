@@ -8,7 +8,7 @@
 		 <h1>Please Login</h1>
 	 </div>
     <div class="list-group" ng-show="checkLoggedIn()" >
-        <a data-ng-repeat="committee in committees" data-ng-href="#!/committees/{{committee._id}}" class="list-group-item" ng-show="userInCommittee(committee) || checkAdmin()">
+        <a data-ng-repeat="committee in committees" data-ng-href="#!/committees/{{committee._id}}" class="list-group-item" ng-show="userInCommittee(committee) || checkAdmin() || checkOwner(committee)">
 			<small class="list-group-item-text">
 				Posted on
 				<span data-ng-bind="committee.created | date:'medium'"></span>
