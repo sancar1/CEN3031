@@ -35,7 +35,7 @@
                <div class = "list-group" class = "list-group-item">
                         <h1 class = "list-group-item-text">Committee Members</h1>
                 <div class="list-group"> 
-                        <a data-ng-repeat="user in users" data-ng-show = "inCommittee(user)" class="list-group-item">
+                        <a data-ng-repeat="user in users" data-ng-show = "inCommittee(user)" data-ng-click = "removeMember(index)" class="list-group-item">
                         <small class="list-group-item-text">
                             <span data-ng-bind="user.displayName | date:'medium'"></span>
                         </small>
