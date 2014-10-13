@@ -77,7 +77,7 @@ angular.module('committees').controller('CommitteesController', ['$rootScope', '
 			var committee = $scope.committee;
 			committee.members.splice(index, 1);
 			committee.$update(function(){
-				$location.path('committees/'+committee._id+'/edit';	
+				$location.path('committees/'+committee._id+'/edit');	
 			}, function(errorResponse){
 				$scope.error = errorResponse.data.message;
 			});
