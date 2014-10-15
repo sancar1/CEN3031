@@ -1,3 +1,5 @@
+
+'use strict';
 (function() {
 	// Authentication controller Spec
 	describe('UsersController', function() {
