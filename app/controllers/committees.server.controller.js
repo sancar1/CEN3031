@@ -84,6 +84,21 @@ exports.list = function(req, res) {
 		}
 	});
 };
+/**
+ * List of Committees
+ */
+exports.getMembers = function(req, res) { 
+	console.log('hello');
+	Committee.find().sort('-created').populate('user', 'displayName').exec(function(err, committees) {
+		if (err) {
+			return res.status(400).send({
+				message: errorHandler.getErrorMessage(err)
+			});
+		} else {
+			res.jsonp(committees);
+		}
+	});
+};
 
 
 

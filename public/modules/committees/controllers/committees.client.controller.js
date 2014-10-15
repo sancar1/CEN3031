@@ -83,11 +83,16 @@ angular.module('committees').controller('CommitteesController', ['$rootScope', '
 			});
 		};
 
+		$scope.getMembers = function(){
+			var committee = $scope.committee;
+			var Members = Committees.Members.get({committeeId: $stateParams.committeeId});
+		};
+
 		// Find a list of Committees
 		$scope.find = function() {
 			// $scope.committees = Committees.query();
 
-			Committees.query().$promise.then(function(data) {
+			Committees.Committees.query().$promise.then(function(data) {
 				$scope.committees = data;
 
 				// $log.debug('data: ');
@@ -160,7 +165,7 @@ angular.module('committees').controller('CommitteesController', ['$rootScope', '
 			
 		// Find existing Committee
 		$scope.findOne = function() {
-			Committees.get({
+			Committees.Committees.get({
 				committeeId: $stateParams.committeeId
 			}).$promise.then(function(data) {
 				//TEMPORARY SOLUTION FOR SPRINT 1

@@ -30,20 +30,9 @@
             </fieldset>
 			</div>
 
-        <section data-ng-controller="UsersController"  data-ng-init= "find()">
-            <form name="userForm" class="form-horizontal" novalidate>
-               <div class = "list-group" class = "list-group-item">
-                        <h1 class = "list-group-item-text">Committee Members</h1>
-                <div class="list-group"> 
-                        <a data-ng-repeat="user in users" data-ng-show = "inCommittee(user)" class="list-group-item">
-                        <small class="list-group-item-text">
-                            <span data-ng-bind="user.displayName | date:'medium'"></span>
-                        </small> 
-                    </a>
-                </div>
-             </div>
-            </form>
-        </section>
+       <button ng-click = "getMembers()">
+       list members
+       </button>
 
         <section data-ng-controller="UsersController" data-ng-init="find()">
             <form name="userForm" class="form-horizontal" novalidate>
