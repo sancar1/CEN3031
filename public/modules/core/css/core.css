@@ -43,6 +43,8 @@ background-image: linear-gradient(to bottom, #ff4a00 0%, #FF4A00 100%);
 	padding-left: 300px;
 }*/
 
+/*Tab body code */
+
 .app-content {
 	margin-top: 50px;
 }
@@ -62,6 +64,14 @@ background-image: linear-gradient(to bottom, #ff4a00 0%, #FF4A00 100%);
 	float: right;
 	/*display: inline;*/
 }
+
+.view-container{
+	float: right;
+	margin-right: 35px;
+	width: 1100px;
+}
+
+/*Code for navigation */
 
 .nav-pills > li.active > a, .nav-pills > li.active > a:hover, .nav-pills > li.active > a:focus {
 color: #fff;
