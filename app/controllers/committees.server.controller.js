@@ -93,7 +93,7 @@ exports.getMembers = function(req, res) {
 	console.log(memberById);
 	console.log(memberById.length);
 
-	User.find({firstName: 'Clay'}).exec(function(err, members) {
+	User.find({'_id':{$in: memberById}}).exec(function(err, members) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
