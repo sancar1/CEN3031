@@ -85,17 +85,21 @@ exports.list = function(req, res) {
 	});
 };
 /**
- * List of Committees
+ * List of Committee Members
  */
 exports.getMembers = function(req, res) { 
-	console.log('hello');
-	Committee.find().sort('-created').populate('user', 'displayName').exec(function(err, committees) {
+	var committee = req.committee;
+	var memberById = committee.members;
+	console.log(memberById);
+	console.log(memberById.length);
+
+	User.find({firstName: 'Clay'}).exec(function(err, members) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			res.jsonp(committees);
+			res.jsonp(members);
 		}
 	});
 };

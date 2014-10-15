@@ -85,7 +85,9 @@ angular.module('committees').controller('CommitteesController', ['$rootScope', '
 
 		$scope.getMembers = function(){
 			var committee = $scope.committee;
-			var Members = Committees.Members.get({committeeId: $stateParams.committeeId});
+			var Members = Committees.Members.query({committeeId: $stateParams.committeeId}).$promise.then(function(data) {
+				$scope.members = data;
+			});
 		};
 
 		// Find a list of Committees
