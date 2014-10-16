@@ -115,7 +115,8 @@ exports.addMember = function(req, res) {
 			});
 		} else {
 			console.log('userId: '+user[0]._id);
-			Committee.update({_id: committeeById}, {$addToSet: {members: user[0]._id}}).exec(function(err, committee){
+			var toAdd = user[0]._id;
+			Committee.update({'_id': committeeById}, {'members': toAdd}).exec(function(err, committee){
 				if(err){
 					return res.status(401).send({
 						message: errorHandler.getErrorMessage(err)

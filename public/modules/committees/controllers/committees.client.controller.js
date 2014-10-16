@@ -9,7 +9,7 @@ angular.module('committees').controller('CommitteesController', ['$rootScope', '
 		// Create new Committee
 		$scope.create = function() {
 			// Create new Committee object
-			var committee = new Committees ({
+			var committee = new Committees.Committees ({
 				name: this.name,
 				chair: this.chair
 			});
