@@ -36,14 +36,7 @@ var CommitteeSchema = new Schema({
 		 	ref: 'User'
 		},
 	},
-	members: [
-		{
-			user: {
-				type: Schema.ObjectId, 
-				ref: 'User'
-			}
-		}
-	],
+	members:   [String],
 	user: {
 		type: Schema.ObjectId,
 		ref: 'User'
