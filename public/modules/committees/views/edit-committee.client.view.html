@@ -35,7 +35,7 @@
                <div class = "list-group" class = "list-group-item">
                         <h1 class = "list-group-item-text">Committee Members</h1>
                 <div class="list-group"> 
-                        <a data-ng-repeat="member in members" class="list-group-item">
+                        <a data-ng-repeat="member in members"  data-ng-click = "removeMember(member)" class="list-group-item">
                         <small class="list-group-item-text">
                             <span data-ng-bind="member.displayName"></span>
                         </small> 

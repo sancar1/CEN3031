@@ -106,27 +106,16 @@ exports.getMembers = function(req, res) {
  */
 exports.addMember = function(req, res) { 
 	var userById = req.params.userId;
-	var committeeById = req.committee;
+	var committeeById = req.committee._id;
 
-	User.find({'_id': userById}).exec(function(err, user) {
-		if (err) {
-			return res.status(400).send({
+	Committee.update({'_id': committeeById}, {$addToSet:{'members': userById}} ).exec(function(err, committee){
+		if(err){
+			return res.status(401).send({
 				message: errorHandler.getErrorMessage(err)
 			});
-		} else {
-			console.log(user[0]);
-			var id = user[0]._id.toString();
-			Committee.update({'_id': committeeById}, {$addToSet:{'members': id}} ).exec(function(err, committee){
-				if(err){
-					return res.status(401).send({
-						message: errorHandler.getErrorMessage(err)
-					});
-				}else{
-					res.jsonp(committee[0]);
-				}
-			});
+		}else{
+			res.jsonp(committee[0]);
 		}
-		
 	});
 };
 
@@ -134,18 +123,19 @@ exports.addMember = function(req, res) {
  * Remove Committee Member
  */
 exports.removeMember = function(req, res) { 
-	var committee = req.committee;
-	var memberById = committee.members;
-	console.log(memberById);
-	console.log(memberById.length);
+	var committeeById = req.committee._id;
+	var memberById = req.params.userId;
 
-	User.find({'_id':{$in: memberById}}).exec(function(err, members) {
+	console.log(committeeById);
+	console.log(memberById);
+
+	Committee.update({'_id':committeeById},{$pull:{'members': memberById}}).exec(function(err, committee) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			res.jsonp(members);
+			res.jsonp(committee[0]);
 		}
 	});
 };

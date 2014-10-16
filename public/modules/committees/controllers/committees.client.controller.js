@@ -63,14 +63,13 @@ angular.module('committees').controller('CommitteesController', ['$rootScope', '
 			
 		};
 
-		$scope.removeMember = function(){
+		$scope.removeMember = function(member){
 			var committee = $scope.committee;
-			committee.members.splice(committee.members.indexOf($scope.user), 1);
-			committee.$update(function(){
-				$location.path('committees/'+committee._id+'/edit');	
-			}, function(errorResponse){
-				$scope.error = errorResponse.data.message;
+			var passed = 0;		
+			angular.forEach(committee.members, function(members){
+				if(members === member._id) passed = 1;
 			});
+			if(passed) Committees.Member.remove({userId: member._id,committeeId: committee._id});
 		};
 
 		$scope.getMembers = function(){
