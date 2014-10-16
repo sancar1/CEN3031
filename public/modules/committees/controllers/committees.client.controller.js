@@ -55,22 +55,14 @@ angular.module('committees').controller('CommitteesController', ['$rootScope', '
 		//Add member to committee
 		$scope.addMember = function(user){
 			var committee = $scope.committee;
-			var check = 1;
-			for(var i = 0; i < committee.members.length; i++){
-				if($scope.currentUser._id === committee.members[i]._id){
-					check = 0;
-				}
-			}
-			if(check===1){
-			committee.members.push(user);}
-			else{
-				console.log('NOPE!');
-			}
-			committee.$update(function(){
-				$location.path('committees/'+committee._id+'/edit');	
-			}, function(errorResponse){
-				$scope.error = errorResponse.data.message;
+			console.log('addMember()');
+			console.log('committee: '+committee._id);
+			console.log('User: '+user._id);
+
+			Committees.Member.update({userId: user._id,committeeId: committee._id}).$promise.then(function(data){
+				console.log(data);
 			});
+	
 		};
 
 		$scope.removeMember = function(){
@@ -84,7 +76,8 @@ angular.module('committees').controller('CommitteesController', ['$rootScope', '
 		};
 
 		$scope.getMembers = function(){
-			var Members = Committees.Members.query({committeeId: $stateParams.committeeId}).$promise.then(function(data) {
+			var committee = $scope.committee;
+			var Members = Committees.Members.query({committeeId: committee._id}).$promise.then(function(data) {
 				$scope.members = data;
 			});
 		};

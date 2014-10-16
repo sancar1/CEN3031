@@ -90,6 +90,45 @@ exports.list = function(req, res) {
 exports.getMembers = function(req, res) { 
 	var committee = req.committee;
 	var memberById = committee.members;
+	User.find({'_id':{$in: memberById}}).exec(function(err, members) {
+		if (err) {
+			return res.status(400).send({
+				message: errorHandler.getErrorMessage(err)
+			});
+		} else {
+			res.jsonp(members);
+		}
+	});
+};
+
+/**
+ * Add Committee Member
+ */
+exports.addMember = function(req, res) { 
+	var userById = req.user;
+	var committeeById = req.committee;
+	console.log('committee: '+committeeById);
+	console.log('user: '+userById);
+
+/*
+	User.find({'_id':{$in: memberById}}).exec(function(err, members) {
+		if (err) {
+			return res.status(400).send({
+				message: errorHandler.getErrorMessage(err)
+			});
+		} else {
+			res.jsonp(members);
+		}
+	});
+*/
+};
+
+/**
+ * Remove Committee Member
+ */
+exports.removeMember = function(req, res) { 
+	var committee = req.committee;
+	var memberById = committee.members;
 	console.log(memberById);
 	console.log(memberById.length);
 
@@ -103,7 +142,6 @@ exports.getMembers = function(req, res) {
 		}
 	});
 };
-
 
 
 
