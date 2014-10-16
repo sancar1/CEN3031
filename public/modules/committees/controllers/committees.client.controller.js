@@ -55,12 +55,12 @@ angular.module('committees').controller('CommitteesController', ['$rootScope', '
 		//Add member to committee
 		$scope.addMember = function(user){
 			var committee = $scope.committee;
-			console.log('addMember()');
-			console.log('committee: '+committee._id);
-			console.log('User: '+user._id);
-
-			Committees.Member.update({userId: user._id,committeeId: committee._id});
-	
+			var passed = 1;		
+			angular.forEach(committee.members, function(members){
+				if(members === user._id) passed = 0;
+			});
+			if(passed) Committees.Member.update({userId: user._id,committeeId: committee._id});
+			
 		};
 
 		$scope.removeMember = function(){
@@ -76,6 +76,7 @@ angular.module('committees').controller('CommitteesController', ['$rootScope', '
 		$scope.getMembers = function(){
 			var committee = $scope.committee;
 			var Members = Committees.Members.query({committeeId: committee._id}).$promise.then(function(data) {
+				console.log(data);
 				$scope.members = data;
 			});
 		};

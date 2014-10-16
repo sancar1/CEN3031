@@ -89,8 +89,8 @@ exports.list = function(req, res) {
  */
 exports.getMembers = function(req, res) { 
 	var committee = req.committee;
-	var memberById = committee.members;
-	User.find({'_id':{$in: memberById}}).exec(function(err, members) {
+	
+	User.find({'_id':{$in: committee.members}}).exec(function(err, members) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
@@ -108,36 +108,26 @@ exports.addMember = function(req, res) {
 	var userById = req.params.userId;
 	var committeeById = req.committee;
 
-	User.find({_id: userById}).exec(function(err, user) {
+	User.find({'_id': userById}).exec(function(err, user) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			console.log('userId: '+user[0]._id);
-			var toAdd = user[0]._id;
-			Committee.update({'_id': committeeById}, {'members': toAdd}).exec(function(err, committee){
+			console.log(user[0]);
+			var id = user[0]._id.toString();
+			Committee.update({'_id': committeeById}, {$addToSet:{'members': id}} ).exec(function(err, committee){
 				if(err){
 					return res.status(401).send({
 						message: errorHandler.getErrorMessage(err)
 					});
 				}else{
-					res.jsonp(committee);
+					res.jsonp(committee[0]);
 				}
 			});
 		}
+		
 	});
-/*
-	User.find({'_id':{$in: memberById}}).exec(function(err, members) {
-		if (err) {
-			return res.status(400).send({
-				message: errorHandler.getErrorMessage(err)
-			});
-		} else {
-			res.jsonp(members);
-		}
-	});
-*/
 };
 
 /**
