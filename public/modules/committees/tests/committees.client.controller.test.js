@@ -1,3 +1,4 @@
+'use strict';
 (function() {
 	// Committees Controller Spec
 	describe('Committees Controller Tests', function() {

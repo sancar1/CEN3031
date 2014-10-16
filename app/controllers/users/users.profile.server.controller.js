@@ -59,14 +59,12 @@ exports.me = function(req, res) {
  * List of Users
  */
 exports.list = function(req, res) {	
-	console.log('looking to list users');
 	User.find().sort('-firstName').populate('user', 'displayName').exec(function(err, users) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			console.log(users);
 			res.jsonp(users);
 		}
 	});

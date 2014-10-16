@@ -9,7 +9,7 @@ angular.module('committees').controller('CommitteesController', ['$rootScope', '
 		// Create new Committee
 		$scope.create = function() {
 			// Create new Committee object
-			var committee = new Committees ({
+			var committee = new Committees.Committees ({
 				name: this.name,
 				chair: this.chair
 			});
@@ -55,31 +55,28 @@ angular.module('committees').controller('CommitteesController', ['$rootScope', '
 		//Add member to committee
 		$scope.addMember = function(user){
 			var committee = $scope.committee;
-			var check = 1;
-			for(var i = 0; i < committee.members.length; i++){
-				if($scope.currentUser._id === committee.members[i]._id){
-					check = 0;
-				}
-			}
-			if(check===1){
-			committee.members.push(user);}
-			else{
-				console.log('NOPE!');
-			}
-			committee.$update(function(){
-				$location.path('committees/'+committee._id+'/edit');	
-			}, function(errorResponse){
-				$scope.error = errorResponse.data.message;
+			var passed = 1;		
+			angular.forEach(committee.members, function(members){
+				if(members === user._id) passed = 0;
 			});
+			if(passed) Committees.Member.update({userId: user._id,committeeId: committee._id});
+			
 		};
 
-		$scope.removeMember = function(){
+		$scope.removeMember = function(member){
 			var committee = $scope.committee;
-			committee.members.splice(committee.members.indexOf($scope.user), 1);
-			committee.$update(function(){
-				$location.path('committees/'+committee._id+'/edit');	
-			}, function(errorResponse){
-				$scope.error = errorResponse.data.message;
+			var passed = 0;		
+			angular.forEach(committee.members, function(members){
+				if(members === member._id) passed = 1;
+			});
+			if(passed) Committees.Member.remove({userId: member._id,committeeId: committee._id});
+		};
+
+		$scope.getMembers = function(){
+			var committee = $scope.committee;
+			var Members = Committees.Members.query({committeeId: committee._id}).$promise.then(function(data) {
+				console.log(data);
+				$scope.members = data;
 			});
 		};
 
@@ -87,7 +84,7 @@ angular.module('committees').controller('CommitteesController', ['$rootScope', '
 		$scope.find = function() {
 			// $scope.committees = Committees.query();
 
-			Committees.query().$promise.then(function(data) {
+			Committees.Committees.query().$promise.then(function(data) {
 				$scope.committees = data;
 
 				// $log.debug('data: ');
@@ -160,7 +157,7 @@ angular.module('committees').controller('CommitteesController', ['$rootScope', '
 			
 		// Find existing Committee
 		$scope.findOne = function() {
-			Committees.get({
+			Committees.Committees.get({
 				committeeId: $stateParams.committeeId
 			}).$promise.then(function(data) {
 				//TEMPORARY SOLUTION FOR SPRINT 1

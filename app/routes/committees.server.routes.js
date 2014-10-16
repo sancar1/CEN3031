@@ -14,6 +14,14 @@ module.exports = function(app) {
 		.put(users.requiresLogin, committees.hasAuthorization, committees.update)
 		.delete(users.requiresLogin, committees.hasAuthorization, committees.delete);
 
+
+	app.route('/committees/:committeeId/members')		
+		.get(committees.getMembers);
+
+	app.route('/committees/:committeeId/:userId')
+		.put(committees.addMember)
+		.delete(committees.removeMember);
+
 	// Finish by binding the Committee middleware
 	app.param('committeeId', committees.committeeByID);
 	app.param('userId', users.userByID);
