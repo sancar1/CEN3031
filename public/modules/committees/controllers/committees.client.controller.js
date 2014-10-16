@@ -59,9 +59,7 @@ angular.module('committees').controller('CommitteesController', ['$rootScope', '
 			console.log('committee: '+committee._id);
 			console.log('User: '+user._id);
 
-			Committees.Member.update({userId: user._id,committeeId: committee._id}).$promise.then(function(data){
-				console.log(data);
-			});
+			Committees.Member.update({userId: user._id,committeeId: committee._id});
 	
 		};
 

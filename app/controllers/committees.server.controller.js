@@ -105,11 +105,27 @@ exports.getMembers = function(req, res) {
  * Add Committee Member
  */
 exports.addMember = function(req, res) { 
-	var userById = req.user;
+	var userById = req.params.userId;
 	var committeeById = req.committee;
-	console.log('committee: '+committeeById);
-	console.log('user: '+userById);
 
+	User.find({_id: userById}).exec(function(err, user) {
+		if (err) {
+			return res.status(400).send({
+				message: errorHandler.getErrorMessage(err)
+			});
+		} else {
+			console.log('userId: '+user[0]._id);
+			Committee.update({_id: committeeById}, {$addToSet: {members: user[0]._id}}).exec(function(err, committee){
+				if(err){
+					return res.status(401).send({
+						message: errorHandler.getErrorMessage(err)
+					});
+				}else{
+					res.jsonp(committee);
+				}
+			});
+		}
+	});
 /*
 	User.find({'_id':{$in: memberById}}).exec(function(err, members) {
 		if (err) {
