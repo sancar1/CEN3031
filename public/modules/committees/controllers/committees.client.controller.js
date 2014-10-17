@@ -80,6 +80,23 @@ angular.module('committees').controller('CommitteesController', ['$rootScope', '
 			});
 		};
 
+		$scope.removeChair = function(){
+			var committee = $scope.committee;
+			Committees.Chair.delete({committeeId: committee._id, chairId: committee.chair}).$promise.then(function(data) {
+				console.log(data);
+				$scope.members = data;
+
+			});
+		};
+
+		$scope.updateChair = function(user){
+			var committee = $scope.committee;
+			Committees.Chair.delete({committeeId: committee._id, chairId: user._id}).$promise.then(function(data) {
+				console.log(data);
+				$scope.members = data;
+			});
+		};
+
 		// Find a list of Committees
 		$scope.find = function() {
 			// $scope.committees = Committees.query();
