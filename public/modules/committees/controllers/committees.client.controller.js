@@ -100,7 +100,7 @@ angular.module('committees').controller('CommitteesController', ['$rootScope', '
 			var committee = $scope.committee;
 			Committees.Chair.get({committeeId: committee._id, chairId: committee.chair}).$promise.then(function(data) {
 				console.log(data);
-				$scope.chair = data;
+				$scope.committee = data;
 			});
 		};
 
