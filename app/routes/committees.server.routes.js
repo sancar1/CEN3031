@@ -22,6 +22,11 @@ module.exports = function(app) {
 		.put(committees.addMember)
 		.delete(committees.removeMember);
 
+	app.route('/committees/:committeeId/committeeChair/:userId')
+		.get(committees.getChair)
+		.put(committees.updateChair)
+		.delete(committees.removeChair);
+
 	// Finish by binding the Committee middleware
 	app.param('committeeId', committees.committeeByID);
 	app.param('userId', users.userByID);

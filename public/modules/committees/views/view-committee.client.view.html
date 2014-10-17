@@ -19,21 +19,21 @@
 			<i class="glyphicon glyphicon-trash"></i>
 		</a>
 	</div>
-			
-   <section data-ng-controller="UsersController"  data-ng-init= "find()">
-       <form name="userForm" class="form-horizontal" novalidate>
-          <div class = "list-group" class = "list-group-item">
-                   <h3 class = "list-group-item-text">Committee Members</h3>
-           <div class="list-group"> 
-                   <a data-ng-repeat="user in users" data-ng-show = "inCommittee(user)" class="list-group-item">
-                   <small class="list-group-item-text">
-                       <span data-ng-bind="user.displayName | date:'medium'"></span>
-                   </small>
-               </a>
-           </div>
-        </div>
-       </form>
-   </section>
+
+   <section data-ng-controller="CommitteesController"  data-ng-init= "getMembers()">
+            <form name="userForm" class="form-horizontal" novalidate>
+               <div class = "list-group" class = "list-group-item">
+                        <h1 class = "list-group-item-text">Committee Members</h1>
+                <div class="list-group"> 
+                        <a data-ng-repeat="member in members" class="list-group-item">
+                        <small class="list-group-item-text">
+                            <span data-ng-bind="member.displayName"></span>
+                        </small> 
+                    </a>
+                </div>
+             </div>
+        </form>
+    </section>
 	
 	
 	<small><small>
