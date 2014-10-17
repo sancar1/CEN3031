@@ -182,7 +182,7 @@ exports.removeChair = function(req, res) {
  */
 exports.updateChair = function(req, res) { 
 	var committeeById = req.committee._id;
-	var chairById = req.params.userId;
+	var chairById = req.committee.chair;
 
 	console.log(committeeById);
 	console.log(chairById);
