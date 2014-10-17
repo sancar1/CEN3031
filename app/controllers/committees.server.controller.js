@@ -144,10 +144,8 @@ exports.removeMember = function(req, res) {
  * Get Committee Chair
  */
 exports.getChair = function(req, res) { 
-	var chairById = req.params.chairId;
-	console.log(chairById);
-
-	User.find({'chair': chairById}).exec(function(err, chair) {
+	var chairById = req.committee.chair;
+	User.find({'_id': chairById}).exec(function(err, chair) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
@@ -163,7 +161,7 @@ exports.getChair = function(req, res) {
  */
 exports.removeChair = function(req, res) { 
 	var committeeById = req.committee._id;
-	var chairById = req.params.chairId;
+	var chairById = req.committee.chair;
 
 	console.log(committeeById);
 	console.log(chairById);

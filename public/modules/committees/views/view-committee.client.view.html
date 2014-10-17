@@ -19,7 +19,20 @@
 			<i class="glyphicon glyphicon-trash"></i>
 		</a>
 	</div>
-
+	<section data-ng-controller="CommitteesController"  data-ng-init= "getChair()">
+            <form name="userForm" class="form-horizontal" novalidate>
+               <div class = "list-group" class = "list-group-item">
+                        <h1 class = "list-group-item-text">Committee Chair</h1>
+                <div class="list-group"> 
+                       
+                <small class="list-group-item-text">
+                    <span data-ng-bind="chair.displayName"></span>
+                </small> 
+                   
+                </div>
+             </div>
+        </form>
+   </section>
    <section data-ng-controller="CommitteesController"  data-ng-init= "getMembers()">
             <form name="userForm" class="form-horizontal" novalidate>
                <div class = "list-group" class = "list-group-item">
