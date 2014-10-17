@@ -7,11 +7,18 @@ angular.module('committees').controller('CommitteesController', ['$rootScope', '
 		$scope.currentUser = Authentication.user;
 
 		// Create new Committee
-		$scope.create = function() {
+		$scope.create = function($scope) {
 			// Create new Committee object
+
+			// $scope.chair.id;
+			// $scope.name = 'TEST NAME';
+
+			$log.debug('Chair Id:');
+			$log.debug(this.chair_id);
+
 			var committee = new Committees.Committees ({
 				name: this.name,
-				chair: this.chair
+				chair: this.chair_id
 			});
 
 			// Redirect after save

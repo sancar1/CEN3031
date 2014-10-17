@@ -12,7 +12,7 @@
                         <input type="text" data-ng-model="name" id="name" class="form-control" placeholder="Name" required>
 							<p>
 								<label class="control-label" for="chair">Committee Chair</label>
-							<select data-ng-model="chair" id="chair" class="form-control" ng-options="user.firstName for user in users"></select><br>
+							 <select data-ng-model="chair_id" id="chair" class="form-control" ng-options="user._id as user.firstName for user in users"></select><br>
                     </div>
                 </div>
                 <div class="form-group">
