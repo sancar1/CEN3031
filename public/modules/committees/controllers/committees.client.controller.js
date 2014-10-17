@@ -98,7 +98,7 @@ angular.module('committees').controller('CommitteesController', ['$rootScope', '
 
 		$scope.updateChair = function(user){
 			var committee = $scope.committee;
-			Committees.Chair.delete({committeeId: committee._id, chairId: user._id}).$promise.then(function(data) {
+			Committees.Chair.update({committeeId: committee._id, chairId: user._id}).$promise.then(function(data) {
 				console.log(data);
 				$scope.committee = data;
 			});
