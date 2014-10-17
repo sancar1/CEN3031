@@ -23,6 +23,7 @@ module.exports = function(app) {
 		.delete(committees.removeMember);
 
 	app.route('/committees/:committeeId/committeeChair/:userId')
+		.get(committees.getChair)
 		.put(committees.updateChair)
 		.delete(committees.removeChair);
 

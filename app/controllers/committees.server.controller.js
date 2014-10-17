@@ -141,6 +141,24 @@ exports.removeMember = function(req, res) {
 };
 
 /**
+ * Get Committee Chair
+ */
+exports.getChair = function(req, res) { 
+	var chairById = req.params.chairId;
+	console.log(chairById);
+
+	User.find({'chair': chairById}).exec(function(err, chair) {
+		if (err) {
+			return res.status(400).send({
+				message: errorHandler.getErrorMessage(err)
+			});
+		} else {
+			res.jsonp(chair[0]);
+		}
+	});
+};
+
+/**
  * Remove Committee Chair
  */
 exports.removeChair = function(req, res) { 

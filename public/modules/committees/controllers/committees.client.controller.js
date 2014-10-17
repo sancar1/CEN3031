@@ -84,7 +84,7 @@ angular.module('committees').controller('CommitteesController', ['$rootScope', '
 			var committee = $scope.committee;
 			Committees.Chair.delete({committeeId: committee._id, chairId: committee.chair}).$promise.then(function(data) {
 				console.log(data);
-				$scope.members = data;
+				$scope.committee = data;
 
 			});
 		};
@@ -93,7 +93,14 @@ angular.module('committees').controller('CommitteesController', ['$rootScope', '
 			var committee = $scope.committee;
 			Committees.Chair.delete({committeeId: committee._id, chairId: user._id}).$promise.then(function(data) {
 				console.log(data);
-				$scope.members = data;
+				$scope.committee = data;
+			});
+		};
+		$scope.getChair = function(){
+			var committee = $scope.committee;
+			Committees.Chair.get({committeeId: committee._id, chairId: committee.chair}).$promise.then(function(data) {
+				console.log(data);
+				$scope.chair = data;
 			});
 		};
 
