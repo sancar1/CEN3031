@@ -7,7 +7,23 @@ var mongoose = require('mongoose'),
 	errorHandler = require('./errors'),
 	Committee = mongoose.model('Committee'),
 	User = mongoose.model('User'),
+	nodemailer = require('nodemailer'),
+	//wellknown = requrie('nodemailer-wellknown'),
 	_ = require('lodash');
+
+var sync = require('synchronize');
+var fiber = sync.fiber;
+var await = sync.await;
+var defer = sync.defer;
+
+var transporter = nodemailer.createTransport({
+	service: 'gmail',
+	auth:{
+		user: 'CACTUS.cen3031@gmail.com',
+		pass: 'cen3031cactus'
+	}
+});
+
 
 /**
  * Create a Committee
@@ -104,19 +120,86 @@ exports.getMembers = function(req, res) {
 /**
  * Add Committee Member
  */
-exports.addMember = function(req, res) { 
+exports.addMember = function(req, res) {
 	var userById = req.params.userId;
-	var committeeById = req.committee._id;
+	var committeeById = req.committee._id; 
 
+	Committee.update({'_id': committeeById}, {$addToSet:{'members': userById}}, function(err,data){
+		if(err){
+			return res.status(401).send({
+				message: errorHandler.getErrorMessage(err)
+			});
+		}
+		else{
+			User.find({'_id': userById}).exec(function(err2, data2){
+				if(err2){
+					return res.status(401).send({
+						message: errorHandler.getErrorMessage(err)
+					});
+				}
+				else{
+					var mailOptions = {
+							from: 'CACTUS <CACTUS.cen3031@gmail.com>', 
+							to: data2[0].displayName+'<'+data2[0].email+'>', 
+							subject: 'Added to a committee',
+							text: 'You have been added to: '+req.committee.name, 
+						};
+						transporter.sendMail(mailOptions, function(error, info){
+							if(error) console.log(error);
+							else console.log('message sent: '+info.response);	
+						});
+				}
+				res.jsonp(data[0]);
+			});
+		}
+	});
+/*
+
+	
+	try{
+		var committee = await()
+	}
+	catch(err){
+		console.log(err);
+	}
+	
+
+	var print = Committee.update({'_id': committeeById}, {$addToSet:{'members': userById}} ).exec(function(err, data){
+		if(err){
+			return res.status(401).send({
+				message: errorHandler.getErrorMessage(err)
+			});
+		}
+		else committee = data[0];
+	});
+console.log(print);*/
+
+	/*
 	Committee.update({'_id': committeeById}, {$addToSet:{'members': userById}} ).exec(function(err, committee){
 		if(err){
 			return res.status(401).send({
 				message: errorHandler.getErrorMessage(err)
 			});
-		}else{
-			res.jsonp(committee[0]);
 		}
-	});
+		else{
+			User.find({'_id': userById}).exec(function(err2, getUser){
+				
+				if(err2){
+					return res.status(401).send({
+						message: errorHandler.getErrorMessage(err)
+					});
+				}
+				else{
+					user = getUser[0];
+				}
+			});
+		
+	res.jsonp(committee[0]);
+		}
+	});	*/
+
+
+	
 };
 
 /**
@@ -130,6 +213,64 @@ exports.removeMember = function(req, res) {
 	console.log(memberById);
 
 	Committee.update({'_id':committeeById},{$pull:{'members': memberById}}).exec(function(err, committee) {
+		if (err) {
+			return res.status(400).send({
+				message: errorHandler.getErrorMessage(err)
+			});
+		} else {
+			res.jsonp(committee[0]);
+		}
+	});
+};
+
+/**
+ * Get Committee Chair
+ */
+exports.getChair = function(req, res) { 
+	var chairById = req.committee.chair;
+	User.find({'_id': chairById}).exec(function(err, chair) {
+		if (err) {
+			return res.status(400).send({
+				message: errorHandler.getErrorMessage(err)
+			});
+		} else {
+			res.jsonp(chair[0]);
+		}
+	});
+};
+
+/**
+ * Remove Committee Chair
+ */
+exports.removeChair = function(req, res) { 
+	var committeeById = req.committee._id;
+	var chairById = req.committee.chair;
+
+	console.log(committeeById);
+	console.log(chairById);
+
+	Committee.update({'_id':committeeById},{'chair': ''}).exec(function(err, committee) {
+		if (err) {
+			return res.status(400).send({
+				message: errorHandler.getErrorMessage(err)
+			});
+		} else {
+			res.jsonp(committee[0]);
+		}
+	});
+};
+
+/**
+ * Change Committee Chair
+ */
+exports.updateChair = function(req, res) { 
+	var committeeById = req.committee._id;
+	var chairById = req.committee.chair;
+
+	console.log(committeeById);
+	console.log(chairById);
+
+	Committee.update({'_id':committeeById},{'chair': chairById}).exec(function(err, committee) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)

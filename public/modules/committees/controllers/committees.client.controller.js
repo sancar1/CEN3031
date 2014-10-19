@@ -7,11 +7,18 @@ angular.module('committees').controller('CommitteesController', ['$rootScope', '
 		$scope.currentUser = Authentication.user;
 
 		// Create new Committee
-		$scope.create = function() {
+		$scope.create = function($scope) {
 			// Create new Committee object
+
+			// $scope.chair.id;
+			// $scope.name = 'TEST NAME';
+
+			$log.debug('Chair Id:');
+			$log.debug(this.chair_id);
+
 			var committee = new Committees.Committees ({
 				name: this.name,
-				chair: this.chair
+				chair: this.chair_id
 			});
 
 			// Redirect after save
@@ -59,7 +66,7 @@ angular.module('committees').controller('CommitteesController', ['$rootScope', '
 			angular.forEach(committee.members, function(members){
 				if(members === user._id) passed = 0;
 			});
-			if(passed) Committees.Member.update({userId: user._id,committeeId: committee._id});
+			if(passed)Committees.Member.update({userId: user._id,committeeId: committee._id});
 			
 		};
 
@@ -77,6 +84,31 @@ angular.module('committees').controller('CommitteesController', ['$rootScope', '
 			var Members = Committees.Members.query({committeeId: committee._id}).$promise.then(function(data) {
 				console.log(data);
 				$scope.members = data;
+			});
+		};
+
+		$scope.removeChair = function(){
+			var committee = $scope.committee;
+			Committees.Chair.delete({committeeId: committee._id, chairId: committee.chair}).$promise.then(function(data) {
+				console.log(data.displayName);
+				$scope.committee = data;
+
+			});
+		};
+
+		$scope.updateChair = function(user){
+			var committee = $scope.committee;
+			Committees.Chair.update({committeeId: committee._id, chairId: user._id}).$promise.then(function(data) {
+				console.log(data);
+				$scope.committee = data;
+			});
+		};
+		$scope.getChair = function(){
+			var committee = $scope.committee;
+			Committees.Chair.get({committeeId: committee._id, chairId: committee.chair}).$promise.then(function(data) {
+				console.log('chair: ');
+				console.log(data.displayName);
+				$scope.chair = data;
 			});
 		};
 

@@ -31,10 +31,7 @@ var CommitteeSchema = new Schema({
 		default: ''
 	},
 	chair: {
-		 user: {
-		 	type: Schema.ObjectId, 
-		 	ref: 'User'
-		},
+		 type: String,
 	},
 	members:   [String],
 	user: {
