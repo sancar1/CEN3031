@@ -31,12 +31,12 @@ module.exports = {
 		callbackURL: 'http://localhost:3000/auth/github/callback'
 	},
 	mailer: {
-		from: process.env.MAILER_FROM || 'MAILER_FROM',
+		from: 'CACTUS.cen3031@gmail.com',
 		options: {
-			service: process.env.MAILER_SERVICE_PROVIDER || 'MAILER_SERVICE_PROVIDER',
+			service: 'gmail',
 			auth: {
-				user: process.env.MAILER_EMAIL_ID || 'MAILER_EMAIL_ID',
-				pass: process.env.MAILER_PASSWORD || 'MAILER_PASSWORD'
+				user: 'CACTUS.cen3031@gmail.com',
+				pass: 'cen3031cactus'
 			}
 		}
 	}
