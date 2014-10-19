@@ -121,10 +121,10 @@ exports.getMeetings = function(req, res){
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			res.jsonp(members);
+			res.jsonp(meetings);
 		}
 	});
-}
+};
 
 /**
  * Add Committee Member
@@ -277,7 +277,7 @@ exports.removeChair = function(req, res) {
 	var committeeById = req.committee._id;
 
 	console.log(committeeById);
-	console.log(chairById);
+	//console.log(chairById);
 
 	Committee.update({'_id':committeeById},{'chair': ''}).exec(function(err, committee) {
 		if (err) {
