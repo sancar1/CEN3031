@@ -14,4 +14,5 @@ Trello User Stories Board:<br>
 https://trello.com/b/vqyJDPmN/user-stories
 <br><br>
 Trello Sprint 1 Board:<br>
-https://trello.com/b/pW8p2UDQ/sprint-1
+https://trello.com/b/pW8p2UDQ/sprint-1<br>
+https://trello.com/b/htYLW8Rx/sprint-2<br>
