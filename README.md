@@ -1,18 +1,18 @@
-CEN3031
-=======
-Team: 
-1. Antonio (TJ) Sanchez - sancar1
-2. Clay Brooks - brks9622
-3. Katelyn Smith - katelynicole
-4. Sarah Thomas - sarahrthomas
-5. Stephen Soohoo - ss083193
+<h1>CEN3031</h1><br>
+========================<br>
+Team:<br>
+1. Antonio (TJ) Sanchez - sancar1<br>
+2. Clay Brooks - brks9622<br>
+3. Katelyn Smith - katelynicole<br>
+4. Sarah Thomas - sarahrthomas<br>
+5. Stephen Soohoo - ss083193<br>
 6. Zachary Burke - zburke1
-
-Project description:
+<br><br>
+Project description:<br>
 Faculty Committee Project (assigned by Alin Dobra)
-
-Trello User Stories Board:
+<br><br>
+Trello User Stories Board:<br>
 https://trello.com/b/vqyJDPmN/user-stories
-
-Trello Sprint 1 Board:
+<br><br>
+Trello Sprint 1 Board:<br>
 https://trello.com/b/pW8p2UDQ/sprint-1
