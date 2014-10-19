@@ -112,6 +112,20 @@ exports.getMembers = function(req, res) {
 	});
 };
 
+exports.getMeetings = function(req, res){
+	var committee = req.committee;
+
+	User.find({'_id':{$in: committee.meetings}}).exec(function(err, meetings) {
+		if (err) {
+			return res.status(400).send({
+				message: errorHandler.getErrorMessage(err)
+			});
+		} else {
+			res.jsonp(members);
+		}
+	});
+}
+
 /**
  * Add Committee Member
  */
@@ -235,32 +249,11 @@ exports.getChair = function(req, res) {
 };
 
 /**
- * Remove Committee Chair
- */
-exports.removeChair = function(req, res) { 
-	var committeeById = req.committee._id;
-	var chairById = req.committee.chair;
-
-	console.log(committeeById);
-	console.log(chairById);
-
-	Committee.update({'_id':committeeById},{'chair': ''}).exec(function(err, committee) {
-		if (err) {
-			return res.status(400).send({
-				message: errorHandler.getErrorMessage(err)
-			});
-		} else {
-			res.jsonp(committee[0]);
-		}
-	});
-};
-
-/**
  * Change Committee Chair
  */
-exports.updateChair = function(req, res) { 
+exports.setChair = function(req, res) { 
 	var committeeById = req.committee._id;
-	var chairById = req.committee.chair;
+	var chairById = req.params.userId;
 
 	console.log(committeeById);
 	console.log(chairById);
@@ -277,6 +270,25 @@ exports.updateChair = function(req, res) {
 };
 
 
+/**
+ * Remove Committee Chair
+ */
+exports.removeChair = function(req, res) { 
+	var committeeById = req.committee._id;
+
+	console.log(committeeById);
+	console.log(chairById);
+
+	Committee.update({'_id':committeeById},{'chair': ''}).exec(function(err, committee) {
+		if (err) {
+			return res.status(400).send({
+				message: errorHandler.getErrorMessage(err)
+			});
+		} else {
+			res.jsonp(committee[0]);
+		}
+	});
+};
 
 /**
  * Committee middleware

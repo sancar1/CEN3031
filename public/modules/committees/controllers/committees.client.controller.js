@@ -26,7 +26,7 @@ angular.module('committees').controller('CommitteesController', ['$rootScope', '
 				$location.path('committees/' + response._id);
 
 				// Clear form fields
-				$scope.name = '';
+				//$scope.name = '';
 			}, function(errorResponse) { 
 				$scope.error = errorResponse.data.message;
 			});
@@ -87,6 +87,22 @@ angular.module('committees').controller('CommitteesController', ['$rootScope', '
 			});
 		};
 
+		$scope.getMeetings = function(){
+			var committee = $scope.committee;
+			var Meetings = Committees.Meetings.query({committeeId: committee._id}).$promise.then(function(data) {
+				console.log(data);
+				$scope.meetings = data;
+			});
+		};
+
+		$scope.setChair = function(user){
+			var committee = $scope.committee;
+			Committees.Chair.update({committeeId: committee._id, chairId: user._id}).$promise.then(function(data) {
+				console.log(data);
+				$scope.committee = data;
+			});
+		};
+
 		$scope.removeChair = function(){
 			var committee = $scope.committee;
 			Committees.Chair.delete({committeeId: committee._id, chairId: committee.chair}).$promise.then(function(data) {
@@ -96,13 +112,6 @@ angular.module('committees').controller('CommitteesController', ['$rootScope', '
 			});
 		};
 
-		$scope.updateChair = function(user){
-			var committee = $scope.committee;
-			Committees.Chair.update({committeeId: committee._id, chairId: user._id}).$promise.then(function(data) {
-				console.log(data);
-				$scope.committee = data;
-			});
-		};
 		$scope.getChair = function(){
 			var committee = $scope.committee;
 			Committees.Chair.get({committeeId: committee._id, chairId: committee.chair}).$promise.then(function(data) {
