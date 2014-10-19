@@ -7,6 +7,7 @@ var _ = require('lodash'),
 	errorHandler = require('../errors'),
 	mongoose = require('mongoose'),
 	passport = require('passport'),
+	Article = mongoose.model('Article'),
 	User = mongoose.model('User');
 
 /**
@@ -53,4 +54,18 @@ exports.update = function(req, res) {
  */
 exports.me = function(req, res) {
 	res.jsonp(req.user || null);
+};
+/**
+ * List of Users
+ */
+exports.list = function(req, res) {	
+	User.find().sort('-firstName').populate('user', 'displayName').exec(function(err, users) {
+		if (err) {
+			return res.status(400).send({
+				message: errorHandler.getErrorMessage(err)
+			});
+		} else {
+			res.jsonp(users);
+		}
+	});
 };

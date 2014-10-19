@@ -46,6 +46,8 @@ ApplicationConfiguration.registerModule('articles');'use strict';
 ApplicationConfiguration.registerModule('core');'use strict';
 // Use Applicaion configuration module to register a new module
 ApplicationConfiguration.registerModule('users');'use strict';
+// Use Applicaion configuration module to register a new module
+ApplicationConfiguration.registerModule('committees');'use strict'; /******************************************/
 // Configuring the Articles module
 angular.module('articles').run([
   'Menus',
@@ -54,26 +56,6 @@ angular.module('articles').run([
     Menus.addMenuItem('topbar', 'Articles', 'articles', 'dropdown', '/articles(/create)?');
     Menus.addSubMenuItem('topbar', 'articles', 'List Articles', 'articles');
     Menus.addSubMenuItem('topbar', 'articles', 'New Article', 'articles/create');
-  }
-]);'use strict';
-// Setting up route
-angular.module('articles').config([
-  '$stateProvider',
-  function ($stateProvider) {
-    // Articles state routing
-    $stateProvider.state('listArticles', {
-      url: '/articles',
-      templateUrl: 'modules/articles/views/list-articles.client.view.html'
-    }).state('createArticle', {
-      url: '/articles/create',
-      templateUrl: 'modules/articles/views/create-article.client.view.html'
-    }).state('viewArticle', {
-      url: '/articles/:articleId',
-      templateUrl: 'modules/articles/views/view-article.client.view.html'
-    }).state('editArticle', {
-      url: '/articles/:articleId/edit',
-      templateUrl: 'modules/articles/views/edit-article.client.view.html'
-    });
   }
 ]);'use strict';
 angular.module('articles').controller('ArticlesController', [
@@ -134,6 +116,155 @@ angular.module('articles').factory('Articles', [
     return $resource('articles/:articleId', { articleId: '@_id' }, { update: { method: 'PUT' } });
   }
 ]);'use strict';
+// Setting up route
+angular.module('articles').config([
+  '$stateProvider',
+  function ($stateProvider) {
+    // Articles state routing
+    $stateProvider.state('listArticles', {
+      url: '/articles',
+      templateUrl: 'modules/articles/views/list-articles.client.view.html'
+    }).state('createArticle', {
+      url: '/articles/create',
+      templateUrl: 'modules/articles/views/create-article.client.view.html'
+    }).state('viewArticle', {
+      url: '/articles/:articleId',
+      templateUrl: 'modules/articles/views/view-article.client.view.html'
+    }).state('editArticle', {
+      url: '/articles/:articleId/edit',
+      templateUrl: 'modules/articles/views/edit-article.client.view.html'
+    });
+  }
+]);'use strict';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+angular.module('committees').run([
+  'Menus',
+  function (Menus) {
+    // Set top bar menu items
+    Menus.addMenuItem('topbar', 'Committees', 'committees', 'dropdown', '/committees(/create)?');
+    Menus.addSubMenuItem('topbar', 'committees', 'List Committees', 'committees');
+    Menus.addSubMenuItem('topbar', 'committees', 'New Committee', 'committees/create');
+  }
+]);'use strict';
+// Setting up route
+angular.module('committees').config([
+  '$stateProvider',
+  function ($stateProvider) {
+    // Committees state routing
+    $stateProvider.state('listCommittees', {
+      url: '/committees',
+      templateUrl: 'modules/committees/views/list-committee.client.view.html'
+    }).state('createCommittee', {
+      url: '/committees/create',
+      templateUrl: 'modules/committees/views/create-committee.client.view.html'
+    }).state('editArticle', {
+      url: '/committees/:committeeId/edit',
+      templateUrl: 'modules/committees/views/edit-committee.client.view.html'
+    });
+  }
+]);'use strict';
+angular.module('committees').controller('CommitteesController',[
+  '$scope',
+  '$stateParams',
+  '$location',
+  'Authentication',
+  'Committees',
+  function ($scope, $stateParams, $location, Authentication, Articles) {
+    $scope.authentication = Authentication;
+    $scope.create = function () {
+      var committee = new Committees({
+          title: this.title,
+        });
+      article.$save(function (response) {
+        $location.path('committees/' + response._id);
+        $scope.title = '';
+      }, function (errorResponse) {
+        $scope.error = errorResponse.data.message;
+      });
+    };
+    $scope.remove = function (committee) {
+      if (committee) {
+        committee.$remove();
+        for (var i in $scope.committees) {
+          if ($scope.committees[i] === committee) {
+            $scope.committees.splice(i, 1);
+          }
+        }
+      } else {
+        $scope.committee.$remove(function () {
+          $location.path('committees');
+        });
+      }
+    };
+    $scope.update = function () {
+      var committee = $scope.committee;
+      committee.$update(function () {
+        $location.path('committees/' + committee._id);
+      }, function (errorResponse) {
+        $scope.error = errorResponse.data.message;
+      });
+    };
+    $scope.find = function () {
+      $scope.committees = Committees.query();
+    };
+  }
+  ])
+angular.module('committees').factory('Committees', [
+  '$resource',
+  function ($resource) {
+    return $resource('committees/:committeeId', { committeeId: '@_id' }, { update: { method: 'PUT' } });
+  }
+])'use strict';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // Setting up route
 angular.module('core').config([
   '$stateProvider',
@@ -504,6 +635,70 @@ angular.module('users').controller('SettingsController', [
     };
   }
 ]);'use strict';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+angular.module('users').controller('UsersController', [
+  '$scope',
+  '$stateParams',
+  '$location',
+  'Users',
+  'Authentication',
+  function ($scope, $stateParams, $location, Users, Authentication) {
+    $scope.user = Authentication.user;
+    // If user is not signed in then redirect back home
+    if (!$scope.user)
+      $location.path('/');
+    // Check if there are additional accounts 
+    
+    $scope.find = function() {
+      $scope.users = Users.query();
+    };
+    $scope.findOne = function() {
+      $scope.user = Users.get({
+        userId: $stateParams.userId
+      });
+    };
+
+    /**
+    * List of Users
+     */
+    exports.list = function(req, res) {
+      console.log('trying to list users');
+      User.find().sort('-created').populate('name', 'fullName').exec(function(err, users) {
+        if (err) {
+          return res.status(400).send({
+            message: errorHandler.getErrorMessage(err)
+          });
+        } else {
+          res.jsonp(users);
+        }
+      });
+    };
+    
+  }
+]);'use strict';
+
+
+
+
+
+
+
+
+
+
 // Authentication service for user variables
 angular.module('users').factory('Authentication', [function () {
     var _this = this;

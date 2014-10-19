@@ -54,6 +54,16 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$l
 				$scope.submitted = true;
 			}
 		};
+		
+		$scope.checkCredential = function(){
+			var user = new Users($scope.user);
+			if(user.role === 'Super'){
+				return true;
+			}
+			else{
+				return false;
+			}
+		};
 
 		// Change user password
 		$scope.changeUserPassword = function() {
