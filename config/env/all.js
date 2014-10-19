@@ -18,11 +18,17 @@ module.exports = {
 			],
 			js: [
 				'public/lib/angular/angular.js',
+				'http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js',
+				'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.1/jquery-ui.min.js',
 				'public/lib/angular-resource/angular-resource.js',
 				'public/lib/angular-animate/angular-animate.js',
 				'public/lib/angular-ui-router/release/angular-ui-router.js',
 				'public/lib/angular-ui-utils/ui-utils.js',
-				'public/lib/angular-bootstrap/ui-bootstrap-tpls.js'
+				'public/lib/angular-bootstrap/ui-bootstrap-tpls.js',
+				'public/lib/angular/angular.js',
+				'public/lib/angular-ui-calendar/src/calendar.js',
+				'public/lib/fullcalendar/fullcalendar.js',
+				'public/lib/fullcalendar/gcal.js'
 			]
 		},
 		css: [
