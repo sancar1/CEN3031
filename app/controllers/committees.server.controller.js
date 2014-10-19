@@ -148,10 +148,11 @@ exports.addMember = function(req, res) {
 				}
 				else{
 					var mailOptions = {
-							from: 'CACTUS <CACTUS.cen3031@gmail.com>', 
-							to: data2[0].displayName+'<'+data2[0].email+'>', 
+							from: config.mailer.from, 
+							//to: data2[0].displayName+'<'+data2[0].email+'>', 
+							to: user.email,
 							subject: 'Added to a committee',
-							text: 'You have been added to: '+req.committee.name, 
+							text: 'You have been added to: ' + req.committee.name, 
 						};
 						transporter.sendMail(mailOptions, function(error, info){
 							if(error) console.log(error);
