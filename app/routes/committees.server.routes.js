@@ -18,6 +18,9 @@ module.exports = function(app) {
 	app.route('/committees/:committeeId/members')		
 		.get(committees.getMembers);
 
+	app.route('/committees/:committeeId/meetings')		
+		.get(committees.getMeetings);
+
 	app.route('/committees/:committeeId/:userId')
 		.put(committees.addMember)
 		.delete(committees.removeMember);

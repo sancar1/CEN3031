@@ -87,6 +87,14 @@ angular.module('committees').controller('CommitteesController', ['$rootScope', '
 			});
 		};
 
+		$scope.getMeetings = function(){
+			var committee = $scope.committee;
+			var Meetings = Committees.Meetings.query({committeeId: committee._id}).$promise.then(function(data) {
+				console.log(data);
+				$scope.meetings = data;
+			});
+		};
+
 		$scope.setChair = function(user){
 			var committee = $scope.committee;
 			Committees.Chair.update({committeeId: committee._id, chairId: user._id}).$promise.then(function(data) {
@@ -104,7 +112,6 @@ angular.module('committees').controller('CommitteesController', ['$rootScope', '
 			});
 		};
 
-		
 		$scope.getChair = function(){
 			var committee = $scope.committee;
 			Committees.Chair.get({committeeId: committee._id, chairId: committee.chair}).$promise.then(function(data) {
