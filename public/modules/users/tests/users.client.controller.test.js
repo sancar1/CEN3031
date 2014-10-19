@@ -76,7 +76,7 @@
 			var sampleUser = new Users({
 				userName: 'userName'
 			});
-			var sampleCommittee = new Committees({
+			var sampleCommittee = new Committees.Committees({
 				name : 'testCommitte'
 			});
 
@@ -93,7 +93,7 @@
 			});
 			sampleUser._Id = '123456789';
 
-			var sampleCommittee = new Committees({
+			var sampleCommittee = new Committees.Committees({
 				name : 'testCommitte',
 				members : [sampleUser._Id]
 			});

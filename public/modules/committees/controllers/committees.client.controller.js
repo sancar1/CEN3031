@@ -26,7 +26,7 @@ angular.module('committees').controller('CommitteesController', ['$rootScope', '
 				$location.path('committees/' + response._id);
 
 				// Clear form fields
-				$scope.name = '';
+				//$scope.name = '';
 			}, function(errorResponse) { 
 				$scope.error = errorResponse.data.message;
 			});
@@ -96,7 +96,7 @@ angular.module('committees').controller('CommitteesController', ['$rootScope', '
 			});
 		};
 
-		$scope.updateChair = function(user){
+		$scope.setChair = function(user){
 			var committee = $scope.committee;
 			Committees.Chair.update({committeeId: committee._id, chairId: user._id}).$promise.then(function(data) {
 				console.log(data);
