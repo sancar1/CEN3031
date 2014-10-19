@@ -1,5 +1,4 @@
-<h1>CEN3031</h1><br>
-========================<br>
+<h1>CEN3031</h1>
 Team:<br>
 1. Antonio (TJ) Sanchez - sancar1<br>
 2. Clay Brooks - brks9622<br>
