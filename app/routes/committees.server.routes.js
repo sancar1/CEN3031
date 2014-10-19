@@ -24,7 +24,7 @@ module.exports = function(app) {
 
 	app.route('/committees/:committeeId/committeeChair/:userId')
 		.get(committees.getChair)
-		.put(committees.updateChair)
+		.put(committees.setChair)
 		.delete(committees.removeChair);
 
 	// Finish by binding the Committee middleware

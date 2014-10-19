@@ -69,20 +69,20 @@ exports.delete = function(req, res) {
 		}
 	});
 };
+
 /**
  * Get Notetaker
  */
 exports.getNotetaker = function(req, res) {
-	var meeting = req.meeting ;
-	var noteTakerById = req.params.userId;
+	var noteTakerById = req.committee.noteTaker;
 
-	User.find({'_id': noteTakerById},{'noteTaker': noteTakerById}).exec(function(err, noteTaker) {
+	User.find({'_id': noteTakerById}).exec(function(err, noteTaker) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			res.jsonp(meeting);
+			res.jsonp(noteTaker[0]);
 		}
 	});
 };
@@ -91,16 +91,16 @@ exports.getNotetaker = function(req, res) {
  * Set Notetaker
  */
 exports.setNotetaker = function(req, res) {
-	var meeting = req.meeting ;
+	var meetingById = req.meeting._id;
 	var noteTakerById = req.params.userId;
 
-	Meeting.update({'_id': meeting._id},{'noteTaker': noteTakerById}).exec(function(err, meeting) {
+	Meeting.update({'_id': meetingById},{'noteTaker': noteTakerById}).exec(function(err, meeting) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			res.jsonp(meeting);
+			res.jsonp(meeting[0]);
 		}
 	});
 };
@@ -109,15 +109,15 @@ exports.setNotetaker = function(req, res) {
  * Remove Notetaker
  */
 exports.removeNotetaker = function(req, res) {
-	var meeting = req.meeting ;
+	var meetingById = req.meeting._id ;
 
-	Meeting.update({'_id': meeting._id},{'noteTaker': ''}).exec(function(err, meeting) {
+	Meeting.update({'_id': meetingById},{'noteTaker': ''}).exec(function(err, meeting) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			res.jsonp(meeting);
+			res.jsonp(meeting[0]);
 		}
 	});
 };
