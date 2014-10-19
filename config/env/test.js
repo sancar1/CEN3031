@@ -4,7 +4,7 @@ module.exports = {
 	db: 'mongodb://clay:123456789@ds035270.mongolab.com:35270/test_db',
 	port: 3001,
 	app: {
-		title: 'MEAN.JS - Test Environment'
+		title: 'CACTUS Committee Manager - Development Environment'
 	},
 	facebook: {
 		clientID: process.env.FACEBOOK_ID || 'APP_ID',

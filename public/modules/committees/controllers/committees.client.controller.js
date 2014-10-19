@@ -66,8 +66,9 @@ angular.module('committees').controller('CommitteesController', ['$rootScope', '
 			angular.forEach(committee.members, function(members){
 				if(members === user._id) passed = 0;
 			});
-			if(passed)Committees.Member.update({userId: user._id,committeeId: committee._id});
-			
+			if(passed){
+				Committees.Member.update({userId: user._id,committeeId: committee._id});
+			}
 		};
 
 		$scope.removeMember = function(member){

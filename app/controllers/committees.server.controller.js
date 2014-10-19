@@ -9,7 +9,8 @@ var mongoose = require('mongoose'),
 	User = mongoose.model('User'),
 	nodemailer = require('nodemailer'),
 	//wellknown = requrie('nodemailer-wellknown'),
-	_ = require('lodash');
+	_ = require('lodash'),
+	config = require('../../config/config');
 
 var transporter = nodemailer.createTransport({
 	service: 'gmail',
@@ -148,10 +149,10 @@ exports.addMember = function(req, res) {
 				}
 				else{
 					var mailOptions = {
-							from: 'CACTUS <CACTUS.cen3031@gmail.com>', 
+							from: config.mailer.from, 
 							to: data2[0].displayName+'<'+data2[0].email+'>', 
 							subject: 'Added to a committee',
-							text: 'You have been added to: '+req.committee.name, 
+							html: 'You have been added to: ' + req.committee.name, 
 						};
 						transporter.sendMail(mailOptions, function(error, info){
 							if(error) console.log(error);
