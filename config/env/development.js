@@ -3,7 +3,7 @@
 module.exports = {
 	db: 'mongodb://dev:dev@ds035250.mongolab.com:35250/dev',
 	app: {
-		title: 'MEAN.JS - Development Environment'
+		title: 'CACTUS Committee Manager - Development Environment'
 	},
 	facebook: {
 		clientID: process.env.FACEBOOK_ID || 'APP_ID',
