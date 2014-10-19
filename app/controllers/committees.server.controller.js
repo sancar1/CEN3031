@@ -11,11 +11,6 @@ var mongoose = require('mongoose'),
 	//wellknown = requrie('nodemailer-wellknown'),
 	_ = require('lodash');
 
-var sync = require('synchronize');
-var fiber = sync.fiber;
-var await = sync.await;
-var defer = sync.defer;
-
 var transporter = nodemailer.createTransport({
 	service: 'gmail',
 	auth:{
