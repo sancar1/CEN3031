@@ -158,8 +158,8 @@ exports.addMember = function(req, res) {
 							if(error) console.log(error);
 							else console.log('message sent: '+info.response);	
 						});
+					res.jsonp(data[0]);
 				}
-				res.jsonp(data[0]);
 			});
 		}
 	});

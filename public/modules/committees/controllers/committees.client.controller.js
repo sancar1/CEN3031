@@ -1,8 +1,8 @@
 'use strict';
 
 // Committees controller
-angular.module('committees').controller('CommitteesController', ['$rootScope', '$scope', '$stateParams', '$location', 'Authentication', 'Users', 'Committees', '$q', '$log',
-	function($rootScope, $scope, $stateParams, $location, Authentication,Users, Committees, $q, $log) {
+angular.module('committees').controller('CommitteesController', ['$timeout','$rootScope', '$scope', '$stateParams', '$location', 'Authentication', 'Users', 'Committees', '$q', '$log',
+	function($timeout,$rootScope, $scope, $stateParams, $location, Authentication,Users, Committees, $q, $log) {
 		$scope.authentication = Authentication;
 		$scope.currentUser = Authentication.user;
 
@@ -67,8 +67,22 @@ angular.module('committees').controller('CommitteesController', ['$rootScope', '
 				if(members === user._id) passed = 0;
 			});
 			if(passed){
-				Committees.Member.update({userId: user._id,committeeId: committee._id});
+				Committees.Member.update({userId: user._id,committeeId: committee._id}).$promise.then(function(data) {
+					$scope.getMembers();
+				});
 			}
+		};
+
+		$scope.findUsers = function(){
+			Users.query().$promise.then(function(data) {
+				$scope.users= data;
+
+				// $log.debug('data: ');
+				// $log.debug(data);
+
+				// $log.debug('$scope.committees: ');
+				// $log.debug($scope.committees);
+			});
 		};
 
 		$scope.removeMember = function(member){
@@ -77,7 +91,10 @@ angular.module('committees').controller('CommitteesController', ['$rootScope', '
 			angular.forEach(committee.members, function(members){
 				if(members === member._id) passed = 1;
 			});
-			if(passed) Committees.Member.remove({userId: member._id,committeeId: committee._id});
+			if(passed) Committees.Member.remove({userId: member._id,committeeId: committee._id}).$promise.then(function(data) {
+				console.log(data);
+				$scope.getMembers();
+			});
 		};
 
 		$scope.getMembers = function(){
