@@ -98,9 +98,9 @@ angular.module('committees').controller('CommitteesController', ['$rootScope', '
 			});
 		};
 
-		$scope.setChair = function(user){
+		$scope.setChair = function(userId){
 			var committee = $scope.committee;
-			Committees.Chair.update({committeeId: committee._id, chairId: user._id}).$promise.then(function(data) {
+			Committees.Chair.update({committeeId: committee._id, chairId: userId}).$promise.then(function(data) {
 				console.log(data);
 				$scope.committee = data;
 			});
