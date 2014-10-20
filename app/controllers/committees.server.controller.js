@@ -29,6 +29,8 @@ exports.create = function(req, res) {
 	var committee = new Committee(req.body);
 	committee.user = req.user;
 
+	exports.setChair(req,res);
+
 	committee.save(function(err) {
 		if (err) {
 			return res.status(400).send({
