@@ -18,13 +18,15 @@ angular.module('committees').controller('CommitteesController', ['$rootScope', '
 
 			var committee = new Committees.Committees ({
 				name: this.name,
-				chair: this.chair_id
+				//chair: this.chair_id
 			});
 
 			// Redirect after save
 			committee.$save(function(response) {
 				$location.path('committees/' + response._id);
 
+			$scope.setChair();
+				
 				// Clear form fields
 				//$scope.name = '';
 			}, function(errorResponse) { 
