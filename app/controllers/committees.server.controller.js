@@ -20,7 +20,7 @@ var transporter = nodemailer.createTransport({
 		pass: 'cen3031cactus'
 	}
 */
-});
+// });
 
 
 /**
