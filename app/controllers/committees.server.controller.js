@@ -292,7 +292,7 @@ exports.setChair = function(req, res) {
 			});
 		},
 		function(committee, done){
-			User.find({'_id': userById},function(err, user){
+			User.find({'_id': chairById},function(err, user){
 				if(err){
 					return res.status(401).send({
 						message: errorHandler.getErrorMessage(err)
