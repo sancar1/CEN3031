@@ -26,19 +26,64 @@ var transporter = nodemailer.createTransport({
  * Create a Committee
  */
 exports.create = function(req, res) {
+	var pass = req.committee;
 	var committee = new Committee(req.body);
 	committee.user = req.user;
 
-	exports.setChair(req,res);
+console.log(req.body.chair);
 
-	committee.save(function(err) {
-		if (err) {
-			return res.status(400).send({
-				message: errorHandler.getErrorMessage(err)
+async.waterfall([
+		function(done){
+			committee.save(function(err) {
+				if (err) {
+					return res.status(400).send({
+						message: errorHandler.getErrorMessage(err)
+					});
+				} else {
+					done(err,committee);
+				}
 			});
-		} else {
-			res.jsonp(committee);
+		},
+		function(committee, done){
+			User.find({'_id': req.body.chair},function(err, user){
+				if(err){
+					return res.status(401).send({
+						message: errorHandler.getErrorMessage(err)
+					});
+				}
+				else{
+					console.log(user);
+					done(err,user[0]);
+				}
+			});
+		},
+		function(user, done) {
+			res.render('templates/add-as-chair', {
+				name: user.displayName,
+				committee: req.body.name,
+				appName: config.app.title
+			}, function(err, emailHTML) {
+				done(err, emailHTML, user);
+			});
+		},
+		// If valid email, send reset email using service
+		function(emailHTML, user, done) {
+			var smtpTransport = nodemailer.createTransport(config.mailer.options);
+			var mailOptions = {
+				to: user.email,
+				from: config.mailer.from,
+				subject: 'Added as chair of a committee',
+				html: emailHTML
+			};
+			smtpTransport.sendMail(mailOptions, function(err, info) {
+				if (err) console.log('message not sent: ' + console.log(err));
+				else console.log('message sent: ' + console.log(info));
+				done(err);
+			});
 		}
+		],function(err){
+			if(err) console.log(err);
+
 	});
 };
 
@@ -284,7 +329,6 @@ exports.setChair = function(req, res) {
 	
 	async.waterfall([
 		function(done){
-
 			Committee.update({'_id':committeeById},{'chair': chairById}).exec(function(err, committee) {
 				if (err) {
 					return res.status(400).send({
