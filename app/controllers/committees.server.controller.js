@@ -19,9 +19,8 @@ var transporter = nodemailer.createTransport({
 		user: 'CACTUS.cen3031@gmail.com',
 		pass: 'cen3031cactus'
 	}
-*/
 });
-
+*/
 
 /**
  * Create a Committee
@@ -276,7 +275,6 @@ exports.getChair = function(req, res) {
  * Change Committee Chair
  */
 exports.setChair = function(req, res) { 
-	var userById = req.params.userId;
 	var committeeById = req.committee._id;
 	var chairById = req.params.userId;
 
