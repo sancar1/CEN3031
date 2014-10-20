@@ -12,12 +12,14 @@ var mongoose = require('mongoose'),
 	_ = require('lodash'),
 	config = require('../../config/config');
 
+/*
 var transporter = nodemailer.createTransport({
 	service: 'gmail',
 	auth:{
 		user: 'CACTUS.cen3031@gmail.com',
 		pass: 'cen3031cactus'
 	}
+*/
 });
 
 
@@ -66,7 +68,7 @@ exports.update = function(req, res) {
 };
 
 /**
- * Delete an Committee
+ * Delete a Committee
  */
 exports.delete = function(req, res) {
 	var committee = req.committee;
@@ -113,6 +115,9 @@ exports.getMembers = function(req, res) {
 	});
 };
 
+/**
+ * List of Meetings
+ */
 exports.getMeetings = function(req, res){
 	var committee = req.committee;
 
