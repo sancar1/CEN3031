@@ -1,7 +1,7 @@
 'use strict';
 
 // Schedules controller
-angular.module('schedules').controller('SchedulesController', ['ui.calendar', 'ui.bootstrap','$scope', '$stateParams', '$location', 'Authentication', 'Schedules',
+angular.module('schedules').controller('SchedulesController', ['ui.calendar', 'ui.router', 'ngRoute','ui.bootstrap','$scope', '$stateParams', '$location', 'Authentication', 'Schedules',
 	function($scope, $stateParams, $location, Authentication, Schedules ) {
 		$scope.authentication = Authentication;
 
