@@ -136,7 +136,6 @@ exports.addMember = function(req, res) {
 
 	async.waterfall([
 		function(done){
-			console.log('committee: '+committeeById);
 			Committee.update({'_id': committeeById}, {$addToSet:{'members': userById}},function(err, committee){
 				if(err){
 					return res.status(401).send({
@@ -148,7 +147,6 @@ exports.addMember = function(req, res) {
 			
 		},
 		function(committee, done){
-			console.log('user: '+userById);
 			User.find({'_id': userById},function(err, user){
 				if(err){
 					return res.status(401).send({
@@ -162,7 +160,6 @@ exports.addMember = function(req, res) {
 			});
 		},
 		function(user, done) {
-			console.log(user.displayName);
 			res.render('templates/add-to-committee', {
 				name: user.displayName,
 				committee: req.committee.name,
@@ -173,7 +170,6 @@ exports.addMember = function(req, res) {
 		},
 		// If valid email, send reset email using service
 		function(emailHTML, user, done) {
-			console.log('here to send');
 			var smtpTransport = nodemailer.createTransport(config.mailer.options);
 			var mailOptions = {
 				to: user.email,
@@ -207,8 +203,6 @@ exports.removeMember = function(req, res) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
-		} else {
-			res.jsonp(committee[0]);
 		}
 	});
 };
