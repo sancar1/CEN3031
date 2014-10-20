@@ -163,15 +163,17 @@ exports.addMember = function(req, res) {
 		},
 		function(user, done) {
 			console.log(user.displayName);
-			res.render('templates/reset-password-email', {
+			res.render('templates/add-to-committee', {
 				name: user.displayName,
-				appName: config.app.title,
+				committee: req.committee.name,
+				appName: config.app.title
 			}, function(err, emailHTML) {
 				done(err, emailHTML, user);
 			});
 		},
 		// If valid email, send reset email using service
 		function(emailHTML, user, done) {
+			console.log('here to send');
 			var smtpTransport = nodemailer.createTransport(config.mailer.options);
 			var mailOptions = {
 				to: user.email,
@@ -180,16 +182,14 @@ exports.addMember = function(req, res) {
 				html: emailHTML
 			};
 			smtpTransport.sendMail(mailOptions, function(err, info) {
-				if (!err) {
-					res.send({
-						message: 'An email has been sent to ' + user.email + ' with further instructions.'
-					});
-				}
-				else console.log('message not sent: '+console.log(err));
+				if (err) console.log('message not sent: '+console.log(err));
+				else console.log('message sent: '+console.log(info));
 				done(err);
 			});
 		}
-		]);
+		],function(err){
+			if(err) console.log(err);
+		});
 /*
 	Committee.update({'_id': committeeById}, {$addToSet:{'members': userById}}, function(err,data){
 		if(err){
