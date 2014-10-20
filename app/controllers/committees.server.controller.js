@@ -190,36 +190,6 @@ exports.addMember = function(req, res) {
 		],function(err){
 			if(err) console.log(err);
 		});
-/*
-	Committee.update({'_id': committeeById}, {$addToSet:{'members': userById}}, function(err,data){
-		if(err){
-			return res.status(401).send({
-				message: errorHandler.getErrorMessage(err)
-			});
-		}
-		else{
-			User.find({'_id': userById}).exec(function(err2, data2){
-				if(err2){
-					return res.status(401).send({
-						message: errorHandler.getErrorMessage(err)
-					});
-				}
-				else{
-					var mailOptions = {
-							from: config.mailer.from, 
-							to: data2[0].displayName+'<'+data2[0].email+'>', 
-							subject: 'Added to a committee',
-							html: 'You have been added to: ' + req.committee.name, 
-						};
-						transporter.sendMail(mailOptions, function(error, info){
-							if(error) console.log(error);
-							else console.log('message sent: '+info.response);	
-						});
-				}
-				res.jsonp(data[0]);
-			});
-		}
-	});*/
 };
 
 /**
