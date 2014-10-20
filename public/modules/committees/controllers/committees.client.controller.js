@@ -25,7 +25,7 @@ angular.module('committees').controller('CommitteesController', ['$rootScope', '
 			committee.$save(function(response) {
 				$location.path('committees/' + response._id);
 
-			$scope.setChair();
+			$scope.setChair(this.chair_id);
 				
 				// Clear form fields
 				//$scope.name = '';
