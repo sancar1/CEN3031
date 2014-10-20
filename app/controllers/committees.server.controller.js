@@ -278,6 +278,8 @@ exports.setChair = function(req, res) {
 	var committeeById = req.committee._id;
 	var chairById = req.params.userId;
 
+	console.log('setChair in committees.servers.controller');
+	
 	async.waterfall([
 		function(done){
 

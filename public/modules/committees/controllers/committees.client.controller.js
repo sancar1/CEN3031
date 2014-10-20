@@ -21,12 +21,12 @@ angular.module('committees').controller('CommitteesController', ['$rootScope', '
 				//chair: this.chair_id
 			});
 
+			$scope.setChair(this.chair_id);
+			
 			// Redirect after save
 			committee.$save(function(response) {
 				$location.path('committees/' + response._id);
-
-			$scope.setChair(this.chair_id);
-				
+		
 				// Clear form fields
 				//$scope.name = '';
 			}, function(errorResponse) { 
