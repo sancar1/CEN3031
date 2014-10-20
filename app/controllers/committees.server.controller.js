@@ -8,7 +8,7 @@ var mongoose = require('mongoose'),
 	Committee = mongoose.model('Committee'),
 	User = mongoose.model('User'),
 	nodemailer = require('nodemailer'),
-	//wellknown = requrie('nodemailer-wellknown'),
+	async = require('async'),
 	_ = require('lodash'),
 	config = require('../../config/config');
 
@@ -134,6 +134,63 @@ exports.addMember = function(req, res) {
 	var userById = req.params.userId;
 	var committeeById = req.committee._id; 
 
+	async.waterfall([
+		function(done){
+			console.log('committee: '+committeeById);
+			Committee.update({'_id': committeeById}, {$addToSet:{'members': userById}},function(err, committee){
+				if(err){
+					return res.status(401).send({
+						message: errorHandler.getErrorMessage(err)
+					});
+				}
+				else done(err,committee);
+			});
+			
+		},
+		function(committee, done){
+			console.log('user: '+userById);
+			User.find({'_id': userById},function(err, user){
+				if(err){
+					return res.status(401).send({
+						message: errorHandler.getErrorMessage(err)
+					});
+				}
+				else{
+					console.log(user);
+					done(err,user[0]);
+				}
+			});
+		},
+		function(user, done) {
+			console.log(user.displayName);
+			res.render('templates/reset-password-email', {
+				name: user.displayName,
+				appName: config.app.title,
+			}, function(err, emailHTML) {
+				done(err, emailHTML, user);
+			});
+		},
+		// If valid email, send reset email using service
+		function(emailHTML, user, done) {
+			var smtpTransport = nodemailer.createTransport(config.mailer.options);
+			var mailOptions = {
+				to: user.email,
+				from: config.mailer.from,
+				subject: 'Password Reset',
+				html: emailHTML
+			};
+			smtpTransport.sendMail(mailOptions, function(err, info) {
+				if (!err) {
+					res.send({
+						message: 'An email has been sent to ' + user.email + ' with further instructions.'
+					});
+				}
+				else console.log('message not sent: '+console.log(err));
+				done(err);
+			});
+		}
+		]);
+/*
 	Committee.update({'_id': committeeById}, {$addToSet:{'members': userById}}, function(err,data){
 		if(err){
 			return res.status(401).send({
@@ -162,54 +219,7 @@ exports.addMember = function(req, res) {
 				res.jsonp(data[0]);
 			});
 		}
-	});
-/*
-
-	
-	try{
-		var committee = await()
-	}
-	catch(err){
-		console.log(err);
-	}
-	
-
-	var print = Committee.update({'_id': committeeById}, {$addToSet:{'members': userById}} ).exec(function(err, data){
-		if(err){
-			return res.status(401).send({
-				message: errorHandler.getErrorMessage(err)
-			});
-		}
-		else committee = data[0];
-	});
-console.log(print);*/
-
-	/*
-	Committee.update({'_id': committeeById}, {$addToSet:{'members': userById}} ).exec(function(err, committee){
-		if(err){
-			return res.status(401).send({
-				message: errorHandler.getErrorMessage(err)
-			});
-		}
-		else{
-			User.find({'_id': userById}).exec(function(err2, getUser){
-				
-				if(err2){
-					return res.status(401).send({
-						message: errorHandler.getErrorMessage(err)
-					});
-				}
-				else{
-					user = getUser[0];
-				}
-			});
-		
-	res.jsonp(committee[0]);
-		}
-	});	*/
-
-
-	
+	});*/
 };
 
 /**
