@@ -263,6 +263,6 @@ angular.module('committees').controller('CommitteesController', ['$rootScope', '
 			if(isChecked === false){
 				$scope.membersPresent--;
 			}
-		}
+		};
 	}
 ]);
