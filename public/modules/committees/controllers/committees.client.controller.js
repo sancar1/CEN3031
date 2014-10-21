@@ -246,5 +246,23 @@ angular.module('committees').controller('CommitteesController', ['$rootScope', '
 		// 	return false;
 
 		// };
+
+		$scope.membersPresent = 0;
+
+		$scope.checkMembersPresent = function(isChecked){
+			// $log.debug('Committee Members:');
+			// $log.debug($scope.members);
+
+			// $log.debug('isChecked:');
+			// $log.debug(isChecked);
+
+			if(isChecked === true){
+				$scope.membersPresent++;
+			}
+
+			if(isChecked === false){
+				$scope.membersPresent--;
+			}
+		}
 	}
 ]);
