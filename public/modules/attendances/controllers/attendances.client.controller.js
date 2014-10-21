@@ -48,6 +48,14 @@ angular.module('attendances').controller('AttendancesController', ['$scope', '$s
 			});
 		};
 
+		$scope.getAttendees = function(){
+			var attendence = $scope.attendance;
+
+			Attendances.Attendees.query({attendanceId: $stateParams.attendanceId}).$promise.then(function(data) {
+				// $log.debug(data);
+				$scope.attendees = data;
+			});
+		};
 
 
 		// Find a list of Attendances

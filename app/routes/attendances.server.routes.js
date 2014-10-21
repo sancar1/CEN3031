@@ -14,6 +14,9 @@ module.exports = function(app) {
 		.put(users.requiresLogin, attendances.hasAuthorization, attendances.update)
 		.delete(users.requiresLogin, attendances.hasAuthorization, attendances.delete);
 
+	app.route('/attendances/:attendanceId/attendees')
+		.get(attendances.getAttendees);
+
 	// Finish by binding the Attendance middleware
 	app.param('attendanceId', attendances.attendanceByID);
 };

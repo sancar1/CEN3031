@@ -6,6 +6,8 @@
 var mongoose = require('mongoose'),
 	errorHandler = require('./errors'),
 	Attendance = mongoose.model('Attendance'),
+	User = mongoose.model('User'),
+	async = require('async'),
 	_ = require('lodash');
 
 /**
@@ -66,6 +68,43 @@ exports.delete = function(req, res) {
 		} else {
 			res.jsonp(attendance);
 		}
+	});
+};
+
+/**
+* Get Member Id's who showed up to a meeting
+*/
+exports.getAttendees = function(req,res){
+	var attendanceById = req.attendance._id;
+
+	async.waterfall([
+		function(done){
+			Attendance.find({'_id':'attendanceById'}).exec(function(err, attendance) {
+				if (err) {
+					return res.status(400).send({
+						message: errorHandler.getErrorMessage(err)
+					});
+				} else {
+					done(err,attendance[0]);
+				}
+			});
+		},
+		function(attendance, done){
+			User.find({'_id': {$in: attendance.membersPresent}}).exec(function(err, membersWhoAttended){
+				if(err){
+					return res.status(401).send({
+						message: errorHandler.getErrorMessage(err)
+					});
+				}
+				else{
+					console.log(membersWhoAttended);
+					done(err,membersWhoAttended);
+				}
+			});
+		}
+		],function(err){
+			if(err) console.log(err);
+
 	});
 };
 
