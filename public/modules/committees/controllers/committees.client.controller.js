@@ -169,7 +169,16 @@ angular.module('committees').controller('CommitteesController', ['$rootScope', '
 
 			if(typeof committee !== 'undefined'){
 				for(var i = 0; i < committee.members.length; i++){
-					if($scope.currentUser._id === committee.members[i]._id){
+					// $log.debug('Current User:');
+					// $log.debug($scope.currentUser._id);
+
+					// $log.debug('Committee Members ID:');
+					// $log.debug(committee.members[i]._id);
+
+					// $log.debug('Committee Members:');
+					// $log.debug(committee.members);
+
+					if($scope.currentUser._id === committee.members[i]){
 						return true;
 					}
 				}
@@ -263,6 +272,22 @@ angular.module('committees').controller('CommitteesController', ['$rootScope', '
 			if(isChecked === false){
 				$scope.membersPresent--;
 			}
+		};
+
+		$scope.viewCommittee = function(committee) {
+			// var debugObj = {
+			// 				'checkAdmin' : $scope.checkAdmin(),
+			// 				'checkOwner' : $scope.checkOwner(committee),
+			// 				'userInCommittee' : $scope.userInCommittee(committee)
+			// 			};
+
+			// $log.debug('Debug Statement:');
+			// $log.debug(debugObj);
+			
+			if($scope.checkAdmin() === true || $scope.checkOwner(committee) === true || $scope.userInCommittee(committee) === true){
+				return true;
+			}
+			return false;
 		};
 	}
 ]);
