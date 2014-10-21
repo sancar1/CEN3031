@@ -19,7 +19,7 @@ var AttendanceSchema = new Schema({
 	meeting:{
 		type: Schema.ObjectId,
 		ref: 'Meeting'
-	}
+	},
 	user: {
 		type: Schema.ObjectId,
 		ref: 'User'
