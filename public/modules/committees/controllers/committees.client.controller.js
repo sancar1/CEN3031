@@ -8,28 +8,21 @@ angular.module('committees').controller('CommitteesController', ['$rootScope', '
 
 		// Find a List of Committees
 		// find() function
-		// Committees.Committees.query().$promise.then(function(data) {
-		// 	$scope.committees = data;
-			// $log.debug('TEST SERVICE CHANGE');
-		// });
-
-		// Find existing committee
-		// findOne() fuction
+		Committees.Committees.query().$promise.then(function(data) {
+			$scope.committees = data;
+			$log.debug('TEST SERVICE LOAD');
+		});
 
 		// Create new Committee
 		$scope.create = function($scope) {
 			// Create new Committee object
 
-			// $scope.chair.id;
-			// $scope.name = 'TEST NAME';
-
-
-			$log.debug('Chair Id:');
-			$log.debug(this.chair_id);
+			// $log.debug('Chair Id:');
+			// $log.debug(this.chair.id);
 
 			var committee = new Committees.Committees ({
-				name: this.name,
-				chair: this.chair_id
+				name: this.committee.name,
+				chair: this.chair.id
 			});
 			
 			// Redirect after save
@@ -37,10 +30,16 @@ angular.module('committees').controller('CommitteesController', ['$rootScope', '
 				$location.path('committees/' + response._id);
 		
 				// Clear form fields
-				//$scope.name = '';
+				this.committe.name = '';
+				this.chair.id = '';
 			}, function(errorResponse) { 
 				$scope.error = errorResponse.data.message;
 			});
+
+			//Clear form fields
+			this.committee.name = '';
+			this.chair.id = '';
+
 		};
 
 		// Remove existing Committee
@@ -94,7 +93,7 @@ angular.module('committees').controller('CommitteesController', ['$rootScope', '
 		$scope.getMembers = function(){
 			var committee = $scope.committee;
 			var Members = Committees.Members.query({committeeId: committee._id}).$promise.then(function(data) {
-				console.log(data);
+				// $log.debug(data);
 				$scope.members = data;
 			});
 		};
@@ -127,25 +126,9 @@ angular.module('committees').controller('CommitteesController', ['$rootScope', '
 		$scope.getChair = function(){
 			var committee = $scope.committee;
 			Committees.Chair.get({committeeId: committee._id, chairId: committee.chair}).$promise.then(function(data) {
-				$log.debug('chair: ');
-				$log.debug(data.displayName);
+				$log.debug($scope.committee.name + ' Chair: ' + data.displayName);
 				$scope.chair = data;
 			});
-		};
-
-		// Find a list of Committees
-		$scope.find = function() {
-
-			Committees.Committees.query().$promise.then(function(data) {
-				$scope.committees = data;
-
-				// $log.debug('data: ');
-				// $log.debug(data);
-
-				// $log.debug('$scope.committees: ');
-				// $log.debug($scope.committees);
-			});
-
 		};
 
 		$scope.checkAdmin = function(){
@@ -214,8 +197,8 @@ angular.module('committees').controller('CommitteesController', ['$rootScope', '
 			}).$promise.then(function(data) {
 				$scope.committee = data;
 				
-				$log.debug('$scope.committee: ');
-				$log.debug($scope.committee);
+				// $log.debug('$scope.committee: ');
+				// $log.debug($scope.committee);
 
 				$scope.getChair();
 				$scope.getMembers();
