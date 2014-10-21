@@ -11,7 +11,6 @@ var mongoose = require('mongoose'),
  */
 var AttendanceSchema = new Schema({
 	membersPresent:[String],
-	allMembers:[String],
 	dateOfMeeting: {
 		type: Date,
 		default: Date.now

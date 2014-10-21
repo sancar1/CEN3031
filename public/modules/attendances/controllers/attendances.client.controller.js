@@ -57,7 +57,6 @@ angular.module('attendances').controller('AttendancesController', ['$scope', '$s
 			});
 		};
 
-
 		// Find a list of Attendances
 		$scope.find = function() {
 			$scope.attendances = Attendances.Attendances.query();
