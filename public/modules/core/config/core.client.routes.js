@@ -25,7 +25,7 @@ angular.module('core').config(['$stateProvider', '$urlRouterProvider',
 		}).
 		state('schedule', {
 			url: '/committee/schedule',
-			templateUrl: 'modules/committees/views/schedule.client.view.html'
+			templateUrl: 'modules/schedules/views/schedule.client.view.html'
 		}).
 		state('resources', {
 			url: '/committee/resources',

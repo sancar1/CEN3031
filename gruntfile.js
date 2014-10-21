@@ -135,7 +135,15 @@ module.exports = function(grunt) {
 			unit: {
 				configFile: 'karma.conf.js'
 			}
-		}
+		},
+		ngAnnotate: {
+	        options: {
+	            // Task-specific options go here.
+	        },
+	        your_target: {
+	            // Target-specific file lists and/or options go here.
+	        }
+    	}
 	});
 
 	// Load NPM tasks 
@@ -163,8 +171,12 @@ module.exports = function(grunt) {
 	grunt.registerTask('lint', ['jshint', 'csslint']);
 
 	// Build task(s).
-	grunt.registerTask('build', ['lint', 'loadConfig', 'ngmin', 'uglify', 'cssmin']);
+	grunt.registerTask('build', ['lint', 'loadConfig', 'ngmin', 'cssmin']);
 
 	// Test task.
 	grunt.registerTask('test', ['env:test', 'mochaTest', 'karma:unit']);
+
+	//enabling ng-annotate instead of uglify mangle
+	grunt.loadNpmTasks('grunt-ng-annotate');
+
 };
