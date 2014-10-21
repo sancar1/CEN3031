@@ -9,7 +9,7 @@
 		 		 <img src="http://captainkimo.com/wp-content/uploads/2011/01/curacao-landscape-cactus-plant-oringal-photomatix-hdr-image.jpg" width="500">
 	 </div>
     <div class="list-group" ng-show="checkLoggedIn()" >
-        <a data-ng-repeat="committee in committees" data-ng-href="#!/committees/{{committee._id}}" class="list-group-item" ng-show="userInCommittee(committee) || checkAdmin() || checkOwner(committee)">
+        <a data-ng-repeat="committee in committees" data-ng-href="#!/committees/{{committee._id}}" class="list-group-item" ng-show="viewCommittee(committee)">
 			<h3 class="list-group-item-heading" data-ng-bind="committee.name"></h3>
 			<h5 class="list-group-item-heading" data-ng-bind="committee.description"></h5>
 			<small class="list-group-item-text">
