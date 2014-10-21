@@ -10,16 +10,16 @@ var mongoose = require('mongoose'),
  * Attendance Schema
  */
 var AttendanceSchema = new Schema({
-	name: {
-		type: String,
-		default: '',
-		required: 'Please fill Attendance name',
-		trim: true
-	},
-	created: {
+	membersPresent:[String],
+	allMembers:[String],
+	dateOfMeeting: {
 		type: Date,
 		default: Date.now
 	},
+	meeting:{
+		type: Schema.ObjectId,
+		ref: 'Meeting'
+	}
 	user: {
 		type: Schema.ObjectId,
 		ref: 'User'

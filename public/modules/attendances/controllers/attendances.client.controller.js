@@ -9,15 +9,13 @@ angular.module('attendances').controller('AttendancesController', ['$scope', '$s
 		$scope.create = function() {
 			// Create new Attendance object
 			var attendance = new Attendances ({
-				name: this.name
+			
 			});
 
 			// Redirect after save
 			attendance.$save(function(response) {
 				$location.path('attendances/' + response._id);
 
-				// Clear form fields
-				$scope.name = '';
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
 			});
