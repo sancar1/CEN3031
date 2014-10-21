@@ -4,9 +4,9 @@ angular.module('users').controller('UsersController', ['$scope', '$stateParams',
 	function($scope, $stateParams, $location, Users, Authentication) {
 		$scope.authentication = Authentication;
 
-		$scope.find = function() {
-			$scope.users= Users.query();
-		};
+		//Find users in the db
+		$scope.users= Users.query();
+
 		$scope.findOne = function() {
 			$scope.user = Users.get({
 				userId: $stateParams.userId
