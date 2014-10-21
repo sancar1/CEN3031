@@ -8,7 +8,7 @@ angular.module('attendances').controller('AttendancesController', ['$scope', '$s
 		// Create new Attendance
 		$scope.create = function() {
 			// Create new Attendance object
-			var attendance = new Attendances ({
+			var attendance = new Attendances.Attendances ({
 			
 			});
 
@@ -48,14 +48,16 @@ angular.module('attendances').controller('AttendancesController', ['$scope', '$s
 			});
 		};
 
+
+
 		// Find a list of Attendances
 		$scope.find = function() {
-			$scope.attendances = Attendances.query();
+			$scope.attendances = Attendances.Attendances.query();
 		};
 
 		// Find existing Attendance
 		$scope.findOne = function() {
-			$scope.attendance = Attendances.get({ 
+			$scope.attendance = Attendances.Attendances.get({ 
 				attendanceId: $stateParams.attendanceId
 			});
 		};
