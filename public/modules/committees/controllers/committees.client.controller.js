@@ -8,10 +8,10 @@ angular.module('committees').controller('CommitteesController', ['$rootScope', '
 
 		// Find a List of Committees
 		// find() function
-		Committees.Committees.query().$promise.then(function(data) {
-			$scope.committees = data;
+		// Committees.Committees.query().$promise.then(function(data) {
+		// 	$scope.committees = data;
 			// $log.debug('TEST SERVICE CHANGE');
-		});
+		// });
 
 		// Find existing committee
 		// findOne() fuction
@@ -134,19 +134,19 @@ angular.module('committees').controller('CommitteesController', ['$rootScope', '
 		};
 
 		// Find a list of Committees
-		// $scope.find = function() {
+		$scope.find = function() {
 
-		// 	Committees.Committees.query().$promise.then(function(data) {
-		// 		$scope.committees = data;
+			Committees.Committees.query().$promise.then(function(data) {
+				$scope.committees = data;
 
-		// 		// $log.debug('data: ');
-		// 		// $log.debug(data);
+				// $log.debug('data: ');
+				// $log.debug(data);
 
-		// 		// $log.debug('$scope.committees: ');
-		// 		// $log.debug($scope.committees);
-		// 	});
+				// $log.debug('$scope.committees: ');
+				// $log.debug($scope.committees);
+			});
 
-		// };
+		};
 
 		$scope.checkAdmin = function(){
 			var user = new Users($scope.currentUser);
