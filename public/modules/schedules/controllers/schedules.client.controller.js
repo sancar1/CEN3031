@@ -97,6 +97,7 @@ angular.module('schedules').controller('SchedulesController', ['$scope', '$state
     /* alert on eventClick */
     $scope.alertOnEventClick = function( event, allDay, jsEvent, view ){
         $scope.alertMessage = (event.title + ' was clicked ');
+		  console.log(event.title);
     };
     /* alert on Drop */
      $scope.alertOnDrop = function(event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view){
@@ -156,7 +157,7 @@ angular.module('schedules').controller('SchedulesController', ['$scope', '$state
       }
     };
     /* event sources array*/
-    $scope.eventSources = [$scope.events, $scope.eventSource, $scope.eventsF];
-    $scope.eventSources2 = [$scope.calEventsExt, $scope.eventsF, $scope.events];
+    $scope.eventSources = [$scope.events];
+  
 	}
 ]);
