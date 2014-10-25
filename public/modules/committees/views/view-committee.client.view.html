@@ -7,32 +7,32 @@
 		<h4 data-ng-bind="committee.description"></h4>
 	</div>
 	<br>
-	<div class="pull-right" data-ng-show="authentication.user._id == committee.user._id">
+	<!-- <div class="pull-right" data-ng-show="authentication.user._id == committee.user._id">
 
-		<!-- <a class="btn btn-primary" ui-sref="edit({committeeId: committee._id})">
+		<a class="btn btn-primary" ui-sref="edit({committeeId: committee._id})">
 			<i class="glyphicon glyphicon-edit"></i>
 		</a> -->
 
-		<a class="btn btn-primary" href="/#!/committees/{{committee._id}}/edit">
+		<!--<a class="btn btn-primary" href="/#!/committees/{{committee._id}}/edit">
 			<i class="glyphicon glyphicon-edit"></i>
 		</a>
 		<a class="btn btn-primary" data-ng-click="remove();">
 			<i class="glyphicon glyphicon-trash"></i>
 		</a>
-	</div>
+	</div>-->
 	<section>
-            <form name="userForm" class="form-horizontal" novalidate>
-               <div class = "list-group" class = "list-group-item">
-                        <h1 class = "list-group-item-text">Committee Chair</h1>
-                <div class="list-group-item"> 
-                       
-                <small class="list-group-item-text">
-                    <span data-ng-bind="chair.displayName"></span>
-                </small> 
-                   
-                </div>
-             </div>
-        </form>
+           <form name="userForm" class="form-horizontal" novalidate>
+	<div class = "list-group" class = "list-group-item">
+		<h1 class = "list-group-item-text">Committee Chair</h1>
+		<div class="list-group"> 
+			<a class="list-group-item">
+				<small class="list-group-item-text">
+					<span data-ng-bind="chair.displayName"></span>
+				</small> 
+			</a>
+		</div>
+    </div>
+</form>
    </section>
    <section>
 <form name="userForm" class="form-horizontal" novalidate>

@@ -2,6 +2,11 @@
 <section data-ng-init="findOne()">
     
         <h1><b>Edit Committee</b></h1>
+    <div class="pull-right" data-ng-show="authentication.user._id == committee.user._id">
+        <a class="btn btn-primary" data-ng-click="remove();">
+            <i class="glyphicon glyphicon-trash"></i>
+        </a>
+    </div>
     
     <div class="col-md-12">
         <form name="committeeForm" class="form-horizontal" data-ng-submit="update()" novalidate>
