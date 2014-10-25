@@ -1,11 +1,4 @@
-h1, h2, h3, h4, h5, h6{
-	font-family: 'Open Sans';
-}
 
-p,div{
-	font-family: 'Open Sans';
-	font-size:16px;
-}
 .content {
 	margin-top: 50px;
 }
@@ -23,21 +16,40 @@ p,div{
 }
 
 /*Start of added code */
+
+h1, h2, h3, h4, h5, h6{
+	font-family: 'Open Sans';
+}
+
+p,div{
+	font-family: 'Open Sans';
+	font-size:16px;
+}
+
 .navbar-inverse{
-	background-image: linear-gradient(to bottom, #0021A5 0%, #150E4D 100%);
+	background-image:none;
+	background-color:#0021A5 ;
+	color:#fffff;
 }
+
+/*project title*/
 .navbar-inverse .navbar-brand {
-color: #CCC;
+color: #fff;
+background-color:#0021A5;
 }
+
+/*buttons on nav bar*/
 .navbar-inverse .navbar-nav > li > a {
-color: #CCC;
+color: #ccc;
+background-color:#0021A5;
 }
 .navbar-inverse .navbar-nav > .open > a, .navbar-inverse .navbar-nav > .open > a:hover, .navbar-inverse .navbar-nav > .open > a:focus {
 color: #fff;
-background-color: #15197E;
+background-color: #0025B8;
 }
 .navbar-inverse .navbar-nav > .active > a{
-background-image: linear-gradient(to bottom, #ff4a00 0%, #FF4A00 100%);
+background-color: #0025B8;
+background-image: none;
 }
 
 /*.sidebar{
@@ -88,7 +100,7 @@ background-image: linear-gradient(to bottom, #ff4a00 0%, #FF4A00 100%);
 
 .nav-pills > li.active > a, .nav-pills > li.active > a:hover, .nav-pills > li.active > a:focus {
 color: #fff;
-background-color: #0021A5;
+background-color: #0025B8;
 }
 
 a:hover, a:focus {
