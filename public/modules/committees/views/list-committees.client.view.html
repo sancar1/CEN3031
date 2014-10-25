@@ -1,28 +1,28 @@
 <section><!-- data-ng-controller="CommitteesController"> -->
 <section data-ng-controller="UsersController">
-
-    <div ng-show="checkLoggedIn()" class="page-header">
-        <h1><b>Committees</b></h1>
-    </div>
-	 
-	 <div ng-hide="checkLoggedIn()" class="page-header">
+    <div ng-hide="authentication.user" class="page-header">
 		 <h1>Please Login</h1>
-		 		 <img src="http://www.crosscamp.us/wp-content/uploads/2013/07/Cactus-Rotorua.jpg" >
-	 </div>
-    <div class="list-group" ng-show="checkLoggedIn()" >
-        <a data-ng-repeat="committee in committees" data-ng-href="#!/committees/{{committee._id}}" class="list-group-item" ng-show="viewCommittee(committee)">
-			<h3 class="list-group-item-heading" data-ng-bind="committee.name"></h3>
-			<h5 class="list-group-item-heading" data-ng-bind="committee.description"></h5>
-			<small class="list-group-item-text">
-			<small>
-				Created on
-				<span data-ng-bind="committee.created | date:'medium'"></span>
-				by
-				<span data-ng-bind="committee.user.displayName"></span>
-			</small>
-			</small>
-        </a>
-    </div>
+		 		 <img src="http://captainkimo.com/wp-content/uploads/2011/01/curacao-landscape-cactus-plant-oringal-photomatix-hdr-image.jpg" width="500">
+	</div>
+	<div data-ng-show="authentication.user">
+		<div class="page-header">
+	        <h1><b>Committees</b></h1>
+	    </div>
+	    <div class="list-group">
+	        <a data-ng-repeat="committee in committees" data-ng-href="#!/committees/{{committee._id}}" class="list-group-item">
+				<h3 class="list-group-item-heading" data-ng-bind="committee.name"></h3>
+				<h5 class="list-group-item-heading" data-ng-bind="committee.description"></h5>
+				<small class="list-group-item-text">
+				<small>
+					Created on
+					<span data-ng-bind="committee.created | date:'medium'"></span>
+					by
+					<span data-ng-bind="committee.user.displayName"></span>
+				</small>
+				</small>
+	        </a>
+	    </div>
+	</div>
     <div class="alert alert-warning text-center"  data-ng-hide="!committees.$resolved || committees.length">
     	No Committees yet, why don't you <a href="/#!/committees/create">create one</a>?
     </div>
