@@ -1,3 +1,11 @@
+h1, h2, h3, h4, h5, h6{
+	font-family: 'Open Sans';
+}
+
+p,div{
+	font-family: 'Open Sans';
+	font-size:16px;
+}
 .content {
 	margin-top: 50px;
 }
@@ -46,7 +54,7 @@ background-image: linear-gradient(to bottom, #ff4a00 0%, #FF4A00 100%);
 /*Tab body code */
 
 .app-content {
-	margin-top: 50px;
+	margin-top: 80px;
 }
 
 .app-content .app-sidebar {
@@ -72,7 +80,8 @@ background-image: linear-gradient(to bottom, #ff4a00 0%, #FF4A00 100%);
 	margin-right: 35px;
 	width: 1100px;
 	*/
-	width: 90%;
+	width: 95%;
+	margin-top:10px;
 }
 
 /*Code for navigation */
@@ -93,20 +102,8 @@ text-decoration: none;
 
 /*code for attendance page*/
 
-/*.memberspresent{ 
-	color:pink;
-}
 
-.memberlabel input{
-
-}
-
-.memberlabel span{
-
-}*/
-/* Base for label styling 
-check box stylying credit: http://codepen.io/CreativeJuiz/pen/BiHzp*/
-
+/* Base for label styling */
 [type="checkbox"]:not(:checked),
 [type="checkbox"]:checked {
   position: absolute;
