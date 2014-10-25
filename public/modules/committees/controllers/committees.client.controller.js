@@ -10,7 +10,7 @@ angular.module('committees').controller('CommitteesController', ['$rootScope', '
 		// find() function
 		Committees.Committees.query().$promise.then(function(data) {
 			$scope.committees = data;
-			$log.debug('TEST SERVICE LOAD');
+			$log.info('List of Committees Loaded');
 		});
 
 		// Create new Committee
@@ -143,6 +143,10 @@ angular.module('committees').controller('CommitteesController', ['$rootScope', '
 		
 		$scope.checkLoggedIn = function(){
 			var user = new Users($scope.currentUser);
+
+			$log.debug('Current User:');
+			$log.debug($scope.currentUser);
+
 			if(!$scope.currentUser){
 				return false;
 			}
