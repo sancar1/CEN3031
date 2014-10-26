@@ -254,7 +254,7 @@ exports.addMeeting = function(req, res) {
 						message: errorHandler.getErrorMessage(err)
 					});
 				}
-				else done(err,committee);
+				else done(err,committee[0]);
 			});
 			
 		}/*,
@@ -291,19 +291,19 @@ exports.addMeeting = function(req, res) {
 /**
  * Remove Committee Meeting
  */
-exports.removeMember = function(req, res) { 
+exports.removeMeeting = function(req, res) { 
 	var committeeById = req.committee._id;
 	var meetingById = req.params.meetingId;
 
 	async.waterfall([
 		function(done){
-			Committee.update({'_id':committeeById},{$pull:{'meetings': meetingrById}}).exec(function(err, meeting) {
+			Committee.update({'_id':committeeById},{$pull:{'meetings': meetingById}}).exec(function(err, committee) {
 				if (err) {
 					return res.status(400).send({
 						message: errorHandler.getErrorMessage(err)
 					});
 				}
-				else done(err, meeting);
+				else done(err, committee[0]);
 			});
 			
 		}/*,

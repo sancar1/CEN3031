@@ -66,7 +66,7 @@ angular.module('schedules').controller('SchedulesController', ['$scope', '$state
 
     $scope.addEvent = function(index){
       var schedule = $scope.schedule;
-      $scope.schedule.eventToAdd = events[index];
+      $scope.schedule.eventToAdd = schedule.events[index];
       Schedules.Event.put({scheduleId: schedule._id}).$promise.then(function(data) {
         // $log.debug(data);
         $scope.schedule = data;

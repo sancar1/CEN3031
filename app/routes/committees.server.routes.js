@@ -38,4 +38,5 @@ module.exports = function(app) {
 	// Finish by binding the Committee middleware
 	app.param('committeeId', committees.committeeByID);
 	app.param('userId', users.userByID);
+	app.param('meetingId', meetings.meetingByID);
 };
