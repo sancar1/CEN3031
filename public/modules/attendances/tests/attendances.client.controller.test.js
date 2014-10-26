@@ -52,7 +52,7 @@
 
 		it('$scope.find() should create an array with at least one Attendance object fetched from XHR', inject(function(Attendances) {
 			// Create sample Attendance using the Attendances service
-			var sampleAttendance = new Attendances({
+			var sampleAttendance = new Attendances.Attendances({
 				name: 'New Attendance'
 			});
 
@@ -72,7 +72,7 @@
 
 		it('$scope.findOne() should create an array with one Attendance object fetched from XHR using a attendanceId URL parameter', inject(function(Attendances) {
 			// Define a sample Attendance object
-			var sampleAttendance = new Attendances({
+			var sampleAttendance = new Attendances.Attendances({
 				name: 'New Attendance'
 			});
 
@@ -90,38 +90,9 @@
 			expect(scope.attendance).toEqualData(sampleAttendance);
 		}));
 
-		it('$scope.create() with valid form data should send a POST request with the form input values and then locate to new object URL', inject(function(Attendances) {
-			// Create a sample Attendance object
-			var sampleAttendancePostData = new Attendances({
-				name: 'New Attendance'
-			});
-
-			// Create a sample Attendance response
-			var sampleAttendanceResponse = new Attendances({
-				_id: '525cf20451979dea2c000001',
-				name: 'New Attendance'
-			});
-
-			// Fixture mock form input values
-			scope.name = 'New Attendance';
-
-			// Set POST response
-			$httpBackend.expectPOST('attendances', sampleAttendancePostData).respond(sampleAttendanceResponse);
-
-			// Run controller functionality
-			scope.create();
-			$httpBackend.flush();
-
-			// Test form inputs are reset
-			expect(scope.name).toEqual('');
-
-			// Test URL redirection after the Attendance was created
-			expect($location.path()).toBe('/attendances/' + sampleAttendanceResponse._id);
-		}));
-
 		it('$scope.update() should update a valid Attendance', inject(function(Attendances) {
 			// Define a sample Attendance put data
-			var sampleAttendancePutData = new Attendances({
+			var sampleAttendancePutData = new Attendances.Attendances({
 				_id: '525cf20451979dea2c000001',
 				name: 'New Attendance'
 			});
@@ -142,7 +113,7 @@
 
 		it('$scope.remove() should send a DELETE request with a valid attendanceId and remove the Attendance from the scope', inject(function(Attendances) {
 			// Create new Attendance object
-			var sampleAttendance = new Attendances({
+			var sampleAttendance = new Attendances.Attendances({
 				_id: '525a8422f6d0f87f0e407a33'
 			});
 

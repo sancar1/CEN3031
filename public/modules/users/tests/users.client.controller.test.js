@@ -43,12 +43,11 @@
 			$location = _$location_;
 
 			// Initialize the Committees controller.
+			
 			UsersController = $controller('UsersController', {
 				$scope: userScope
 			});
-			CommitteesController = $controller('CommitteesController', {
-				$scope: committeeScope
-			});
+			
 		}));
 
 		it('$scope.find() should create an array with at least one User object fetched from XHR', inject(function(Users) {

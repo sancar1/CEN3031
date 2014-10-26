@@ -7,11 +7,12 @@ angular.module('committees').controller('CommitteesController', ['$rootScope', '
 		$scope.currentUser = Authentication.user;
 
 		// Find a List of Committees
-		// find() function
-		Committees.Committees.query().$promise.then(function(data) {
-			$scope.committees = data;
-			$log.info('List of Committees Loaded');
-		});
+		$scope.find = function(){
+			Committees.Committees.query().$promise.then(function(data) {
+				$scope.committees = data;
+				$log.info('List of Committees Loaded');
+			});
+		};
 
 		// Create new Committee
 		$scope.create = function($scope) {
@@ -77,7 +78,9 @@ angular.module('committees').controller('CommitteesController', ['$rootScope', '
 				if(members === user._id) passed = 0;
 			});
 			if(passed){
-				Committees.Member.update({userId: user._id,committeeId: committee._id});
+				Committees.Member.update({userId: user._id,committeeId: committee._id},function(){
+					$location.path('committees/' + committee._id+'/edit');
+				});
 			}
 		};
 
@@ -87,7 +90,9 @@ angular.module('committees').controller('CommitteesController', ['$rootScope', '
 			angular.forEach(committee.members, function(members){
 				if(members === member._id) passed = 1;
 			});
-			if(passed) Committees.Member.remove({userId: member._id,committeeId: committee._id});
+			if(passed) Committees.Member.remove({userId: member._id,committeeId: committee._id},function(){
+					$location.path('committees/' + committee._id+'/edit');
+			});
 		};
 
 		$scope.getMembers = function(){
@@ -230,8 +235,8 @@ angular.module('committees').controller('CommitteesController', ['$rootScope', '
 				// $log.debug('$scope.committee: ');
 				// $log.debug($scope.committee);
 
-				$scope.getChair();
-				$scope.getMembers();
+				//$scope.getChair();
+				//$scope.getMembers();
 				
 			});
 

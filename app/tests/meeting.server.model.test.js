@@ -30,7 +30,8 @@ describe('Meeting Model Unit Tests:', function() {
 		user.save(function() { 
 			meeting = new Meeting({
 				name: 'Meeting Name',
-				user: user
+				user: user,
+				noteTaker: '4'
 			});
 
 			done();
@@ -39,6 +40,7 @@ describe('Meeting Model Unit Tests:', function() {
 
 	describe('Method Save', function() {
 		it('should be able to save without problems', function(done) {
+			meeting.name = 'meeting1';
 			return meeting.save(function(err) {
 				should.not.exist(err);
 				done();
