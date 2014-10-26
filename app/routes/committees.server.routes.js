@@ -3,6 +3,7 @@
 module.exports = function(app) {
 	var users = require('../../app/controllers/users');
 	var committees = require('../../app/controllers/committees');
+	var meetings = require('../../app/controllers/meetings');
 
 	// Committees Routes
 	app.route('/committees')
@@ -20,6 +21,10 @@ module.exports = function(app) {
 
 	app.route('/committees/:committeeId/meetings')		
 		.get(committees.getMeetings);
+
+	app.route('/committees/:committeeId/meetings/:meetingId')
+		.put(committees.addMeeting)
+		.delete(committees.removeMeeting);
 
 	app.route('/committees/:committeeId/:userId')
 		.put(committees.addMember)

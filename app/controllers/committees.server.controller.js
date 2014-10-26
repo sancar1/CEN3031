@@ -239,6 +239,104 @@ exports.addMember = function(req, res) {
 		});
 };
 
+/*
+ * Add Committee Meeting
+ */
+exports.addMeeting = function(req, res) {
+	var meetingById = req.params.meetingId;
+	var committeeById = req.committee._id; 
+
+	async.waterfall([
+		function(done){
+			Committee.update({'_id': committeeById}, {$addToSet:{'meetings': meetingById}},function(err, committee){
+				if(err){
+					return res.status(401).send({
+						message: errorHandler.getErrorMessage(err)
+					});
+				}
+				else done(err,committee);
+			});
+			
+		}/*,
+		function(user, done) {
+			res.render('templates/add-to-committee', {
+				name: user.displayName,
+				committee: req.committee.name,
+				appName: config.app.title
+			}, function(err, emailHTML) {
+				done(err, emailHTML, user);
+			});
+		},
+		// If valid email, send reset email using service
+		function(emailHTML, user, done) {
+			var smtpTransport = nodemailer.createTransport(config.mailer.options);
+			var mailOptions = {
+				to: user.email,
+				from: config.mailer.from,
+				subject: 'Added to a committee',
+				html: emailHTML
+			};
+			smtpTransport.sendMail(mailOptions, function(err, info) {
+				if (err) console.log('message not sent: ' + console.log(err));
+				else console.log('message sent: ' + console.log(info));
+				done(err);
+			});
+		}*/
+		],function(err){
+			if(err) console.log(err);
+		});
+};
+
+
+/**
+ * Remove Committee Meeting
+ */
+exports.removeMember = function(req, res) { 
+	var committeeById = req.committee._id;
+	var meetingById = req.params.meetingId;
+
+	async.waterfall([
+		function(done){
+			Committee.update({'_id':committeeById},{$pull:{'meetings': meetingrById}}).exec(function(err, meeting) {
+				if (err) {
+					return res.status(400).send({
+						message: errorHandler.getErrorMessage(err)
+					});
+				}
+				else done(err, meeting);
+			});
+			
+		}/*,
+		function(user, done) {
+			res.render('templates/remove-from-committee', {
+				name: user.displayName,
+				committee: req.committee.name,
+				appName: config.app.title
+			}, function(err, emailHTML) {
+				done(err, emailHTML, user);
+			});
+		},
+		// If valid email, send reset email using service
+		function(emailHTML, user, done) {
+			var smtpTransport = nodemailer.createTransport(config.mailer.options);
+			var mailOptions = {
+				to: user.email,
+				from: config.mailer.from,
+				subject: 'Removed from a committee',
+				html: emailHTML
+			};
+			smtpTransport.sendMail(mailOptions, function(err, info) {
+				if (err) console.log('message not sent: ' + console.log(err));
+				else console.log('message sent: ' + console.log(info));
+				done(err);
+			});
+		}*/
+		],function(err){
+			if(err) console.log(err);
+
+	});
+};
+
 /**
  * Remove Committee Member
  */
