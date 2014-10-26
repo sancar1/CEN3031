@@ -50,6 +50,7 @@
 			
 		}));
 
+
 		it('$scope.find() should create an array with at least one User object fetched from XHR', inject(function(Users) {
 			// Create sample Committee using the Committees service
 			var sampleUser = new Users({
@@ -60,6 +61,7 @@
 			var sampleUsers = [sampleUser];
 
 			// Set GET response
+			$httpBackend.expectGET('users').respond(sampleUsers);
 			$httpBackend.expectGET('users').respond(sampleUsers);
 
 			// Run controller functionality

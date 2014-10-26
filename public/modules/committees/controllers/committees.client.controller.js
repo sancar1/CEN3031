@@ -12,6 +12,13 @@ angular.module('committees').controller('CommitteesController', ['$rootScope', '
 			$log.info('List of Committees Loaded');
 		});
 
+		$scope.find = function(){
+			Committees.Committees.query().$promise.then(function(data) {
+				$scope.committees = data;
+				$log.info('List of Committees Loaded');
+			});
+		};
+
 		// Create new Committee
 		$scope.create = function($scope) {
 			// Create new Committee object
@@ -225,6 +232,7 @@ angular.module('committees').controller('CommitteesController', ['$rootScope', '
 			
 		// Find existing Committee
 		$scope.findOne = function() {
+
 			Committees.Committees.get({
 				committeeId: $stateParams.committeeId
 			}).$promise.then(function(data) {
@@ -233,8 +241,8 @@ angular.module('committees').controller('CommitteesController', ['$rootScope', '
 				// $log.debug('$scope.committee: ');
 				// $log.debug($scope.committee);
 
-				//$scope.getChair();
-				//$scope.getMembers();
+				$scope.getChair();
+				$scope.getMembers();
 				
 			});
 
