@@ -116,6 +116,15 @@ angular.module('committees').controller('CommitteesController', ['$rootScope', '
 			});
 		};
 
+		$scope.addSchedule = function(schedule){
+			var committee = $scope.committee;
+			var scheduleById = schedule._id;
+			var Meetings = Committees.Schedules.put({committeeId: committee._id}, {scheduleId: scheduleById}).$promise.then(function(data) {
+				console.log(data);
+				$scope.meetings = data;
+			});
+		};
+
 		$scope.addMeeting = function(meeting){
 			var committee = $scope.committee;
 			var meetingById = meeting._id;

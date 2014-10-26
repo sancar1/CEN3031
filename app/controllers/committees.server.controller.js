@@ -287,6 +287,53 @@ exports.addMeeting = function(req, res) {
 		});
 };
 
+/*
+ * Add Committee Meeting
+ */
+exports.addSchedule = function(req, res) {
+	var scheduleById = req.params.scheduleId;
+	var committeeById = req.committee._id; 
+
+	async.waterfall([
+		function(done){
+			Committee.update({'_id': committeeById}, {$addToSet:{'schedules': scheduleById}},function(err, committee){
+				if(err){
+					return res.status(401).send({
+						message: errorHandler.getErrorMessage(err)
+					});
+				}
+				else done(err,committee[0]);
+			});
+			
+		}/*,
+		function(user, done) {
+			res.render('templates/add-to-committee', {
+				name: user.displayName,
+				committee: req.committee.name,
+				appName: config.app.title
+			}, function(err, emailHTML) {
+				done(err, emailHTML, user);
+			});
+		},
+		// If valid email, send reset email using service
+		function(emailHTML, user, done) {
+			var smtpTransport = nodemailer.createTransport(config.mailer.options);
+			var mailOptions = {
+				to: user.email,
+				from: config.mailer.from,
+				subject: 'Added to a committee',
+				html: emailHTML
+			};
+			smtpTransport.sendMail(mailOptions, function(err, info) {
+				if (err) console.log('message not sent: ' + console.log(err));
+				else console.log('message sent: ' + console.log(info));
+				done(err);
+			});
+		}*/
+		],function(err){
+			if(err) console.log(err);
+		});
+};
 
 /**
  * Remove Committee Meeting

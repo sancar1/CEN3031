@@ -35,6 +35,10 @@ module.exports = function(app) {
 		.put(committees.setChair)
 		.delete(committees.removeChair);
 
+	app.route('/committees/:committeeId/schedule/:scheduleId')
+		.put(committees.addSchedule);
+		
+
 	// Finish by binding the Committee middleware
 	app.param('committeeId', committees.committeeByID);
 	app.param('userId', users.userByID);
