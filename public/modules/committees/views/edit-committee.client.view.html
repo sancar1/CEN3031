@@ -57,7 +57,7 @@
                     <h1>Users In Database</h1>
                 </div>
                 <div class="list-group">
-                    <a data-ng-repeat="user in users" data-ng-click = "addMember(user)" class="list-group-item">
+                    <a data-ng-repeat="user in users" data-ng-click = "addMember(user)" data-ng-hide = "inCommittee(user)"class="list-group-item">
                         <small class="list-group-item-text">
                             <span data-ng-bind="user.firstName | date:'medium'"></span>
                         </small>
