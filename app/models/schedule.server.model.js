@@ -23,7 +23,10 @@ var ScheduleSchema = new Schema({
 	user: {
 		type: Schema.ObjectId,
 		ref: 'User'
-	}
+	},
+	events:[
+      {title: String,start: Date,end: Date,allDay: Boolean}
+	]
 });
 
 mongoose.model('Schedule', ScheduleSchema);
