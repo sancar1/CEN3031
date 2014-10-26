@@ -7,12 +7,10 @@ angular.module('committees').controller('CommitteesController', ['$rootScope', '
 		$scope.currentUser = Authentication.user;
 
 		// Find a List of Committees
-		$scope.find = function(){
-			Committees.Committees.query().$promise.then(function(data) {
-				$scope.committees = data;
-				$log.info('List of Committees Loaded');
-			});
-		};
+		Committees.Committees.query().$promise.then(function(data) {
+			$scope.committees = data;
+			$log.info('List of Committees Loaded');
+		});
 
 		// Create new Committee
 		$scope.create = function($scope) {
