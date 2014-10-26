@@ -6,6 +6,8 @@
 var mongoose = require('mongoose'),
 	errorHandler = require('./errors'),
 	Schedule = mongoose.model('Schedule'),
+	nodemailer = require('nodemailer'),
+	async = require('async'),
 	_ = require('lodash');
 
 /**
@@ -67,6 +69,149 @@ exports.delete = function(req, res) {
 			res.jsonp(schedule);
 		}
 	});
+};
+
+/**
+ * Add event to schedule
+ */
+exports.getEvents = function(req, res) {
+	var scheduleById = req.schedule._id;
+
+	async.waterfall([
+		function(done){
+			Schedule.find({'_id': scheduleById}).exec(function(err, schedule){
+				if(err){
+					return res.status(401).send({
+						message: errorHandler.getErrorMessage(err)
+					});
+				}
+				else done(err,schedule[0].events);
+			});
+			
+		}/*,
+		function(user, done) {
+			res.render('templates/add-to-committee', {
+				name: user.displayName,
+				committee: req.committee.name,
+				appName: config.app.title
+			}, function(err, emailHTML) {
+				done(err, emailHTML, user);
+			});
+		},
+		// If valid email, send reset email using service
+		function(emailHTML, user, done) {
+			var smtpTransport = nodemailer.createTransport(config.mailer.options);
+			var mailOptions = {
+				to: user.email,
+				from: config.mailer.from,
+				subject: 'Added to a committee',
+				html: emailHTML
+			};
+			smtpTransport.sendMail(mailOptions, function(err, info) {
+				if (err) console.log('message not sent: ' + console.log(err));
+				else console.log('message sent: ' + console.log(info));
+				done(err);
+			});
+		}*/
+		],function(err){
+			if(err) console.log(err);
+		});
+};
+
+/**
+ * Add event to schedule
+ */
+exports.addEvent = function(req, res) {
+	var scheduleById = req.schedule._id;
+	var Event = req.schedule.newEvent;
+
+	async.waterfall([
+		function(done){
+			Schedule.update({'_id': scheduleById}, {$addToSet:{'events': Event}}).exec(function(err, schedule){
+				if(err){
+					return res.status(401).send({
+						message: errorHandler.getErrorMessage(err)
+					});
+				}
+				else done(err,schedule[0]);
+			});
+			
+		}/*,
+		function(user, done) {
+			res.render('templates/add-to-committee', {
+				name: user.displayName,
+				committee: req.committee.name,
+				appName: config.app.title
+			}, function(err, emailHTML) {
+				done(err, emailHTML, user);
+			});
+		},
+		// If valid email, send reset email using service
+		function(emailHTML, user, done) {
+			var smtpTransport = nodemailer.createTransport(config.mailer.options);
+			var mailOptions = {
+				to: user.email,
+				from: config.mailer.from,
+				subject: 'Added to a committee',
+				html: emailHTML
+			};
+			smtpTransport.sendMail(mailOptions, function(err, info) {
+				if (err) console.log('message not sent: ' + console.log(err));
+				else console.log('message sent: ' + console.log(info));
+				done(err);
+			});
+		}*/
+		],function(err){
+			if(err) console.log(err);
+		});
+};
+
+/**
+ *Remove event from schedule
+ */
+exports.removeEvent = function(req, res) {
+	var scheduleById = req.schedule._id;
+	var Event = req.schedule.eventToRemove;
+
+	async.waterfall([
+		function(done){
+			Schedule.update({'_id': scheduleById}, {$pull:{'events': Event}}).exec(function(err, schedule){
+				if(err){
+					return res.status(401).send({
+						message: errorHandler.getErrorMessage(err)
+					});
+				}
+				else done(err,schedule[0]);
+			});
+			
+		}/*,
+		function(user, done) {
+			res.render('templates/add-to-committee', {
+				name: user.displayName,
+				committee: req.committee.name,
+				appName: config.app.title
+			}, function(err, emailHTML) {
+				done(err, emailHTML, user);
+			});
+		},
+		// If valid email, send reset email using service
+		function(emailHTML, user, done) {
+			var smtpTransport = nodemailer.createTransport(config.mailer.options);
+			var mailOptions = {
+				to: user.email,
+				from: config.mailer.from,
+				subject: 'Added to a committee',
+				html: emailHTML
+			};
+			smtpTransport.sendMail(mailOptions, function(err, info) {
+				if (err) console.log('message not sent: ' + console.log(err));
+				else console.log('message sent: ' + console.log(info));
+				done(err);
+			});
+		}*/
+		],function(err){
+			if(err) console.log(err);
+		});
 };
 
 /**

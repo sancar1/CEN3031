@@ -14,6 +14,11 @@ module.exports = function(app) {
 		.put(users.requiresLogin, schedules.hasAuthorization, schedules.update)
 		.delete(users.requiresLogin, schedules.hasAuthorization, schedules.delete);
 
+	app.route('/schedules/event/:scheduleId')
+		.put(schedules.addEvent)
+		.get(schedules.getEvents)
+		.delete(schedules.removeEvent);
+
 	// Finish by binding the Schedule middleware
 	app.param('scheduleId', schedules.scheduleByID);
 };

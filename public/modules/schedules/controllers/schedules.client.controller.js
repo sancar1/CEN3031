@@ -9,7 +9,7 @@ angular.module('schedules').controller('SchedulesController', ['$scope', '$state
 		// Create new Schedule
 		$scope.create = function() {
 			// Create new Schedule object
-			var schedule = new Schedules ({
+			var schedule = new Schedules.Schedules ({
 				name: this.name
 			});
 
@@ -53,15 +53,42 @@ angular.module('schedules').controller('SchedulesController', ['$scope', '$state
 
 		// Find a list of Schedules
 		$scope.find = function() {
-			$scope.schedules = Schedules.query();
+			$scope.schedules = Schedules.Schedules.query();
 		};
 
 		// Find existing Schedule
 		$scope.findOne = function() {
-			$scope.schedule = Schedules.get({ 
+			$scope.schedule = Schedules.Schedules.get({ 
 				scheduleId: $stateParams.scheduleId
 			});
 		};
+
+
+    $scope.addEvent = function(){
+      var schedule = $scope.schedule;
+      Schedules.Event.put({scheduleId: schedule._id}).$promise.then(function(data) {
+        // $log.debug(data);
+        $scope.schedule = data;
+      });
+    };
+
+      $scope.removeEvent = function(index){
+      var schedule = $scope.schedule;
+      var eventToRemove = schedule.events[index];
+      Schedules.Event.delete({scheduleId: schedule._id}).$promise.then(function(data) {
+        // $log.debug(data);
+        $scope.schedule = data;
+      });
+    };
+
+      $scope.getEvents = function(){
+      var schedule = $scope.schedule;
+      Schedules.Event.query({scheduleId: schedule._id}).$promise.then(function(data) {
+        // $log.debug(data);
+        $scope.schedule = data;
+      });
+    };
+
 		 var date = new Date();
     var d = date.getDate();
     var m = date.getMonth();
