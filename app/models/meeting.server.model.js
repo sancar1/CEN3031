@@ -32,7 +32,7 @@ var MeetingSchema = new Schema({
 	noteTaker: {
 		type: String,
 		required: 'Please select a note taker'
-	}
+	},
 	membersPresent:[String],
 	members:[String],
 	dateOfMeeting: {
