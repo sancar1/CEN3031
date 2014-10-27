@@ -1,29 +1,32 @@
 <h1><b>Attendance</b></h1>
 
 <div data-ng-controller="UsersController">
-	<h3 data-ng-bind="committee.name"></h3>
-	<br>
-	<div>
-		<div>Total Members:</div>
-		<div data-ng-bind="committee.members.length"></div>
-	</div>
-	<br>
-	<div>
-		<div data-ng-show="committee.members.length">Take Attendance</div>
+	<div data-ng-controller="MeetingsController" data-ng-init="findOne()">
+		<h3 data-ng-bind="committee.name"></h3>
 		<br>
-		<div data-ng-repeat="member in members">
-			<label class="memberlabel">
-				<input type="checkbox" data-ng-model="member.isPresent" data-ng-init="member.isPresent=false" data-ng-change="checkMembersPresent(member.isPresent)">
-				<span data-ng-bind="member.firstName + ' ' + member.lastName"></span>
-			</label>
+		<div>
+			<div>Total Members:</div>
+			<div data-ng-bind="committee.members.length"></div>
 		</div>
+		<br>
+		<div>
+			<div data-ng-show="committee.members.length">Take Attendance</div>
+			<br>
+			<div data-ng-repeat="member in members">
+				<label class="memberlabel">
+					<input type="checkbox" data-ng-model="member.isPresent" data-ng-init="member.isPresent=false" data-ng-change="checkMembersPresent(member.isPresent)">
+					<span data-ng-bind="member.firstName + ' ' + member.lastName"></span>
+				</label>
+			</div>
+			<button class="btn btn-primary" data-ng-click="saveAttendance()">Save Attendance</button>
+		</div>
+		<br>
+		<div>
+			<div class="memberspresent">Members Present:</div>
+			<div data-ng-bind="membersPresent"></div> 
+		</div>
+		<br>
 	</div>
-	<br>
-	<div>
-		<div class="memberspresent">Members Present:</div>
-		<div data-ng-bind="membersPresent"></div> 
-	</div>
-	<br>
 </div>
 
 

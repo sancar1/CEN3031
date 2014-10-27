@@ -26,6 +26,10 @@ angular.module('core').config(['$stateProvider', '$urlRouterProvider', '$logProv
 			templateUrl: 'modules/committees/views/attendance.client.view.html'
 			// controller: 'CommitteesController'
 		}).
+		state('meetings', {
+			url: '/meetings',
+			templateUrl: 'modules/meetings/views/list-meetings.client.view.html'
+		}).
 		state('schedule', {
 			url: '/committee/schedule',
 			templateUrl: 'modules/schedules/views/schedule.client.view.html'

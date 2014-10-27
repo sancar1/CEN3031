@@ -92,5 +92,11 @@ angular.module('meetings').controller('MeetingsController', ['$scope', '$statePa
 				meetingId: $stateParams.meetingId
 			});
 		};
+
+		$scope.saveAttendance = function() {
+
+			Meetings.$update();
+
+		};
 	}
 ]);
