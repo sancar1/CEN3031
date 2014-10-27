@@ -133,7 +133,7 @@ angular.module('committees').controller('CommitteesController', ['$rootScope', '
 		$scope.addMeeting = function(meeting){
 			var committee = $scope.committee;
 			var meetingById = meeting._id;
-			var Meetings = Committees.Meetings.put({committeeId: committee._id}, {meetingId: meetingById}).$promise.then(function(data) {
+			var Meetings = Committees.Meetings.put({committeeId: committee._id, meetingId: meetingById}).$promise.then(function(data) {
 				console.log(data);
 				$scope.meetings = data;
 			});
@@ -141,7 +141,7 @@ angular.module('committees').controller('CommitteesController', ['$rootScope', '
 		$scope.removeMeeting = function(meeting){
 			var committee = $scope.committee;
 			var meetingById = meeting._id;
-			var Meetings = Committees.Meetings.delete({committeeId: committee._id}, {meetingId: meetingById}).$promise.then(function(data) {
+			var Meetings = Committees.Meetings.delete({committeeId: committee._id, meetingId: meetingById}).$promise.then(function(data) {
 				console.log(data);
 				$scope.meetings = data;
 			});

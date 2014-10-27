@@ -100,32 +100,34 @@ angular.module('schedules').controller('SchedulesController', ['$scope', '$state
           'end'   : new Date(2014,12,12),
           'allDay': false
       };
+      JSON.stringify(tempEventObject);
+      $scope.schedule.events.push(tempEventObject);
+      $scope.schedule.$update();
+      // $log.debug('tempEventObject:');
+      // $log.debug(tempEventObject);
 
-      $log.debug('tempEventObject:');
-      $log.debug(tempEventObject);
+      // $scope.events.push(tempEventObject);
 
-      $scope.events.push(tempEventObject);
+      // $log.debug('Events Array:');
+      // $log.debug($scope.events);
 
-      $log.debug('Events Array:');
-      $log.debug($scope.events);
+      // $log.debug('Schedule:');
+      // $log.debug($scope.schedule);     
 
-      $log.debug('Schedule:');
-      $log.debug($scope.schedule);     
+      // var index = $scope.events.length-1;
+      // $scope.eventToAdd = $scope.events[index];
 
-      var index = $scope.events.length-1;
-      $scope.schedule.eventToAdd = $scope.events[index];
+      // $log.debug('Event to Add:');
+      // $log.debug($scope.eventToAdd);
 
-      $log.debug('Event to Add:');
-      $log.debug($scope.schedule.eventToAdd);
+      // $log.debug('Schedule id:');
+      // $log.debug(schedule._id);
 
-      $log.debug('Schedule id:');
-      $log.debug(schedule._id);
-
-      Schedules.Event.update({scheduleId: schedule._id}).$promise.then(function(data) {
-        $log.debug('Data from Sucessful Added Event:');
-        $log.debug(data);
-        $scope.schedule = data;
-      });
+      // Schedules.Event.update({scheduleId: schedule._id}).$promise.then(function(data) {
+      //   $log.debug('Data from Sucessful Added Event:');
+      //   $log.debug(data);
+      //   $scope.schedule = data;
+      // });
     };
 
       $scope.removeEvent = function(index){

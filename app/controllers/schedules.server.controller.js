@@ -124,7 +124,7 @@ exports.getEvents = function(req, res) {
  */
 exports.addEvent = function(req, res) {
 	var scheduleById = req.schedule._id;
-	var Event = req.schedule.eventToAdd;
+	var Event = req.eventToAdd;
 
 	console.log(Event);
 
