@@ -41,7 +41,7 @@ exports.update = function(req, res) {
 	var meeting = req.meeting ;
 
 for(var i =0; i < req.meeting.members.length; i++) 
-	if(req.meeting.members[i].isPresent) req.meeting.membersPresent[i] = req.meeting.members[i]
+	if(req.meeting.members[i].isPresent) req.meeting.membersPresent[i] = req.meeting.members[i];
 
 	meeting = _.extend(meeting , req.body);
 
