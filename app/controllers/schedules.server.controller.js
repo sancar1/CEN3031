@@ -126,6 +126,8 @@ exports.addEvent = function(req, res) {
 	var scheduleById = req.schedule._id;
 	var Event = req.schedule.eventToAdd;
 
+	console.log(Event);
+
 	async.waterfall([
 		function(done){
 			Schedule.update({'_id': scheduleById}, {$addToSet:{'events': Event}}).exec(function(err, schedule){

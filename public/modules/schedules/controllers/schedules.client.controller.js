@@ -70,14 +70,13 @@ angular.module('schedules').controller('SchedulesController', ['$scope', '$state
 
 		// Find existing Schedule
 		// Find existing Schedule
-		$scope.findOne = function() {
-      var id = $scope.committee.schedules[0];
+		$scope.findOne = function(id) {
       $log.debug('Schedule id:');
       $log.debug(id);
 			Schedules.Schedules.get({ 
 				scheduleId: id
 			}).$promise.then(function (data) { 
-          $log.debug('Data from findOne function:');
+          $log.debug('$scope.schedule set with data from findOne function:');
           $log.debug(data);
           $scope.schedule = data;
       });
@@ -89,10 +88,17 @@ angular.module('schedules').controller('SchedulesController', ['$scope', '$state
 
       $log.debug('Entered addEvent');
 
+      // var tempEventObject = {
+      //     'title' : $scope.newEvent.name,
+      //     'start' : new Date($scope.newEvent.startY,$scope.newEvent.startM,$scope.newEvent.startD),
+      //     'end'   : new Date($scope.newEvent.endY,$scope.newEvent.endM,$scope.newEvent.endD)
+      // };
+
       var tempEventObject = {
-          'title' : $scope.newEvent.name,
-          'start' : new Date($scope.newEvent.startY,$scope.newEvent.startM,$scope.newEvent.startD),
-          'end'   : new Date($scope.newEvent.endY,$scope.newEvent.endM,$scope.newEvent.endD)
+          'title' : 'Crazy Event',
+          'start' : new Date(2014,11,11),
+          'end'   : new Date(2014,12,12),
+          'allDay': false
       };
 
       $log.debug('tempEventObject:');
