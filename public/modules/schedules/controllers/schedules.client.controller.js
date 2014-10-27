@@ -70,15 +70,21 @@ angular.module('schedules').controller('SchedulesController', ['$scope', '$state
 
 		// Find existing Schedule
 		// Find existing Schedule
-		$scope.findOne = function(id) {
-			$scope.schedule = Schedules.Schedules.get({ 
+		$scope.findOne = function() {
+      var id = $scope.committee.schedules[0];
+      $log.debug('Schedule id:');
+      $log.debug(id);
+			Schedules.Schedules.get({ 
 				scheduleId: id
-			});
-			console.log($scope.schedule);
+			}).$promise.then(function (data) { 
+          $log.debug('Data from findOne function:');
+          $log.debug(data);
+          $scope.schedule = data;
+      });
 		};
-		
+
     $scope.addNewEvent = function(){
-      // var schedule = $scope.schedule;
+      var schedule = $scope.schedule;
       // $scope.schedule.eventToAdd = schedule.events[index];
 
       $log.debug('Entered addEvent');
@@ -106,7 +112,10 @@ angular.module('schedules').controller('SchedulesController', ['$scope', '$state
       $log.debug('Event to Add:');
       $log.debug($scope.schedule.eventToAdd);
 
-      Schedules.Event.put({scheduleId: schedule._id}).$promise.then(function(data) {
+      $log.debug('Schedule id:');
+      $log.debug(schedule._id);
+
+      Schedules.Event.update({scheduleId: schedule._id}).$promise.then(function(data) {
         $log.debug('Data from Sucessful Added Event:');
         $log.debug(data);
         $scope.schedule = data;

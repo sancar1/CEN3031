@@ -4,8 +4,8 @@
 angular.module('schedules').factory('Schedules', ['$resource',
 	function($resource) {
 		return {
-			Schedules: $resource('schedules/:scheduleId', { scheduleId: '@_id'}, {update: {method: 'PUT'}}),
-			Event:     $resource('schedules/event/:scheduleId',{ scheduleId: '@_id'}),
+			Schedules: $resource('schedules/:scheduleId', { scheduleId: '@_id'}, {update: {method: 'PUT'}, query: {method: 'GET', isArray: true}}),
+			Event:     $resource('schedules/event/:scheduleId',{ scheduleId: '@_id'}, {update: {method: 'PUT'}}),
 		};
 	}
 ]);
