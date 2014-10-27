@@ -33,6 +33,12 @@ var MeetingSchema = new Schema({
 		type: String,
 		required: 'Please select a note taker'
 	}
+	membersPresent:[String],
+	members:[String],
+	dateOfMeeting: {
+		type: Date,
+		default: Date.now
+	}
 });
 
 mongoose.model('Meeting', MeetingSchema);
