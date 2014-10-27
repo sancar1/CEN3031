@@ -262,18 +262,18 @@ angular.module('committees').controller('CommitteesController', ['$rootScope', '
 
 		$scope.membersPresent = 0;
 
-		$scope.checkMembersPresent = function(isChecked){
-			// $log.debug('Committee Members:');
-			// $log.debug($scope.members);
+		$scope.checkMembersPresent = function(isPresent){
+			$log.debug('Committee Members:');
+			$log.debug($scope.members);
 
-			// $log.debug('isChecked:');
-			// $log.debug(isChecked);
+			$log.debug('isPresent:');
+			$log.debug(isPresent);
 
-			if(isChecked === true){
+			if(isPresent === true){
 				$scope.membersPresent++;
 			}
 
-			if(isChecked === false){
+			if(isPresent === false){
 				$scope.membersPresent--;
 			}
 		};

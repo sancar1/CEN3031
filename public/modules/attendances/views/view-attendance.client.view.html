@@ -1,21 +1,29 @@
-<section data-ng-controller="AttendancesController" data-ng-init="findOne()">
-	<div class="page-header">
-		<h1 data-ng-bind="attendance.name"></h1>
+<h1><b>Attendance</b></h1>
+<div data-ng-controller="AttendancesController">
+	<div data-ng-controller="UsersController">
+		<h3 data-ng-bind="committee.name"></h3>
+		<br>
+		<div>
+			<div>Total Members:</div>
+			<div data-ng-bind="committee.members.length"></div>
+		</div>
+		<br>
+		<div>
+			<div data-ng-show="committee.members.length">Take Attendance</div>
+			<br>
+			<div data-ng-repeat="member in members">
+				<label class="memberlabel">
+					<input type="checkbox" data-ng-model="member.isChecked" data-ng-init="member.isChecked=false" data-ng-change="checkMembersPresent(member.isChecked)">
+					<span data-ng-bind="member.firstName + ' ' + member.lastName"></span>
+				</label>
+			</div>
+		</div>
+		<br>
+		<div>
+			<div class="memberspresent">Members Present:</div>
+			<div data-ng-bind="membersPresent"></div> 
+		</div>
+		<br>
 	</div>
-	<div class="pull-right" data-ng-show="authentication.user._id == attendance.user._id">
-		<a class="btn btn-primary" href="/#!/attendances/{{attendance._id}}/edit">
-			<i class="glyphicon glyphicon-edit"></i>
-		</a>
-		<a class="btn btn-primary" data-ng-click="remove();">
-			<i class="glyphicon glyphicon-trash"></i>
-		</a>
-	</div>
-	<small>
-		<em class="text-muted">
-			Posted on
-			<span data-ng-bind="attendance.created | date:'mediumDate'"></span>
-			by
-			<span data-ng-bind="attendance.user.displayName"></span>
-		</em>
-	</small>
-</section>
+
+

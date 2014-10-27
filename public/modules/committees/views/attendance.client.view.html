@@ -13,7 +13,7 @@
 		<br>
 		<div data-ng-repeat="member in members">
 			<label class="memberlabel">
-				<input type="checkbox" data-ng-model="member.isChecked" data-ng-init="member.isChecked=false" data-ng-change="checkMembersPresent(member.isChecked)">
+				<input type="checkbox" data-ng-model="member.isPresent" data-ng-init="member.isPresent=false" data-ng-change="checkMembersPresent(member.isPresent)">
 				<span data-ng-bind="member.firstName + ' ' + member.lastName"></span>
 			</label>
 		</div>
