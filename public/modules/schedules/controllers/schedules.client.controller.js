@@ -69,10 +69,12 @@ angular.module('schedules').controller('SchedulesController', ['$scope', '$state
 		};
 
 		// Find existing Schedule
-		$scope.findOne = function() {
+		// Find existing Schedule
+		$scope.findOne = function(id) {
 			$scope.schedule = Schedules.Schedules.get({ 
-				scheduleId: $stateParams.scheduleId
+				scheduleId: id
 			});
+			console.log($scope.schedule);
 		};
 		
     $scope.addNewEvent = function(){
