@@ -1,21 +1,22 @@
 'use strict';
 
 // Schedules controller
-angular.module('schedules').controller('SchedulesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Schedules',
-	function($scope, $stateParams, $location, Authentication, Schedules ) {
+angular.module('schedules').controller('SchedulesController', ['$scope', '$stateParams', '$location', 'Authentication','Committees', 'Schedules',
+	function($scope, $stateParams, $location, Authentication,Committees, Schedules ) {
 		$scope.authentication = Authentication;
+		
 
 
 		// Create new Schedule
 		$scope.create = function() {
 			// Create new Schedule object
 			var schedule = new Schedules.Schedules ({
-				name: this.name
+				name: "TestZachary"
 			});
-
+			$scope.schedule =schedule;
 			// Redirect after save
 			schedule.$save(function(response) {
-				$location.path('schedules/' + response._id);
+				//$location.path('schedules/' + response._id);
 
 				// Clear form fields
 				$scope.name = '';
@@ -62,6 +63,17 @@ angular.module('schedules').controller('SchedulesController', ['$scope', '$state
 				scheduleId: $stateParams.scheduleId
 			});
 		};
+
+		$scope.addSchedule = function(){
+			console.log($scope.schedule);
+			console.log($scope.committee);
+			var committee = $scope.committee;
+			var scheduleById = $scope.schedule._id;
+			Committees.Committees.Schedules.update({committeeId: committee._id, scheduleId: scheduleById}).$promise.then(function(data) {
+				
+			});
+		};
+		
 
 
     $scope.addEvent = function(index){
