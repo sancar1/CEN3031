@@ -4,6 +4,7 @@ module.exports = function(app) {
 	var users = require('../../app/controllers/users');
 	var committees = require('../../app/controllers/committees');
 	var meetings = require('../../app/controllers/meetings');
+	var schedules = require('../../app/controllers/schedules');
 
 	// Committees Routes
 	app.route('/committees')
@@ -35,7 +36,7 @@ module.exports = function(app) {
 		.put(committees.setChair)
 		.delete(committees.removeChair);
 
-	app.route('/committees/:committeeId/schedule/:scheduleId')
+	app.route('/committees/:committeeId/:scheduleId')
 		.put(committees.addSchedule);
 		
 
@@ -43,4 +44,5 @@ module.exports = function(app) {
 	app.param('committeeId', committees.committeeByID);
 	app.param('userId', users.userByID);
 	app.param('meetingId', meetings.meetingByID);
+	app.param('scheduleId', schedules.scheduleByID);
 };

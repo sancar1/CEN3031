@@ -23,6 +23,7 @@ exports.create = function(req, res) {
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
+			console.log(schedule._id);
 			res.jsonp(schedule);
 		}
 	});

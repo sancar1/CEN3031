@@ -11,7 +11,7 @@ angular.module('schedules').controller('SchedulesController', ['$scope', '$state
 		$scope.create = function() {
 			// Create new Schedule object
 			var schedule = new Schedules.Schedules ({
-				name: "TestZachary"
+				name: 'TestZachary'
 			});
 			$scope.schedule =schedule;
 			// Redirect after save
@@ -19,6 +19,17 @@ angular.module('schedules').controller('SchedulesController', ['$scope', '$state
 				//$location.path('schedules/' + response._id);
 
 				// Clear form fields
+        console.log('schedule: '+schedule._id);
+        console.log('schedule: '+$scope.committee._id);
+       // $scope.addSchedule(schedule);
+      
+       $scope.addSchedule(schedule);
+
+
+
+
+
+
 				$scope.name = '';
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
@@ -63,19 +74,7 @@ angular.module('schedules').controller('SchedulesController', ['$scope', '$state
 				scheduleId: $stateParams.scheduleId
 			});
 		};
-
-		$scope.addSchedule = function(){
-			console.log($scope.schedule);
-			console.log($scope.committee);
-			var committee = $scope.committee;
-			var scheduleById = $scope.schedule._id;
-			Committees.Committees.Schedules.update({committeeId: committee._id, scheduleId: scheduleById}).$promise.then(function(data) {
-				
-			});
-		};
 		
-
-
     $scope.addEvent = function(index){
       var schedule = $scope.schedule;
       $scope.schedule.eventToAdd = schedule.events[index];

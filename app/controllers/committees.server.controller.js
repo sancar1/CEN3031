@@ -293,7 +293,7 @@ exports.addMeeting = function(req, res) {
 exports.addSchedule = function(req, res) {
 	var scheduleById = req.params.scheduleId;
 	var committeeById = req.committee._id; 
-
+	console.log('here');
 	async.waterfall([
 		function(done){
 			Committee.update({'_id': committeeById}, {$addToSet:{'schedules': scheduleById}},function(err, committee){

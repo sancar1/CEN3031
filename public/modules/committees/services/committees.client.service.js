@@ -6,7 +6,7 @@ angular.module('committees').factory('Committees', ['$resource',
 		return {
 			Committees:	$resource('committees/:committeeId', { committeeId: '@_id'}, {update: {method: 'PUT'},query: {method: 'GET', isArray: true}}),
 			Meetings: 	$resource('committees/:committeeId/meetings',{committeeId: '@_id'}), 
-			Schedules: 	$resource('committees/:committeeId/schedules/:scheduleId',{committeeId: '@_id', scheduleId: '@scheduleId'}), 
+			Schedule: 	$resource('committees/:committeeId/:scheduleId',{committeeId: '@committeeId', scheduleId: '@scheduleId'}), 
 			Members:    $resource('committees/:committeeId/members',{committeeId: '@_id'}),
 			Member:     $resource('committees/:committeeId/:userId',{committeeId: '@committeeId', userId: '@userId'}, {update: {method: 'PUT'}}), 
 			Chair:      $resource('committees/:committeeId/committeeChair/:chairId',{committeeId: '@committeeId', chairId:'@userId'}), 

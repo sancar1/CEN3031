@@ -1,8 +1,8 @@
 'use strict';
 
 // Committees controller
-angular.module('committees').controller('CommitteesController', ['$rootScope', '$scope', '$stateParams', '$location', 'Authentication', 'Users', 'Committees','Schedules', '$q', '$log',
-	function($rootScope, $scope, $stateParams, $location, Authentication,Users, Committees,Schedules, $q, $log) {
+angular.module('committees').controller('CommitteesController', ['$rootScope', '$scope', '$stateParams', '$location', 'Authentication', 'Users', 'Committees', '$q', '$log',
+	function($rootScope, $scope, $stateParams, $location, Authentication,Users, Committees, $q, $log) {
 		$scope.authentication = Authentication;
 		$scope.currentUser = Authentication.user;
 	//	$scope.schedule = Schedules.schedule;
@@ -117,15 +117,18 @@ angular.module('committees').controller('CommitteesController', ['$rootScope', '
 			});
 		};
 
-		// $scope.addSchedule = function(schedule){
-// 			console.log(schedule.name);
-// 			var committee = $scope.committee;
-// 			var scheduleById = schedule._id;
-// 			var Meetings = Committees.Schedules.put({committeeId: committee._id}, {scheduleId: scheduleById}).$promise.then(function(data) {
-// 				console.log(data);
-// 				$scope.meetings = data;
-// 			});
-// 		};
+		 $scope.addSchedule = function(schedule){
+			var committee = $scope.committee;
+			var scheduleById = schedule._id;
+			console.log('committee: '+committee._id);
+			console.log('committee: '+scheduleById);
+			 $scope.committee.schedules.push(schedule._id);
+			 $scope.committee.$update(function() {
+				$location.path('committees/' + committee._id);
+			}, function(errorResponse) {
+				$scope.error = errorResponse.data.message;
+			});
+		};
 
 		$scope.addMeeting = function(meeting){
 			var committee = $scope.committee;
