@@ -1,8 +1,8 @@
 'use strict';
 
 // Schedules controller
-angular.module('schedules').controller('SchedulesController', ['$scope', '$stateParams', '$location', 'Authentication','Committees', 'Schedules',
-	function($scope, $stateParams, $location, Authentication,Committees, Schedules ) {
+angular.module('schedules').controller('SchedulesController', ['$scope', '$stateParams', '$location', 'Authentication','Committees', 'Schedules', '$log',
+	function($scope, $stateParams, $location, Authentication,Committees, Schedules, $log ) {
 		$scope.authentication = Authentication;
 		
 
@@ -75,13 +75,27 @@ angular.module('schedules').controller('SchedulesController', ['$scope', '$state
 			});
 		};
 		
-    $scope.addEvent = function(index){
-      var schedule = $scope.schedule;
-      $scope.schedule.eventToAdd = schedule.events[index];
-      Schedules.Event.put({scheduleId: schedule._id}).$promise.then(function(data) {
-        // $log.debug(data);
-        $scope.schedule = data;
-      });
+    $scope.addEvent = function(){
+      // var schedule = $scope.schedule;
+      // $scope.schedule.eventToAdd = schedule.events[index];
+
+      $log.debug('Entered addEvent');
+
+      var tempEventObject = {
+          'title' : $scope.newEvent.name,
+          'start' : new Date($scope.newEvent.startY,$scope.newEvent.startM,$scope.newEvent.startD),
+          'end'   : new Date($scope.newEvent.endY,$scope.newEvent.endM,$scope.newEvent.endD)
+      };
+
+      $log.debug('tempEventObject:');
+      $log.debug(tempEventObject);
+
+      // var index = $scope.events.length-1;
+      // $scope.schedule.eventToAdd = $scope.events[index];
+      // Schedules.Event.put({scheduleId: schedule._id}).$promise.then(function(data) {
+      //   // $log.debug(data);
+      //   $scope.schedule = data;
+      // });
     };
 
       $scope.removeEvent = function(index){
