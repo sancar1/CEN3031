@@ -75,7 +75,7 @@ angular.module('schedules').controller('SchedulesController', ['$scope', '$state
 			});
 		};
 		
-    $scope.addEvent = function(){
+    $scope.addNewEvent = function(){
       // var schedule = $scope.schedule;
       // $scope.schedule.eventToAdd = schedule.events[index];
 
@@ -90,12 +90,25 @@ angular.module('schedules').controller('SchedulesController', ['$scope', '$state
       $log.debug('tempEventObject:');
       $log.debug(tempEventObject);
 
-      // var index = $scope.events.length-1;
-      // $scope.schedule.eventToAdd = $scope.events[index];
-      // Schedules.Event.put({scheduleId: schedule._id}).$promise.then(function(data) {
-      //   // $log.debug(data);
-      //   $scope.schedule = data;
-      // });
+      $scope.events.push(tempEventObject);
+
+      $log.debug('Events Array:');
+      $log.debug($scope.events);
+
+      $log.debug('Schedule:');
+      $log.debug($scope.schedule);     
+
+      var index = $scope.events.length-1;
+      $scope.schedule.eventToAdd = $scope.events[index];
+
+      $log.debug('Event to Add:');
+      $log.debug($scope.schedule.eventToAdd);
+
+      Schedules.Event.put({scheduleId: schedule._id}).$promise.then(function(data) {
+        $log.debug('Data from Sucessful Added Event:');
+        $log.debug(data);
+        $scope.schedule = data;
+      });
     };
 
       $scope.removeEvent = function(index){

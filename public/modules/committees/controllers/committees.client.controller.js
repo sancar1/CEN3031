@@ -124,7 +124,7 @@ angular.module('committees').controller('CommitteesController', ['$rootScope', '
 			console.log('committee: '+scheduleById);
 			 $scope.committee.schedules.push(schedule._id);
 			 $scope.committee.$update(function() {
-				$location.path('committees/' + committee._id);
+				// $location.path('committees/' + committee._id);
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
 			});
