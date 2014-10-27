@@ -41,6 +41,9 @@ exports.read = function(req, res) {
 exports.update = function(req, res) {
 	var attendance = req.attendance ;
 
+	for(var i =0; i < req.attendance.members.length; i++) if(req.attendance.members[i].isPresent) req.attendance.membesPresent[i] = req.attendance.members[i]
+	
+
 	attendance = _.extend(attendance , req.body);
 
 	attendance.save(function(err) {
