@@ -1,8 +1,8 @@
 'use strict';
 
 
-angular.module('core').controller('HomeController', ['$scope', 'Authentication', 'Committees', '$filter',
-	function($scope, Authentication, Committees, $filter) {
+angular.module('core').controller('HomeController', ['$scope', 'Authentication', 'Committees', '$filter', '$log',
+	function($scope, Authentication, Committees, $filter, $log) {
 		// This provides Authentication context.
 		$scope.authentication = Authentication;
 		$scope.currentUser = Authentication.user;
