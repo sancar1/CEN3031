@@ -1,24 +1,24 @@
 'use strict';
 
 // Committees controller
-angular.module('committees').controller('CommitteesController', ['$rootScope', '$scope', '$stateParams', '$location', 'Authentication', 'Users', 'Committees', '$q', '$log',
-	function($rootScope, $scope, $stateParams, $location, Authentication,Users, Committees, $q, $log) {
+angular.module('committees').controller('CommitteesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Users', 'Committees', '$q', '$log',
+	function($scope, $stateParams, $location, Authentication,Users, Committees, $q, $log) {
 		$scope.authentication = Authentication;
 		$scope.currentUser = Authentication.user;
 	//	$scope.schedule = Schedules.schedule;
 
 		// Find a List of Committees
-		Committees.Committees.query().$promise.then(function(data) {
-			$scope.committees = data;
-			$log.info('List of Committees Loaded');
-		});
+		// Committees.Committees.query().$promise.then(function(data) {
+		// 	$scope.committees = data;
+		// 	$log.info('List of Committees Loaded');
+		// });
 
-		$scope.find = function(){
-			Committees.Committees.query().$promise.then(function(data) {
-				$scope.committees = data;
-				$log.info('List of Committees Loaded');
-			});
-		};
+		// $scope.find = function(){
+		// 	Committees.Committees.query().$promise.then(function(data) {
+		// 		$scope.committees = data;
+		// 		$log.info('List of Committees Loaded');
+		// 	});
+		// };
 
 		// Create new Committee
 		$scope.create = function($scope) {
