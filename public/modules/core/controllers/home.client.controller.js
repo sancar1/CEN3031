@@ -12,6 +12,8 @@ angular.module('core').controller('HomeController', ['$scope', 'Authentication',
 			'user' : false,
 		};
 
+
+
 		$scope.getRole = function() {
 
 			if($filter('lowercase')($scope.currentUser.role) === 'admin')
@@ -19,6 +21,8 @@ angular.module('core').controller('HomeController', ['$scope', 'Authentication',
 			if($filter('lowercase')($scope.currentUser.role) === 'user')
 				$scope.role.user = true;
 		};
+
+		$scope.getRole();
 
 		// Find a List of Committees
 		Committees.Committees.query().$promise.then(function(data) {
