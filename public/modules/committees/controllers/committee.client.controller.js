@@ -32,15 +32,15 @@ angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParam
 				$location.path('committees/' + response._id);
 		
 				// Clear form fields
-				this.committee.name = null;
-				this.chair.id = null;
+				this.committee.name = '';
+				this.chair.id = '';
 			}, function(errorResponse) { 
 				$scope.error = errorResponse.data.message;
 			});
 
 			//Clear form fields
-			this.committee.name = null;
-			this.chair.id = null;
+			this.committee.name = '';
+			this.chair.id = '';
 
 		};
 
