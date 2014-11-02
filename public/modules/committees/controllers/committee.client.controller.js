@@ -3,14 +3,14 @@
 // Committees controller
 angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParams', '$location', 'Authentication', 'Users', 'Committees', '$q', '$log',
 	function($scope, $stateParams, $location, Authentication,Users, Committees, $q, $log) {
-		$scope.getRole();
+		// $scope.getRole();
 
-		if($scope.role.admin)
-			$scope.committeeTemplates.edit = true;
+		// if($scope.role.admin)
+		// 	$scope.committeeTemplates.edit = true;
 
-		$scope.committeeTemplates.attendance = true;
-		$scope.committeeTemplates.schedule = true;
-		$scope.committeeTemplates.resources = true;
+		// $scope.committeeTemplates.attendance = true;
+		// $scope.committeeTemplates.schedule = true;
+		// $scope.committeeTemplates.resources = true;
 
 		// Create new Committee
 		$scope.create = function($scope) {
