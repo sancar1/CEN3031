@@ -1,8 +1,8 @@
 'use strict';
 
 
-angular.module('core').controller('HomeController', ['$scope', 'Authentication', 'Committees', '$filter', '$log',
-	function($scope, Authentication, Committees, $filter, $log) {
+angular.module('core').controller('HomeController', ['$scope', 'Authentication', 'Committees', '$filter', '$log', '$location',
+	function($scope, Authentication, Committees, $filter, $log, $location) {
 		// This provides Authentication context.
 		$scope.authentication = Authentication;
 		$scope.currentUser = Authentication.user;
@@ -12,7 +12,13 @@ angular.module('core').controller('HomeController', ['$scope', 'Authentication',
 			'user' : false,
 		};
 
-
+		// Default values for Committee
+		$scope.committeeTemplates = {
+			'edit' : false,
+			'attendance' : false,
+			'schedule' : false,
+			'resources' : false
+		};
 
 		$scope.getRole = function() {
 
@@ -23,6 +29,11 @@ angular.module('core').controller('HomeController', ['$scope', 'Authentication',
 		};
 
 		$scope.getRole();
+
+		if ($scope.authentication.user) {
+			$scope.currentUser = Authentication.user;
+			$location.path('/');
+		}
 
 		// Find a List of Committees
 		Committees.Committees.query().$promise.then(function(data) {
