@@ -3,8 +3,8 @@
 // Committees controller
 angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParams', '$location', 'Authentication', 'Users', 'Committees', '$q', '$log',
 	function($scope, $stateParams, $location, Authentication, Users, Committees, $q, $log) {
-		$scope.getRole();
-
+		
+		/* Committee Link Permissions */
 		if($scope.role.admin)
 			$scope.committeeTemplates.edit = true;
 
@@ -12,13 +12,16 @@ angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParam
 		$scope.committeeTemplates.schedule = true;
 		$scope.committeeTemplates.resources = true;
 
+		/* Committee Data to be Loaded on Page Load */
+		$scope.findCommittee().then(function() {
+			$scope.getChair();
+			$scope.getMembers();
+		});
+
+		/* Committee Functions */
 		// Create new Committee
 		$scope.create = function($scope) {
 			// Create new Committee object
-
-			// $log.debug('Chair Id:');
-			// $log.debug(this.chair.id);
-
 			var committee = new Committees.Committees ({
 				name: this.committee.name,
 				chair: this.chair.id
@@ -93,13 +96,13 @@ angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParam
 			});
 		};
 
-		// $scope.getMembers = function(){
-		// 	var committee = $scope.committee;
-		// 	var Members = Committees.Members.query({committeeId: committee._id}).$promise.then(function(data) {
-		// 		// $log.debug(data);
-		// 		$scope.members = data;
-		// 	});
-		// };
+		$scope.getMembers = function(){
+			var committee = $scope.committee;
+			var Members = Committees.Members.query({committeeId: committee._id}).$promise.then(function(data) {
+				// $log.debug(data);
+				$scope.members = data;
+			});
+		};
 
 		$scope.getMeetings = function(){
 			var committee = $scope.committee;
@@ -109,13 +112,13 @@ angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParam
 			});
 		};
 
-		 $scope.addSchedule = function(schedule){
+		$scope.addSchedule = function(schedule){
 			var committee = $scope.committee;
 			var scheduleById = schedule._id;
 			console.log('committee: '+committee._id);
 			console.log('committee: '+scheduleById);
-			 $scope.committee.schedules.push(schedule._id);
-			 $scope.committee.$update(function() {
+			$scope.committee.schedules.push(schedule._id);
+			$scope.committee.$update(function() {
 				// $location.path('committees/' + committee._id);
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
@@ -156,103 +159,15 @@ angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParam
 			});
 		};
 
-		// $scope.getChair = function(){
-		// 	var committee = $scope.committee;
-		// 	Committees.Chair.get({committeeId: committee._id, chairId: committee.chair}).$promise.then(function(data) {
-		// 		$log.debug($scope.committee.name + ' Chair: ' + data.displayName);
-		// 		$scope.chair = data;
-		// 	});
-		// };
-
-		$scope.checkOwner = function(committee){
-		//	var user = new Users($scope.currentUser);
-		//	var committee = $scope.committee;
-			if($scope.currentUser.displayName===committee.user.displayName){
-				return true;
-			}
-			else{
-				return false;
-			}
-		};
-		
-		$scope.userInCommittee = function(committee){
-			//console.log($scope.committee.members);
-			//console.log($scope.committee._id);
-			//console.log(user);
-
-			if(typeof committee !== 'undefined'){
-				for(var i = 0; i < committee.members.length; i++){
-					// $log.debug('Current User:');
-					// $log.debug($scope.currentUser._id);
-
-					// $log.debug('Committee Members ID:');
-					// $log.debug(committee.members[i]._id);
-
-					// $log.debug('Committee Members:');
-					// $log.debug(committee.members);
-
-					if($scope.currentUser._id === committee.members[i]){
-						return true;
-					}
-				}
-				return false;
-			}
-			return false;
-			
-
-
-			/*for(var i = 0; i < committee.members.length; i++){
-				var temp = committee.members[i]._id;
-				console.log(temp);
-				//console.log(Users.get({userId: $stateParams.userId});
-				console.log(Users.get({
-					 temp: $stateParams.userId
-				}));
-			}*/		
-		};
-			
-		// Find existing Committee
-		$scope.findCommittee = function() {
-
-			Committees.Committees.get({
-				committeeId: $stateParams.committeeId
-			}).$promise.then(function(data) {
-				$scope.committee = data;
-				
-				// $log.debug('$scope.committee: ');
-				// $log.debug($scope.committee);
-
-				$scope.getChair();
-				$scope.getMembers();
-				
+		$scope.getChair = function(){
+			var committee = $scope.committee;
+			Committees.Chair.get({committeeId: committee._id, chairId: committee.chair}).$promise.then(function(data) {
+				$log.debug($scope.committee.name + ' Chair: ' + data.displayName);
+				$scope.chair = data;
 			});
-
-
-			// var test =
-
-			// 	Committees.Committees.get({
-			// 		committeeId: $stateParams.committeeId
-			// 	}).$promise.then(function(data) {
-			// 		$scope.committee = data;
-			// 		return data;
-			// 	});
-
-
-			// test.then(function(data) {
-
-			// 	$log.debug('data:');
-			// 	$log.debug(data);
-
-			// 	$log.debug('$scope.committee:');
-			// 	$log.debug($scope.committee);
-			// 	$log.debug('$scope.committee.members:');
-			// 	$log.debug($scope.committee.members);
-			// 	$log.debug('$scope.committee.name:');
-			// 	$log.debug($scope.committee.name);
-
-			// });
 		};
 
+		/* Attendance Checking */
 		$scope.membersPresent = 0;
 
 		$scope.checkMembersPresent = function(isChecked){
@@ -271,21 +186,8 @@ angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParam
 			}
 		};
 
-		$scope.viewCommittee = function(committee) {
-			// var debugObj = {
-			// 				'checkAdmin' : $scope.checkAdmin(),
-			// 				'checkOwner' : $scope.checkOwner(committee),
-			// 				'userInCommittee' : $scope.userInCommittee(committee)
-			// 			};
-
-			// $log.debug('Debug Statement:');
-			// $log.debug(debugObj);
-			
-			if($scope.checkAdmin() === true || $scope.checkOwner(committee) === true || $scope.userInCommittee(committee) === true){
-				return true;
-			}
-			return false;
-		};
+		/* Committee Function Calls */
+		
 
 	}
 ]);

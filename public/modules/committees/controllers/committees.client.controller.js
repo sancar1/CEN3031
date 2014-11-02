@@ -6,7 +6,52 @@ angular.module('committees').controller('CommitteesController', ['$scope', '$sta
 		$scope.authentication = Authentication;
 		$scope.currentUser = Authentication.user;
 
-		
+		$scope.checkOwner = function(committee){
+		//	var user = new Users($scope.currentUser);
+		//	var committee = $scope.committee;
+			if($scope.currentUser.displayName===committee.user.displayName){
+				return true;
+			}
+			else{
+				return false;
+			}
+		};
+
+		$scope.userInCommittee = function(committee){
+			//console.log($scope.committee.members);
+			//console.log($scope.committee._id);
+			//console.log(user);
+
+			if(typeof committee !== 'undefined'){
+				for(var i = 0; i < committee.members.length; i++){
+					// $log.debug('Current User:');
+					// $log.debug($scope.currentUser._id);
+
+					// $log.debug('Committee Members ID:');
+					// $log.debug(committee.members[i]._id);
+
+					// $log.debug('Committee Members:');
+					// $log.debug(committee.members);
+
+					if($scope.currentUser._id === committee.members[i]){
+						return true;
+					}
+				}
+				return false;
+			}
+			return false;
+			
+
+
+			/*for(var i = 0; i < committee.members.length; i++){
+				var temp = committee.members[i]._id;
+				console.log(temp);
+				//console.log(Users.get({userId: $stateParams.userId});
+				console.log(Users.get({
+					 temp: $stateParams.userId
+				}));
+			}*/		
+		};
 
 		
 
@@ -53,9 +98,12 @@ angular.module('committees').controller('CommitteesController', ['$scope', '$sta
 		// Find existing Committee
 		$scope.findOne = function() {
 
+			$log.debug('Entered findOne()');
+
 			Committees.Committees.get({
 				committeeId: $stateParams.committeeId
 			}).$promise.then(function(data) {
+				$log.debug('Data returned from findOne() promise.');
 				$scope.committee = data;
 				
 				// $log.debug('$scope.committee: ');
@@ -90,6 +138,22 @@ angular.module('committees').controller('CommitteesController', ['$scope', '$sta
 			// 	$log.debug($scope.committee.name);
 
 			// });
+		};
+
+		$scope.viewCommittee = function(committee) {
+			// var debugObj = {
+			// 				'checkAdmin' : $scope.role.admin,
+			// 				'checkOwner' : $scope.checkOwner(committee),
+			// 				'userInCommittee' : $scope.userInCommittee(committee)
+			// 			};
+
+			// $log.debug('Debug Statement:');
+			// $log.debug(debugObj);
+			
+			if($scope.role.admin === true || $scope.checkOwner(committee) === true || $scope.userInCommittee(committee) === true){
+				return true;
+			}
+			return false;
 		};
 		
 	}
