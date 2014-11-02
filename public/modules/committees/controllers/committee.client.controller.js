@@ -2,15 +2,15 @@
 
 // Committees controller
 angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParams', '$location', 'Authentication', 'Users', 'Committees', '$q', '$log',
-	function($scope, $stateParams, $location, Authentication,Users, Committees, $q, $log) {
-		// $scope.getRole();
+	function($scope, $stateParams, $location, Authentication, Users, Committees, $q, $log) {
+		$scope.getRole();
 
-		// if($scope.role.admin)
-		// 	$scope.committeeTemplates.edit = true;
+		if($scope.role.admin)
+			$scope.committeeTemplates.edit = true;
 
-		// $scope.committeeTemplates.attendance = true;
-		// $scope.committeeTemplates.schedule = true;
-		// $scope.committeeTemplates.resources = true;
+		$scope.committeeTemplates.attendance = true;
+		$scope.committeeTemplates.schedule = true;
+		$scope.committeeTemplates.resources = true;
 
 		// Create new Committee
 		$scope.create = function($scope) {
@@ -93,13 +93,13 @@ angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParam
 			});
 		};
 
-		$scope.getMembers = function(){
-			var committee = $scope.committee;
-			var Members = Committees.Members.query({committeeId: committee._id}).$promise.then(function(data) {
-				// $log.debug(data);
-				$scope.members = data;
-			});
-		};
+		// $scope.getMembers = function(){
+		// 	var committee = $scope.committee;
+		// 	var Members = Committees.Members.query({committeeId: committee._id}).$promise.then(function(data) {
+		// 		// $log.debug(data);
+		// 		$scope.members = data;
+		// 	});
+		// };
 
 		$scope.getMeetings = function(){
 			var committee = $scope.committee;
@@ -156,13 +156,13 @@ angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParam
 			});
 		};
 
-		$scope.getChair = function(){
-			var committee = $scope.committee;
-			Committees.Chair.get({committeeId: committee._id, chairId: committee.chair}).$promise.then(function(data) {
-				$log.debug($scope.committee.name + ' Chair: ' + data.displayName);
-				$scope.chair = data;
-			});
-		};
+		// $scope.getChair = function(){
+		// 	var committee = $scope.committee;
+		// 	Committees.Chair.get({committeeId: committee._id, chairId: committee.chair}).$promise.then(function(data) {
+		// 		$log.debug($scope.committee.name + ' Chair: ' + data.displayName);
+		// 		$scope.chair = data;
+		// 	});
+		// };
 
 		$scope.checkOwner = function(committee){
 		//	var user = new Users($scope.currentUser);
@@ -210,17 +210,17 @@ angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParam
 				}));
 			}*/		
 		};
-
-		// Find an existing Committee
-		$scope.findOne = function() {
+			
+		// Find existing Committee
+		$scope.findCommittee = function() {
 
 			Committees.Committees.get({
 				committeeId: $stateParams.committeeId
 			}).$promise.then(function(data) {
 				$scope.committee = data;
 				
-				$log.debug('$scope.committee: ');
-				$log.debug($scope.committee);
+				// $log.debug('$scope.committee: ');
+				// $log.debug($scope.committee);
 
 				$scope.getChair();
 				$scope.getMembers();
@@ -269,6 +269,22 @@ angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParam
 			if(isChecked === false){
 				$scope.membersPresent--;
 			}
+		};
+
+		$scope.viewCommittee = function(committee) {
+			// var debugObj = {
+			// 				'checkAdmin' : $scope.checkAdmin(),
+			// 				'checkOwner' : $scope.checkOwner(committee),
+			// 				'userInCommittee' : $scope.userInCommittee(committee)
+			// 			};
+
+			// $log.debug('Debug Statement:');
+			// $log.debug(debugObj);
+			
+			if($scope.checkAdmin() === true || $scope.checkOwner(committee) === true || $scope.userInCommittee(committee) === true){
+				return true;
+			}
+			return false;
 		};
 
 	}
