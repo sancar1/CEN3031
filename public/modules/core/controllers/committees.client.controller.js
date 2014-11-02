@@ -36,8 +36,6 @@ angular.module('core').controller('CommitteesCtrl', ['$scope', '$log', '$q', '$s
 
 		/* Application Functions */
 		$scope.getRole = function() {
-			$log.debug('getRole() Called');
-
 			if($filter('lowercase')($scope.currentUser.role) === 'admin')
 				$scope.role.admin = true;
 			if($filter('lowercase')($scope.currentUser.role) === 'user')
@@ -88,48 +86,12 @@ angular.module('core').controller('CommitteesCtrl', ['$scope', '$log', '$q', '$s
 		// Find existing Committee
 		$scope.findCommittee = function() {
 
-			$log.debug('Entered findCommittee()');
-
-			// var test =
-
 			return Committees.Committees.get({
 				committeeId: $stateParams.committeeId
 			}).$promise.then(function(data) {
-				$log.debug('Data returned from findCommittee() promise.');
-				
 				$scope.committee = data;
-				
 			});
 
-			// test.then(function(data) {
-			// 	$log.debug('Chained promise call');
-			// });
-
-		};
-
-		/* Functions to modify/delete */
-		$scope.checkAdmin = function(){
-			var user = new Users($scope.currentUser);
-			if(user.role === 'Admin'){
-				return true;
-			}
-			else{
-				return false;
-			}
-		};
-
-		$scope.checkLoggedIn = function(){
-			var user = new Users($scope.currentUser);
-
-			$log.debug('Current User:');
-			$log.debug($scope.currentUser);
-
-			if(!$scope.currentUser){
-				return false;
-			}
-			else{
-				return true;
-			}
 		};
 
 		/* Application Function Calls */

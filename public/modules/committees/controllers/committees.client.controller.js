@@ -7,8 +7,6 @@ angular.module('committees').controller('CommitteesController', ['$scope', '$sta
 		$scope.currentUser = Authentication.user;
 
 		$scope.checkOwner = function(committee){
-		//	var user = new Users($scope.currentUser);
-		//	var committee = $scope.committee;
 			if($scope.currentUser.displayName===committee.user.displayName){
 				return true;
 			}

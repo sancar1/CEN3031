@@ -32,7 +32,7 @@ angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParam
 				$location.path('committees/' + response._id);
 		
 				// Clear form fields
-				this.committe.name = '';
+				this.committee.name = '';
 				this.chair.id = '';
 			}, function(errorResponse) { 
 				$scope.error = errorResponse.data.message;
@@ -187,7 +187,14 @@ angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParam
 		};
 
 		/* Committee Function Calls */
-		
+
+		/* Clean Up on Exit */
+		$scope.$on("$destroy", function() {
+			$scope.committeeTemplates.edit = false;
+			$scope.committeeTemplates.attendance = false;
+			$scope.committeeTemplates.schedule = false;
+			$scope.committeeTemplates.resources = false;
+		});
 
 	}
 ]);

@@ -18,7 +18,6 @@ angular.module('core').config(['$stateProvider', '$urlRouterProvider', '$logProv
 		state('home', {
 			url: '/',
 			templateUrl: 'modules/committees/views/list-committees.client.view.html'
-			// templateUrl: 'modules/core/views/test.client.view.html'
 		}).
 		state('edit', {
 			url: '/committees/:committeeId/edit',
