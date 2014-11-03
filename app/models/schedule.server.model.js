@@ -35,7 +35,7 @@ ScheduleSchema.methods.findByUser = function ( callback) {
 }
 
 //static method
-ScheduleSchema.statics.findByName = function (name, callback) {
+ScheduleSchema.statics.findByName = function (name, callback) {ggggg
 	this.find({ name: new RegExp(name, 'i') }, callback);
 }
 
