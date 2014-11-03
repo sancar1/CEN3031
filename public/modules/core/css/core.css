@@ -32,6 +32,10 @@ p,div{
 	color:#fffff;
 }
 
+#name{
+	width: 50%;
+}
+
 /*project title*/
 .navbar-inverse .navbar-brand {
 color: #fff;
