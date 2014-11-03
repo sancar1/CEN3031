@@ -3,6 +3,10 @@
 // Committees controller
 angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParams', '$location', 'Authentication', 'Users', 'Committees', '$q', '$log',
 	function($scope, $stateParams, $location, Authentication, Users, Committees, $q, $log) {
+
+		$log.debug('Entered CommitteeCtrl');
+
+		$scope.testfunc();
 		
 		/* Committee Link Permissions */
 		if($scope.role.admin)
@@ -22,13 +26,25 @@ angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParam
 		// Create new Committee
 		$scope.create = function($scope) {
 			// Create new Committee object
-			var committee = new Committees.Committees ({
+
+			$log.debug('Entered create function');
+
+			var committee = new Committees.Committees({
 				name: this.committee.name,
 				chair: this.chair.id
 			});
+
+			$log.debug('Committee Resource Object');
+			$log.debug(committee);
 			
+			$log.debug('Before save committee');
+
+			$scope.createSchedule();
+
 			// Redirect after save
 			committee.$save(function(response) {
+				$log.debug('Entered save committee function');
+
 				$location.path('committees/' + response._id);
 		
 				// Clear form fields
@@ -37,6 +53,8 @@ angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParam
 			}, function(errorResponse) { 
 				$scope.error = errorResponse.data.message;
 			});
+
+			$log.debug('After save committee');
 
 			//Clear form fields
 			this.committee.name = '';
@@ -55,7 +73,7 @@ angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParam
 				}
 			} else {
 				$scope.committee.$remove(function() {
-					$location.path('committees');
+					$location.path('/');
 				});
 			}
 		};

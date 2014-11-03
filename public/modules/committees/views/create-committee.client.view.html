@@ -1,29 +1,36 @@
-<section data-ng-controller="CommitteeCtrl">
-    <section data-ng-controller="UsersController">
-        <div class="page-header">
-            <h1>New Committee</h1>
-        </div>
-        <div class="col-md-12">
-            <form class="form-horizontal" data-ng-submit="create()" novalidate>
-                <fieldset>
-                    <div class="form-group" ng-class="{ 'has-error': committeeForm.name.$dirty && committeeForm.name.$invalid }">
-                        <label class="control-label" for="name">Name</label>
-                        <div class="controls">
-                            <input type="text" data-ng-model="committee.name" data-ng-init="committee.name=''" id="name" class="form-control" placeholder="Name">
-                                <p>
-                                    <label class="control-label" for="chair">Committee Chair</label>
-                                 <select data-ng-model="chair.id" id="chair" class="form-control" ng-options="user._id as user.firstName for user in users"></select><br>
-                                </p>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <input type="submit" class="btn btn-default">
-                    </div>
-                    <div data-ng-show="error" class="text-danger">
-                        <strong data-ng-bind="error"></strong>
-                    </div>
-                </fieldset>
-            </form>
-        </div>
+<!-- SchedulesController Wrapper is Sprint 2 temp fix -->
+<section data-ng-controller="SchedulesController">
+
+    <section data-ng-controller="CommitteeCtrl">
+        <section data-ng-controller="UsersController">
+            <!-- <section data-ng-controller="SchedulesController"> -->
+                <div class="page-header">
+                    <h1>New Committee</h1>
+                </div>
+                <div class="col-md-12">
+                    <form class="form-horizontal" data-ng-submit="create()" novalidate>
+                        <fieldset>
+                            <div class="form-group" ng-class="{ 'has-error': committeeForm.name.$dirty && committeeForm.name.$invalid }">
+                                <label class="control-label" for="name">Name</label>
+                                <div class="controls">
+                                    <input type="text" data-ng-model="committee.name" data-ng-init="committee.name=''" id="name" class="form-control" placeholder="Name">
+                                        <p>
+                                            <label class="control-label" for="chair">Committee Chair</label>
+                                         <select data-ng-model="chair.id" id="chair" class="form-control" ng-options="user._id as user.firstName for user in users"></select><br>
+                                        </p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" class="btn btn-default">
+                            </div>
+                            <div data-ng-show="error" class="text-danger">
+                                <strong data-ng-bind="error"></strong>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            <!-- </section> -->
+        </section>
     </section>
+
 </section>
