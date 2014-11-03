@@ -32,6 +32,21 @@ p,div{
 	color:#fffff;
 }
 
+#name{
+	width: 50%;
+}
+
+#chair,#users,#start{
+	width: 25%;
+}
+
+body{
+	background-color:#f7f7f7;
+	/*1 #f7f7f7*/
+	/*2 #ededed*/
+	/*3 #e6e6e6*/
+}
+
 /*project title*/
 .navbar-inverse .navbar-brand {
 color: #fff;
