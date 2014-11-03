@@ -2,6 +2,9 @@
 
 module.exports = {
 	db: 'mongodb://master:master12345@ds035270.mongolab.com:35270/master',
+	app: {
+		title: 'CACTUS Committee Manager - Development Environment'
+	},
 	assets: {
 		lib: {
 			css: [

@@ -3,6 +3,8 @@
 module.exports = function(app) {
 	var users = require('../../app/controllers/users');
 	var committees = require('../../app/controllers/committees');
+	var meetings = require('../../app/controllers/meetings');
+	var schedules = require('../../app/controllers/schedules');
 
 	// Committees Routes
 	app.route('/committees')
@@ -21,6 +23,10 @@ module.exports = function(app) {
 	app.route('/committees/:committeeId/meetings')		
 		.get(committees.getMeetings);
 
+	app.route('/committees/:committeeId/meetings/:meetingId')
+		.put(committees.addMeeting)
+		.delete(committees.removeMeeting);
+
 	app.route('/committees/:committeeId/:userId')
 		.put(committees.addMember)
 		.delete(committees.removeMember);
@@ -30,7 +36,13 @@ module.exports = function(app) {
 		.put(committees.setChair)
 		.delete(committees.removeChair);
 
+	app.route('/committees/:committeeId/:scheduleId')
+		.put(committees.addSchedule);
+		
+
 	// Finish by binding the Committee middleware
 	app.param('committeeId', committees.committeeByID);
 	app.param('userId', users.userByID);
+	app.param('meetingId', meetings.meetingByID);
+	app.param('scheduleId', schedules.scheduleByID);
 };

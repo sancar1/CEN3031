@@ -1,12 +1,29 @@
-<h1>Attendance</h1>
+<h1><b>Attendance</b></h1>
 
-<!-- Took out authentication for now until implemented into database, otherwise it doesn't show-->
-<!-- <div class ="sidebar">
-		<ul class="nav nav-pills nav-stacked">
-	  	<li><a href="#">Home</a></li>
-	  	<li><a href="/#!/committee/edit">Edit Committee</a></li>
-	  	<li class = "active"><a href="/#!/committee/attendance">Attendance</a></li>
-	  	<li><a href="/#!/committee/schedule">Schedule</a></li>
-	  	<li><a href="/#!/committee/resources">Resources</a></li>
-	  	</ul>
-</div>  -->
+<div data-ng-controller="UsersController">
+	<h3 data-ng-bind="committee.name"></h3>
+	<br>
+	<div>
+		<div>Total Members:</div>
+		<div data-ng-bind="committee.members.length"></div>
+	</div>
+	<br>
+	<div>
+		<div data-ng-show="committee.members.length">Take Attendance</div>
+		<br>
+		<div data-ng-repeat="member in members">
+			<label class="memberlabel">
+				<input type="checkbox" data-ng-model="member.isChecked" data-ng-init="member.isChecked=false" data-ng-change="checkMembersPresent(member.isChecked)">
+				<span data-ng-bind="member.firstName + ' ' + member.lastName"></span>
+			</label>
+		</div>
+	</div>
+	<br>
+	<div>
+		<div class="memberspresent">Members Present:</div>
+		<div data-ng-bind="membersPresent"></div>
+	</div>
+	<br>
+</div>
+
+

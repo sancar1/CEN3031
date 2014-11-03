@@ -8,9 +8,11 @@ var mongoose = require('mongoose'),
 	Committee = mongoose.model('Committee'),
 	User = mongoose.model('User'),
 	nodemailer = require('nodemailer'),
-	//wellknown = requrie('nodemailer-wellknown'),
-	_ = require('lodash');
+	async = require('async'),
+	_ = require('lodash'),
+	config = require('../../config/config');
 
+/*
 var transporter = nodemailer.createTransport({
 	service: 'gmail',
 	auth:{
@@ -18,23 +20,70 @@ var transporter = nodemailer.createTransport({
 		pass: 'cen3031cactus'
 	}
 });
-
+*/
 
 /**
  * Create a Committee
  */
 exports.create = function(req, res) {
+	var pass = req.committee;
 	var committee = new Committee(req.body);
 	committee.user = req.user;
 
-	committee.save(function(err) {
-		if (err) {
-			return res.status(400).send({
-				message: errorHandler.getErrorMessage(err)
+console.log(req.body.chair);
+
+async.waterfall([
+		function(done){
+			committee.save(function(err) {
+				if (err) {
+					return res.status(400).send({
+						message: errorHandler.getErrorMessage(err)
+					});
+				} else {
+					done(err,committee);
+				}
 			});
-		} else {
-			res.jsonp(committee);
+		},
+		function(committee, done){
+			User.find({'_id': req.body.chair},function(err, user){
+				if(err){
+					return res.status(401).send({
+						message: errorHandler.getErrorMessage(err)
+					});
+				}
+				else{
+					console.log(user);
+					done(err,user[0]);
+				}
+			});
+		},
+		function(user, done) {
+			res.render('templates/add-as-chair', {
+				name: user.displayName,
+				committee: req.body.name,
+				appName: config.app.title
+			}, function(err, emailHTML) {
+				done(err, emailHTML, user);
+			});
+		},
+		// If valid email, send reset email using service
+		function(emailHTML, user, done) {
+			var smtpTransport = nodemailer.createTransport(config.mailer.options);
+			var mailOptions = {
+				to: user.email,
+				from: config.mailer.from,
+				subject: 'Added as chair of a committee',
+				html: emailHTML
+			};
+			smtpTransport.sendMail(mailOptions, function(err, info) {
+				if (err) console.log('message not sent: ' + console.log(err));
+				else console.log('message sent: ' + console.log(info));
+				done(err);
+			});
 		}
+		],function(err){
+			if(err) console.log(err);
+
 	});
 };
 
@@ -65,7 +114,7 @@ exports.update = function(req, res) {
 };
 
 /**
- * Delete an Committee
+ * Delete a Committee
  */
 exports.delete = function(req, res) {
 	var committee = req.committee;
@@ -112,6 +161,9 @@ exports.getMembers = function(req, res) {
 	});
 };
 
+/**
+ * List of Meetings
+ */
 exports.getMeetings = function(req, res){
 	var committee = req.committee;
 
@@ -133,102 +185,265 @@ exports.addMember = function(req, res) {
 	var userById = req.params.userId;
 	var committeeById = req.committee._id; 
 
-	Committee.update({'_id': committeeById}, {$addToSet:{'members': userById}}, function(err,data){
-		if(err){
-			return res.status(401).send({
-				message: errorHandler.getErrorMessage(err)
+	async.waterfall([
+		function(done){
+			Committee.update({'_id': committeeById}, {$addToSet:{'members': userById}},function(err, committee){
+				if(err){
+					return res.status(401).send({
+						message: errorHandler.getErrorMessage(err)
+					});
+				}
+				else done(err,committee);
 			});
-		}
-		else{
-			User.find({'_id': userById}).exec(function(err2, data2){
-				if(err2){
+			
+		},
+		function(committee, done){
+			User.find({'_id': userById},function(err, user){
+				if(err){
 					return res.status(401).send({
 						message: errorHandler.getErrorMessage(err)
 					});
 				}
 				else{
-					var mailOptions = {
-							from: 'CACTUS <CACTUS.cen3031@gmail.com>', 
-							to: data2[0].displayName+'<'+data2[0].email+'>', 
-							subject: 'Added to a committee',
-							text: 'You have been added to: '+req.committee.name, 
-						};
-						transporter.sendMail(mailOptions, function(error, info){
-							if(error) console.log(error);
-							else console.log('message sent: '+info.response);	
-						});
+					console.log(user);
+					done(err,user[0]);
 				}
-				res.jsonp(data[0]);
+			});
+		},
+		function(user, done) {
+			res.render('templates/add-to-committee', {
+				name: user.displayName,
+				committee: req.committee.name,
+				appName: config.app.title
+			}, function(err, emailHTML) {
+				done(err, emailHTML, user);
+			});
+		},
+		// If valid email, send reset email using service
+		function(emailHTML, user, done) {
+			var smtpTransport = nodemailer.createTransport(config.mailer.options);
+			var mailOptions = {
+				to: user.email,
+				from: config.mailer.from,
+				subject: 'Added to a committee',
+				html: emailHTML
+			};
+			smtpTransport.sendMail(mailOptions, function(err, info) {
+				if (err) console.log('message not sent: ' + console.log(err));
+				else console.log('message sent: ' + console.log(info));
+				done(err);
 			});
 		}
-	});
+		],function(err){
+			if(err) console.log(err);
+		});
+};
+
 /*
+ * Add Committee Meeting
+ */
+exports.addMeeting = function(req, res) {
+	var meetingById = req.params.meetingId;
+	var committeeById = req.committee._id; 
 
-	
-	try{
-		var committee = await()
-	}
-	catch(err){
-		console.log(err);
-	}
-	
-
-	var print = Committee.update({'_id': committeeById}, {$addToSet:{'members': userById}} ).exec(function(err, data){
-		if(err){
-			return res.status(401).send({
-				message: errorHandler.getErrorMessage(err)
-			});
-		}
-		else committee = data[0];
-	});
-console.log(print);*/
-
-	/*
-	Committee.update({'_id': committeeById}, {$addToSet:{'members': userById}} ).exec(function(err, committee){
-		if(err){
-			return res.status(401).send({
-				message: errorHandler.getErrorMessage(err)
-			});
-		}
-		else{
-			User.find({'_id': userById}).exec(function(err2, getUser){
-				
-				if(err2){
+	async.waterfall([
+		function(done){
+			Committee.update({'_id': committeeById}, {$addToSet:{'meetings': meetingById}},function(err, committee){
+				if(err){
 					return res.status(401).send({
 						message: errorHandler.getErrorMessage(err)
 					});
 				}
-				else{
-					user = getUser[0];
-				}
+				else done(err,committee[0]);
 			});
-		
-	res.jsonp(committee[0]);
-		}
-	});	*/
+			
+		}/*,
+		function(user, done) {
+			res.render('templates/add-to-committee', {
+				name: user.displayName,
+				committee: req.committee.name,
+				appName: config.app.title
+			}, function(err, emailHTML) {
+				done(err, emailHTML, user);
+			});
+		},
+		// If valid email, send reset email using service
+		function(emailHTML, user, done) {
+			var smtpTransport = nodemailer.createTransport(config.mailer.options);
+			var mailOptions = {
+				to: user.email,
+				from: config.mailer.from,
+				subject: 'Added to a committee',
+				html: emailHTML
+			};
+			smtpTransport.sendMail(mailOptions, function(err, info) {
+				if (err) console.log('message not sent: ' + console.log(err));
+				else console.log('message sent: ' + console.log(info));
+				done(err);
+			});
+		}*/
+		],function(err){
+			if(err) console.log(err);
+		});
+};
 
+/*
+ * Add Committee Meeting
+ */
+exports.addSchedule = function(req, res) {
+	var scheduleById = req.params.scheduleId;
+	var committeeById = req.committee._id; 
+	console.log('here');
+	async.waterfall([
+		function(done){
+			Committee.update({'_id': committeeById}, {$addToSet:{'schedules': scheduleById}},function(err, committee){
+				if(err){
+					return res.status(401).send({
+						message: errorHandler.getErrorMessage(err)
+					});
+				}
+				else done(err,committee[0]);
+			});
+			
+		}/*,
+		function(user, done) {
+			res.render('templates/add-to-committee', {
+				name: user.displayName,
+				committee: req.committee.name,
+				appName: config.app.title
+			}, function(err, emailHTML) {
+				done(err, emailHTML, user);
+			});
+		},
+		// If valid email, send reset email using service
+		function(emailHTML, user, done) {
+			var smtpTransport = nodemailer.createTransport(config.mailer.options);
+			var mailOptions = {
+				to: user.email,
+				from: config.mailer.from,
+				subject: 'Added to a committee',
+				html: emailHTML
+			};
+			smtpTransport.sendMail(mailOptions, function(err, info) {
+				if (err) console.log('message not sent: ' + console.log(err));
+				else console.log('message sent: ' + console.log(info));
+				done(err);
+			});
+		}*/
+		],function(err){
+			if(err) console.log(err);
+		});
+};
 
-	
+/**
+ * Remove Committee Meeting
+ */
+exports.removeMeeting = function(req, res) { 
+	var committeeById = req.committee._id;
+	var meetingById = req.params.meetingId;
+
+	async.waterfall([
+		function(done){
+			Committee.update({'_id':committeeById},{$pull:{'meetings': meetingById}}).exec(function(err, committee) {
+				if (err) {
+					return res.status(400).send({
+						message: errorHandler.getErrorMessage(err)
+					});
+				}
+				else done(err, committee[0]);
+			});
+			
+		}/*,
+		function(user, done) {
+			res.render('templates/remove-from-committee', {
+				name: user.displayName,
+				committee: req.committee.name,
+				appName: config.app.title
+			}, function(err, emailHTML) {
+				done(err, emailHTML, user);
+			});
+		},
+		// If valid email, send reset email using service
+		function(emailHTML, user, done) {
+			var smtpTransport = nodemailer.createTransport(config.mailer.options);
+			var mailOptions = {
+				to: user.email,
+				from: config.mailer.from,
+				subject: 'Removed from a committee',
+				html: emailHTML
+			};
+			smtpTransport.sendMail(mailOptions, function(err, info) {
+				if (err) console.log('message not sent: ' + console.log(err));
+				else console.log('message sent: ' + console.log(info));
+				done(err);
+			});
+		}*/
+		],function(err){
+			if(err) console.log(err);
+
+	});
 };
 
 /**
  * Remove Committee Member
  */
 exports.removeMember = function(req, res) { 
+	var userById = req.params.userId;
 	var committeeById = req.committee._id;
 	var memberById = req.params.userId;
 
-	console.log(committeeById);
-	console.log(memberById);
-
-	Committee.update({'_id':committeeById},{$pull:{'members': memberById}}).exec(function(err, committee) {
-		if (err) {
-			return res.status(400).send({
-				message: errorHandler.getErrorMessage(err)
+	async.waterfall([
+		function(done){
+			Committee.update({'_id':committeeById},{$pull:{'members': memberById}}).exec(function(err, committee) {
+				if (err) {
+					return res.status(400).send({
+						message: errorHandler.getErrorMessage(err)
+					});
+				}
+				else done(err,committee);
 			});
-		} else {
-			res.jsonp(committee[0]);
+			
+		},
+		function(committee, done){
+			User.find({'_id': userById},function(err, user){
+				if(err){
+					return res.status(401).send({
+						message: errorHandler.getErrorMessage(err)
+					});
+				}
+				else{
+					console.log(user);
+					done(err,user[0]);
+				}
+			});
+		},
+		function(user, done) {
+			res.render('templates/remove-from-committee', {
+				name: user.displayName,
+				committee: req.committee.name,
+				appName: config.app.title
+			}, function(err, emailHTML) {
+				done(err, emailHTML, user);
+			});
+		},
+		// If valid email, send reset email using service
+		function(emailHTML, user, done) {
+			var smtpTransport = nodemailer.createTransport(config.mailer.options);
+			var mailOptions = {
+				to: user.email,
+				from: config.mailer.from,
+				subject: 'Removed from a committee',
+				html: emailHTML
+			};
+			smtpTransport.sendMail(mailOptions, function(err, info) {
+				if (err) console.log('message not sent: ' + console.log(err));
+				else console.log('message sent: ' + console.log(info));
+				done(err);
+			});
 		}
+		],function(err){
+			if(err) console.log(err);
+
 	});
 };
 
@@ -255,17 +470,60 @@ exports.setChair = function(req, res) {
 	var committeeById = req.committee._id;
 	var chairById = req.params.userId;
 
-	console.log(committeeById);
-	console.log(chairById);
-
-	Committee.update({'_id':committeeById},{'chair': chairById}).exec(function(err, committee) {
-		if (err) {
-			return res.status(400).send({
-				message: errorHandler.getErrorMessage(err)
+	console.log('setChair in committees.servers.controller');
+	
+	async.waterfall([
+		function(done){
+			Committee.update({'_id':committeeById},{'chair': chairById}).exec(function(err, committee) {
+				if (err) {
+					return res.status(400).send({
+						message: errorHandler.getErrorMessage(err)
+					});
+				} else {
+					res.jsonp(committee[0]);
+				}
 			});
-		} else {
-			res.jsonp(committee[0]);
+		},
+		function(committee, done){
+			User.find({'_id': chairById},function(err, user){
+				if(err){
+					return res.status(401).send({
+						message: errorHandler.getErrorMessage(err)
+					});
+				}
+				else{
+					console.log(user);
+					done(err,user[0]);
+				}
+			});
+		},
+		function(user, done) {
+			res.render('templates/add-as-chair', {
+				name: user.displayName,
+				committee: req.committee.name,
+				appName: config.app.title
+			}, function(err, emailHTML) {
+				done(err, emailHTML, user);
+			});
+		},
+		// If valid email, send reset email using service
+		function(emailHTML, user, done) {
+			var smtpTransport = nodemailer.createTransport(config.mailer.options);
+			var mailOptions = {
+				to: user.email,
+				from: config.mailer.from,
+				subject: 'Added as chair of a committee',
+				html: emailHTML
+			};
+			smtpTransport.sendMail(mailOptions, function(err, info) {
+				if (err) console.log('message not sent: ' + console.log(err));
+				else console.log('message sent: ' + console.log(info));
+				done(err);
+			});
 		}
+		],function(err){
+			if(err) console.log(err);
+
 	});
 };
 
@@ -274,19 +532,61 @@ exports.setChair = function(req, res) {
  * Remove Committee Chair
  */
 exports.removeChair = function(req, res) { 
+	var userById = req.params.userId;
 	var committeeById = req.committee._id;
 
-	console.log(committeeById);
-	//console.log(chairById);
-
-	Committee.update({'_id':committeeById},{'chair': ''}).exec(function(err, committee) {
-		if (err) {
-			return res.status(400).send({
-				message: errorHandler.getErrorMessage(err)
+	async.waterfall([
+		function(done){
+			Committee.update({'_id':committeeById},{'chair': ''}).exec(function(err, committee) {
+				if (err) {
+					return res.status(400).send({
+						message: errorHandler.getErrorMessage(err)
+					});
+				} else {
+					res.jsonp(committee[0]);
+				}
 			});
-		} else {
-			res.jsonp(committee[0]);
+		},
+		function(committee, done){
+			User.find({'_id': userById},function(err, user){
+				if(err){
+					return res.status(401).send({
+						message: errorHandler.getErrorMessage(err)
+					});
+				}
+				else{
+					console.log(user);
+					done(err,user[0]);
+				}
+			});
+		},
+		function(user, done) {
+			res.render('templates/remove-as-chair', {
+				name: user.displayName,
+				committee: req.committee.name,
+				appName: config.app.title
+			}, function(err, emailHTML) {
+				done(err, emailHTML, user);
+			});
+		},
+		// If valid email, send reset email using service
+		function(emailHTML, user, done) {
+			var smtpTransport = nodemailer.createTransport(config.mailer.options);
+			var mailOptions = {
+				to: user.email,
+				from: config.mailer.from,
+				subject: 'Removed as chair from a committee',
+				html: emailHTML
+			};
+			smtpTransport.sendMail(mailOptions, function(err, info) {
+				if (err) console.log('message not sent: ' + console.log(err));
+				else console.log('message sent: ' + console.log(info));
+				done(err);
+			});
 		}
+		],function(err){
+			if(err) console.log(err);
+
 	});
 };
 

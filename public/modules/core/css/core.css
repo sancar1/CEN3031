@@ -1,3 +1,4 @@
+
 .content {
 	margin-top: 50px;
 }
@@ -15,21 +16,55 @@
 }
 
 /*Start of added code */
+
+h1, h2, h3, h4, h5, h6{
+	font-family: 'Open Sans';
+}
+
+p,div{
+	font-family: 'Open Sans';
+	font-size:16px;
+}
+
 .navbar-inverse{
-	background-image: linear-gradient(to bottom, #0021A5 0%, #150E4D 100%);
+	background-image:none;
+	background-color:#0021A5 ;
+	color:#fffff;
 }
+
+#name{
+	width: 50%;
+}
+
+#chair,#users,#start{
+	width: 25%;
+}
+
+body{
+	background-color:#f7f7f7;
+	/*1 #f7f7f7*/
+	/*2 #ededed*/
+	/*3 #e6e6e6*/
+}
+
+/*project title*/
 .navbar-inverse .navbar-brand {
-color: #CCC;
+color: #fff;
+background-color:#0021A5;
 }
+
+/*buttons on nav bar*/
 .navbar-inverse .navbar-nav > li > a {
-color: #CCC;
+color: #ccc;
+background-color:#0021A5;
 }
 .navbar-inverse .navbar-nav > .open > a, .navbar-inverse .navbar-nav > .open > a:hover, .navbar-inverse .navbar-nav > .open > a:focus {
 color: #fff;
-background-color: #15197E;
+background-color: #0025B8;
 }
 .navbar-inverse .navbar-nav > .active > a{
-background-image: linear-gradient(to bottom, #ff4a00 0%, #FF4A00 100%);
+background-color: #0025B8;
+background-image: none;
 }
 
 /*.sidebar{
@@ -46,7 +81,7 @@ background-image: linear-gradient(to bottom, #ff4a00 0%, #FF4A00 100%);
 /*Tab body code */
 
 .app-content {
-	margin-top: 50px;
+	margin-top: 80px;
 }
 
 .app-content .app-sidebar {
@@ -72,14 +107,15 @@ background-image: linear-gradient(to bottom, #ff4a00 0%, #FF4A00 100%);
 	margin-right: 35px;
 	width: 1100px;
 	*/
-	width: 90%;
+	width: 95%;
+	margin-top:10px;
 }
 
 /*Code for navigation */
 
 .nav-pills > li.active > a, .nav-pills > li.active > a:hover, .nav-pills > li.active > a:focus {
 color: #fff;
-background-color: #0021A5;
+background-color: #0025B8;
 }
 
 a:hover, a:focus {
@@ -89,4 +125,75 @@ text-decoration: underline;
 a {
 color: #0021A5;
 text-decoration: none;
+}
+
+/*code for attendance page*/
+
+
+/* Base for label styling */
+[type="checkbox"]:not(:checked),
+[type="checkbox"]:checked {
+  position: absolute;
+  left: -9999px;
+}
+[type="checkbox"]:not(:checked) + span,
+[type="checkbox"]:checked + span {
+  position: relative;
+  padding-left: 25px;
+  cursor: pointer;
+}
+
+/* checkbox aspect */
+[type="checkbox"]:not(:checked) + span:before,
+[type="checkbox"]:checked + span:before {
+  content: '';
+  position: absolute;
+  left:0; top: 2px;
+  width: 17px; height: 17px;
+  border: 1px solid #aaa;
+  background: #f8f8f8;
+  border-radius: 3px;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,.3)
+}
+/* checked mark aspect */
+[type="checkbox"]:not(:checked) + span:after,
+[type="checkbox"]:checked + span:after {
+  content: '✔';
+  position: absolute;
+  top: 0; left: 4px;
+  font-size: 14px;
+  color: #0021A5;
+  transition: all .2s;
+}
+/* checked mark aspect changes */
+[type="checkbox"]:not(:checked) + span:after {
+  opacity: 0;
+  transform: scale(0);
+}
+[type="checkbox"]:checked + span:after {
+  opacity: 1;
+  transform: scale(1);
+}
+/* disabled checkbox */
+[type="checkbox"]:disabled:not(:checked) + span:before,
+[type="checkbox"]:disabled:checked + span:before {
+  box-shadow: none;
+  border-color: #bbb;
+  background-color: #ddd;
+}
+[type="checkbox"]:disabled:checked + span:after {
+  color: #999;
+}
+[type="checkbox"]:disabled + span {
+  color: #aaa;
+}
+/* accessibility */
+[type="checkbox"]:checked:focus + span:before,
+[type="checkbox"]:not(:checked):focus + span:before {
+  border: 1px dotted blue;
+}
+
+/* hover style just for information */
+span:hover:before {
+  border: 1px solid #4778d9!important;
 }

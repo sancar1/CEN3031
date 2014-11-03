@@ -52,7 +52,7 @@
 
 		it('$scope.find() should create an array with at least one Meeting object fetched from XHR', inject(function(Meetings) {
 			// Create sample Meeting using the Meetings service
-			var sampleMeeting = new Meetings({
+			var sampleMeeting = new Meetings.Meetings({
 				name: 'New Meeting'
 			});
 
@@ -72,7 +72,7 @@
 
 		it('$scope.findOne() should create an array with one Meeting object fetched from XHR using a meetingId URL parameter', inject(function(Meetings) {
 			// Define a sample Meeting object
-			var sampleMeeting = new Meetings({
+			var sampleMeeting = new Meetings.Meetings({
 				name: 'New Meeting'
 			});
 
@@ -92,12 +92,12 @@
 
 		it('$scope.create() with valid form data should send a POST request with the form input values and then locate to new object URL', inject(function(Meetings) {
 			// Create a sample Meeting object
-			var sampleMeetingPostData = new Meetings({
+			var sampleMeetingPostData = new Meetings.Meetings({
 				name: 'New Meeting'
 			});
 
 			// Create a sample Meeting response
-			var sampleMeetingResponse = new Meetings({
+			var sampleMeetingResponse = new Meetings.Meetings({
 				_id: '525cf20451979dea2c000001',
 				name: 'New Meeting'
 			});
@@ -121,7 +121,7 @@
 
 		it('$scope.update() should update a valid Meeting', inject(function(Meetings) {
 			// Define a sample Meeting put data
-			var sampleMeetingPutData = new Meetings({
+			var sampleMeetingPutData = new Meetings.Meetings({
 				_id: '525cf20451979dea2c000001',
 				name: 'New Meeting'
 			});
@@ -142,7 +142,7 @@
 
 		it('$scope.remove() should send a DELETE request with a valid meetingId and remove the Meeting from the scope', inject(function(Meetings) {
 			// Create new Meeting object
-			var sampleMeeting = new Meetings({
+			var sampleMeeting = new Meetings.Meetings({
 				_id: '525a8422f6d0f87f0e407a33'
 			});
 

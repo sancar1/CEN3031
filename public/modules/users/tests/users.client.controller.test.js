@@ -43,13 +43,13 @@
 			$location = _$location_;
 
 			// Initialize the Committees controller.
+			
 			UsersController = $controller('UsersController', {
 				$scope: userScope
 			});
-			CommitteesController = $controller('CommitteesController', {
-				$scope: committeeScope
-			});
+			
 		}));
+
 
 		it('$scope.find() should create an array with at least one User object fetched from XHR', inject(function(Users) {
 			// Create sample Committee using the Committees service
@@ -61,6 +61,7 @@
 			var sampleUsers = [sampleUser];
 
 			// Set GET response
+			$httpBackend.expectGET('users').respond(sampleUsers);
 			$httpBackend.expectGET('users').respond(sampleUsers);
 
 			// Run controller functionality

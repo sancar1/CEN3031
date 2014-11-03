@@ -2,6 +2,13 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,700' rel='stylesheet' type='text/css'>
+	<style>
+	body{
+		font-family: 'Open Sans', sans-serif;
+		font-size; 24px;
+	}
+	</style>
 	<title>{{title}}</title>
 
 	<!-- General META -->
@@ -45,28 +52,29 @@
 <body class="ng-cloak">
 	<header data-ng-include="'/modules/core/views/header.client.view.html'" class="navbar navbar-fixed-top navbar-inverse"></header>
 
-	<div class="app-content">
+	
+		<div class="app-content">
+			<div data-ng-controller="CommitteesCtrl">
 
-		<div data-ng-controller="HomeController">
-			<div data-ng-controller="CommitteesController">
 				<div class ="app-sidebar">
 					<ul class="nav nav-pills nav-stacked" data-ng-show="authentication.user">
 					  	<li ui-sref-active="active"><a ui-sref="home">Home</a></li>
-					  	<li ui-sref-active="active" ng-show="checkAdmin()"><a ui-sref="edit({committeeId: committee._id})">Edit Committee</a></li>
-					  	<li ui-sref-active="active"><a ui-sref="attendance">Attendance</a></li>
-					  	<li ui-sref-active="active"><a ui-sref="schedule">Schedule</a></li>
-					  	<li ui-sref-active="active"><a ui-sref="resources">Resources</a></li>
+					  	<li ui-sref-active="active" ng-if="committeeTemplates.edit"><a ui-sref="edit({committeeId: committee._id})">Edit Committee</a></li>
+					  	<li ui-sref-active="active" ng-if="committeeTemplates.attendance"><a ui-sref="attendance">Attendance</a></li>
+					  	<li ui-sref-active="active" ng-if="committeeTemplates.schedule"><a ui-sref="schedule">Schedule</a></li>
+					  	<li ui-sref-active="active" ng-if="committeeTemplates.resources"><a ui-sref="resources">Resources</a></li>
 				  	</ul>
 			  	</div>
+
 			  	<div class="app-workspace">
 			  		<div class="container view-container">
 			  			{% block content %}{% endblock %}
 			  		</div>
 			  	</div>
+
 			</div>
 		</div>
 
-	</div>
 	
 	
 	<!--Embedding The User Object-->
@@ -75,8 +83,10 @@
 	</script>
 
 	<!--Application JavaScript Files-->
-	{% for jsFile in jsFiles %}<script type="text/javascript" src="{{jsFile}}"></script>
+	{% for jsFile in jsFiles %}
+	<script type="text/javascript" src="{{jsFile}}"></script>
 	{% endfor %}
+	
 
 	{% if process.env.NODE_ENV === 'development' %}
 	<!--Livereload script rendered -->
