@@ -40,6 +40,10 @@ p,div{
 	width: 25%;
 }
 
+body{
+	background-color:#f7f7f7;
+}
+
 /*project title*/
 .navbar-inverse .navbar-brand {
 color: #fff;
