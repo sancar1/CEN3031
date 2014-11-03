@@ -5,13 +5,17 @@ angular.module('schedules').controller('SchedulesController', ['$scope', '$state
 	function($scope, $stateParams, $location, Authentication,Committees, Schedules, $log ) {
 		$scope.authentication = Authentication;
 		
+        $log.debug('Entered SchedulesController');
 
+        $scope.testfunc = function() {
+            $log.debug('Entered testfunc');
+        };
 
 		// Create new Schedule
-		$scope.create = function() {
+		$scope.createSchedule = function() {
 			// Create new Schedule object
-			var schedule = new Schedules.Schedules ({
-				name: 'TestZachary'
+			var schedule = new Schedules.Schedules({
+				name: $scope.committee.name + ' Schedule'
 			});
 			$scope.schedule =schedule;
 			// Redirect after save
@@ -19,11 +23,11 @@ angular.module('schedules').controller('SchedulesController', ['$scope', '$state
 				//$location.path('schedules/' + response._id);
 
 				// Clear form fields
-        console.log('schedule: '+schedule._id);
-        console.log('schedule: '+$scope.committee._id);
-       // $scope.addSchedule(schedule);
-      
-       $scope.addSchedule(schedule);
+                console.log('schedule: '+schedule._id);
+                console.log('schedule: '+$scope.committee._id);
+               // $scope.addSchedule(schedule);
+              
+               $scope.addSchedule(schedule);
 
 				$scope.name = '';
 			}, function(errorResponse) {
