@@ -7,14 +7,17 @@ angular.module('core').config(['$stateProvider', '$urlRouterProvider', '$logProv
 		$logProvider.debugEnabled(true);
 
 		// Redirect to home view when route not found
-		$urlRouterProvider.otherwise('/');
+		$urlRouterProvider.otherwise('/prelogin');
 
 		// Home state routing
 		$stateProvider.
+		state('prelogin', {
+			url: '/prelogin',
+			templateUrl: 'modules/core/views/home.client.view.html'
+		}).
 		state('home', {
 			url: '/',
 			templateUrl: 'modules/committees/views/list-committees.client.view.html'
-			// templateUrl: 'modules/core/views/test.client.view.html'
 		}).
 		state('edit', {
 			url: '/committees/:committeeId/edit',
