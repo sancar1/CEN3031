@@ -32,16 +32,19 @@ p,div{
 	color:#fffff;
 }
 
-#name{
+#name,#start{
 	width: 50%;
 }
 
-#chair{
+#chair,#users{
 	width: 25%;
 }
 
 body{
 	background-color:#e6e6e6;
+	/*1 #f7f7f7*/
+	/*2 #ededed*/
+	/*3 #e6e6e6*/
 }
 
 /*project title*/
