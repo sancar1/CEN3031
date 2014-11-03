@@ -94,7 +94,19 @@ angular.module('core').controller('CommitteesCtrl', ['$scope', '$log', '$q', '$s
 
 		};
 
+		// Sprint 2 Temp fix
+		$scope.lastCommittee = function(commMembers) {
+			$log.debug('Entered last committee');
+			$scope.currentCommitteeObjects = {
+				'committee' : $scope.committee,
+				'members' : commMembers
+			};
+			$log.debug('currentCommitteeObject');
+			$log.debug($scope.currentCommitteeObjects);
+		};
+
 		/* Application Function Calls */
 		$scope.getRole();
+
 	}
 ]);
