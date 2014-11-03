@@ -13,7 +13,7 @@ angular.module('core').config(['$stateProvider', '$urlRouterProvider', '$logProv
 		$stateProvider.
 		state('prelogin', {
 			url: '/prelogin',
-			templateUrl: 'modules/core/views/home.client.view.html'
+			templateUrl: 'modules/core/views/prelogin.client.view.html'
 		}).
 		state('home', {
 			url: '/',
