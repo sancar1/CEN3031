@@ -36,6 +36,10 @@ p,div{
 	width: 50%;
 }
 
+#chair{
+	width: 25%;
+}
+
 /*project title*/
 .navbar-inverse .navbar-brand {
 color: #fff;
