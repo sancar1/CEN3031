@@ -52,11 +52,11 @@ var CommitteeSchema = new Schema({
 //instance method
 CommitteeSchema.methods.findByUser = function ( callback) {
 	return this.model('Commmittee').find({ user: this.user }, callback);
-}
+};
 
 //static method
 CommitteeSchema.statics.findByName = function (name, callback) {
 	this.find({ name: new RegExp(name, 'i') }, callback);
-}
+};
 
 mongoose.model('Committee', CommitteeSchema);

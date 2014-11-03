@@ -38,11 +38,11 @@ var MeetingSchema = new Schema({
 //instance method
 MeetingSchema.methods.findByUser = function ( callback) {
 	return this.model('Meeting').find({ user: this.user }, callback);
-}
+};
 
 //static method
 MeetingSchema.statics.findByName = function (name, callback) {
 	this.find({ name: new RegExp(name, 'i') }, callback);
-}
+};
 
 mongoose.model('Meeting', MeetingSchema);
