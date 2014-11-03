@@ -189,7 +189,7 @@ angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParam
 		/* Committee Function Calls */
 
 		/* Clean Up on Exit */
-		$scope.$on("$destroy", function() {
+		$scope.$on('$destroy', function() {
 			$scope.committeeTemplates.edit = false;
 			$scope.committeeTemplates.attendance = false;
 			$scope.committeeTemplates.schedule = false;
