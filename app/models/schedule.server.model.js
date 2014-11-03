@@ -32,11 +32,11 @@ var ScheduleSchema = new Schema({
 //instance method
 ScheduleSchema.methods.findByUser = function ( callback) {
 	return this.model('Schedule').find({ user: this.user }, callback);
-}
+};
 
 //static method
 ScheduleSchema.statics.findByName = function (name, callback) {
 	this.find({ name: new RegExp(name, 'i') }, callback);
-}
+};
 
 mongoose.model('Schedule', ScheduleSchema);
