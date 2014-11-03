@@ -1,29 +1,29 @@
-<h1><b>Attendance</b></h1>
+<section data-ng-controller="CommitteeCtrl">
+	<h1><b>Attendance</b></h1>
 
-<div data-ng-controller="UsersController">
-	<h3 data-ng-bind="committee.name"></h3>
-	<br>
-	<div>
-		<div>Total Members:</div>
-		<div data-ng-bind="committee.members.length"></div>
-	</div>
-	<br>
-	<div>
-		<div data-ng-show="committee.members.length">Take Attendance</div>
+	<div data-ng-controller="UsersController">
+		<h3 data-ng-bind="currentCommitteeObjects.committee.name"></h3>
 		<br>
-		<div data-ng-repeat="member in members">
-			<label class="memberlabel">
-				<input type="checkbox" data-ng-model="member.isChecked" data-ng-init="member.isChecked=false" data-ng-change="checkMembersPresent(member.isChecked)">
-				<span data-ng-bind="member.firstName + ' ' + member.lastName"></span>
-			</label>
+		<div>
+			<div>Total Members:</div>
+			<div data-ng-bind="currentCommitteeObjects.committee.members.length"></div>
 		</div>
+		<br>
+		<div>
+			<div data-ng-show="currentCommitteeObjects.committee.members.length">Take Attendance</div>
+			<br>
+			<div data-ng-repeat="member in currentCommitteeObjects.members">
+				<label class="memberlabel">
+					<input type="checkbox" data-ng-model="member.isChecked" data-ng-init="member.isChecked=false" data-ng-change="checkMembersPresent(member.isChecked)">
+					<span data-ng-bind="member.firstName + ' ' + member.lastName"></span>
+				</label>
+			</div>
+		</div>
+		<br>
+		<div>
+			<div class="memberspresent">Members Present:</div>
+			<div data-ng-bind="membersPresent"></div>
+		</div>
+		<br>
 	</div>
-	<br>
-	<div>
-		<div class="memberspresent">Members Present:</div>
-		<div data-ng-bind="membersPresent"></div>
-	</div>
-	<br>
-</div>
-
-
+</section>

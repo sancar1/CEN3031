@@ -261,5 +261,4 @@ angular.module('schedules').controller('SchedulesController', ['$scope', '$state
  
   
 	}
-
 ]);

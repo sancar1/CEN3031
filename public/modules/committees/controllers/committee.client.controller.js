@@ -15,7 +15,10 @@ angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParam
 		/* Committee Data to be Loaded on Page Load */
 		$scope.findCommittee().then(function() {
 			$scope.getChair();
-			$scope.getMembers();
+			$scope.getMembers().then(function() {
+				$scope.lastCommittee($scope.members);
+			});
+
 		});
 
 		/* Committee Functions */
@@ -98,7 +101,7 @@ angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParam
 
 		$scope.getMembers = function(){
 			var committee = $scope.committee;
-			var Members = Committees.Members.query({committeeId: committee._id}).$promise.then(function(data) {
+			return Committees.Members.query({committeeId: committee._id}).$promise.then(function(data) {
 				// $log.debug(data);
 				$scope.members = data;
 			});

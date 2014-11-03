@@ -23,7 +23,7 @@ var CommitteeSchema = new Schema({
 		trim: true,
 		default: '',
 		required: 'Name cannot be blank',
-		validate: [validateLocalStrategyProperty, 'Please fill in Committee Name']
+		validate: [validateLocalStrategyProperty, 'Please fill in Committee name']
 	},
 	description: {
 		type: String,
@@ -48,5 +48,15 @@ var CommitteeSchema = new Schema({
 		default: Date.now
 	},
 });
+
+//instance method
+CommitteeSchema.methods.findByUser = function ( callback) {
+	return this.model('Commmittee').find({ user: this.user }, callback);
+};
+
+//static method
+CommitteeSchema.statics.findByName = function (name, callback) {
+	this.find({ name: new RegExp(name, 'i') }, callback);
+};
 
 mongoose.model('Committee', CommitteeSchema);
