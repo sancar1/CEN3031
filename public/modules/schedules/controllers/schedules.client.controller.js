@@ -25,11 +25,6 @@ angular.module('schedules').controller('SchedulesController', ['$scope', '$state
       
        $scope.addSchedule(schedule);
 
-
-
-
-
-
 				$scope.name = '';
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
@@ -88,18 +83,18 @@ angular.module('schedules').controller('SchedulesController', ['$scope', '$state
 
       $log.debug('Entered addEvent');
 
-      // var tempEventObject = {
-      //     'title' : $scope.newEvent.name,
-      //     'start' : new Date($scope.newEvent.startY,$scope.newEvent.startM,$scope.newEvent.startD),
-      //     'end'   : new Date($scope.newEvent.endY,$scope.newEvent.endM,$scope.newEvent.endD)
-      // };
-
       var tempEventObject = {
-          'title' : 'Crazy Event',
-          'start' : new Date(2014,11,11),
-          'end'   : new Date(2014,12,12),
-          'allDay': false
+          'title' : $scope.newEvent.name,
+          'start' : new Date($scope.newEvent.startY,$scope.newEvent.startM-1,$scope.newEvent.startD),
+          'end'   : new Date($scope.newEvent.endY,$scope.newEvent.endM-1,$scope.newEvent.endD)
       };
+
+      // var tempEventObject = {
+//           'title' : 'Crazy Event',
+//           'start' : new Date(2014,11,11),
+//           'end'   : new Date(2014,12,12),
+//           'allDay': false
+//       };
       JSON.stringify(tempEventObject);
       $scope.schedule.events.push(tempEventObject);
       $scope.schedule.$update();
