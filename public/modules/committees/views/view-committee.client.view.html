@@ -6,6 +6,11 @@
 		<h4 data-ng-bind="committee.description"></h4>
 	</div>
 	<br>
+
+	<section data-ng-controller="SchedulesController">
+	<div ui-calendar="uiConfig.calendar" ng-model="eventSources" calendar="myCalendar"></div>
+	</section>
+
 	<section>
         <form name="userForm" class="form-horizontal" novalidate>
 			<div class = "list-group" class = "list-group-item">
@@ -45,8 +50,4 @@
 	</small>
 	</small>
 </section>
-<section data-ng-controller="SchedulesController">
 
-<h1>Schedule</h1>
-<div ui-calendar="uiConfig.calendar" ng-model="eventSources" calendar="myCalendar"></div>
-</section>
