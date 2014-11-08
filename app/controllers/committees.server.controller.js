@@ -223,7 +223,6 @@ exports.addMember = function(req, res) {
 		},
 		// If valid email, send reset email using service
 		function(emailHTML, user, done) {
-			var smtpTransport = nodemailer.createTransport(config.mailer.options);
 			var mailOptions = {
 				to: user.email,
 				from: config.mailer.from,
@@ -259,7 +258,7 @@ exports.addMeeting = function(req, res) {
 				else done(err,committee[0]);
 			});
 			
-		}/*,
+		},
 		function(user, done) {
 			res.render('templates/add-to-committee', {
 				name: user.displayName,
@@ -271,7 +270,6 @@ exports.addMeeting = function(req, res) {
 		},
 		// If valid email, send reset email using service
 		function(emailHTML, user, done) {
-			var smtpTransport = nodemailer.createTransport(config.mailer.options);
 			var mailOptions = {
 				to: user.email,
 				from: config.mailer.from,
@@ -283,7 +281,7 @@ exports.addMeeting = function(req, res) {
 				else console.log('message sent: ' + console.log(info));
 				done(err);
 			});
-		}*/
+		}
 		],function(err){
 			if(err) console.log(err);
 		});
@@ -307,7 +305,7 @@ exports.addSchedule = function(req, res) {
 				else done(err,committee[0]);
 			});
 			
-		}/*,
+		},
 		function(user, done) {
 			res.render('templates/add-to-committee', {
 				name: user.displayName,
@@ -319,7 +317,6 @@ exports.addSchedule = function(req, res) {
 		},
 		// If valid email, send reset email using service
 		function(emailHTML, user, done) {
-			var smtpTransport = nodemailer.createTransport(config.mailer.options);
 			var mailOptions = {
 				to: user.email,
 				from: config.mailer.from,
@@ -331,7 +328,7 @@ exports.addSchedule = function(req, res) {
 				else console.log('message sent: ' + console.log(info));
 				done(err);
 			});
-		}*/
+		}
 		],function(err){
 			if(err) console.log(err);
 		});
@@ -355,7 +352,7 @@ exports.removeMeeting = function(req, res) {
 				else done(err, committee[0]);
 			});
 			
-		}/*,
+		},
 		function(user, done) {
 			res.render('templates/remove-from-committee', {
 				name: user.displayName,
@@ -367,7 +364,6 @@ exports.removeMeeting = function(req, res) {
 		},
 		// If valid email, send reset email using service
 		function(emailHTML, user, done) {
-			var smtpTransport = nodemailer.createTransport(config.mailer.options);
 			var mailOptions = {
 				to: user.email,
 				from: config.mailer.from,
@@ -379,7 +375,7 @@ exports.removeMeeting = function(req, res) {
 				else console.log('message sent: ' + console.log(info));
 				done(err);
 			});
-		}*/
+		}
 		],function(err){
 			if(err) console.log(err);
 
@@ -430,7 +426,6 @@ exports.removeMember = function(req, res) {
 		},
 		// If valid email, send reset email using service
 		function(emailHTML, user, done) {
-			var smtpTransport = nodemailer.createTransport(config.mailer.options);
 			var mailOptions = {
 				to: user.email,
 				from: config.mailer.from,
@@ -510,7 +505,6 @@ exports.setChair = function(req, res) {
 		},
 		// If valid email, send reset email using service
 		function(emailHTML, user, done) {
-			var smtpTransport = nodemailer.createTransport(config.mailer.options);
 			var mailOptions = {
 				to: user.email,
 				from: config.mailer.from,
@@ -573,7 +567,6 @@ exports.removeChair = function(req, res) {
 		},
 		// If valid email, send reset email using service
 		function(emailHTML, user, done) {
-			var smtpTransport = nodemailer.createTransport(config.mailer.options);
 			var mailOptions = {
 				to: user.email,
 				from: config.mailer.from,
