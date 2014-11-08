@@ -12,20 +12,11 @@ var mongoose = require('mongoose'),
 	_ = require('lodash'),
 	config = require('../../config/config');
 
-
-var smtpTransport = nodemailer.createTransport("SMTP",{
-	service: 'gmail',
-	auth:{
-		user: 'CACTUS.cen3031@gmail.com',
-		pass: 'cen3031cactus'
-	}
-});
 var smtpTransport = nodemailer.createTransport("SMTP", {
   service: "Gmail",
   auth: {
     XOAuth2: {
-      user: "CACTUS.cen3031@gmail.com", // Your gmail address.
-                                            // Not @developer.gserviceaccount.com
+      user: "CACTUS.cen3031@gmail.com",
       clientId: "366804079742-1b51qcfrsjrrdf1btqd8e7ci797mlbck.apps.googleusercontent.com",
       clientSecret: "kFrDQ6so_ZvNhCHiXrLvhlMY",
       refreshToken: "1/Bfd916IPNMj1xvDhU1UnRaPzbDUa8vHWzd_NKCHNhY0"
