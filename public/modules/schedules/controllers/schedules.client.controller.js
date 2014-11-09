@@ -90,7 +90,7 @@ angular.module('schedules').controller('SchedulesController', ['$scope', '$state
           $scope.schedule = data;
           $log.debug('Schedule was returned');
       });
-		};;
+		};
 
     $scope.addNewEvent = function(){
       var schedule = $scope.schedule;

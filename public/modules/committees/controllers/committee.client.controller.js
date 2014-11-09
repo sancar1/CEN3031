@@ -63,10 +63,6 @@ angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParam
 
 		// };
 
-		$scope.testfunc = function() {
-            $log.debug('Entered testfunc');
-        };
-
 		// Remove existing Committee
 		$scope.remove = function( committee ) {
 			if ( committee ) { committee.$remove();
@@ -227,7 +223,7 @@ angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParam
 				$log.debug('Schedule was returned');
 			});
 
-		};;
+		};
 
 		/* Committee Function Calls */
 
