@@ -12,14 +12,14 @@ var mongoose = require('mongoose'),
 	_ = require('lodash'),
 	config = require('../../config/config');
 
-var smtpTransport = nodemailer.createTransport("SMTP", {
-  service: "Gmail",
+var smtpTransport = nodemailer.createTransport('SMTP', {
+  service: 'Gmail',
   auth: {
     XOAuth2: {
-      user: "CACTUS.cen3031@gmail.com",
-      clientId: "366804079742-1b51qcfrsjrrdf1btqd8e7ci797mlbck.apps.googleusercontent.com",
-      clientSecret: "kFrDQ6so_ZvNhCHiXrLvhlMY",
-      refreshToken: "1/Bfd916IPNMj1xvDhU1UnRaPzbDUa8vHWzd_NKCHNhY0"
+      user: 'CACTUS.cen3031@gmail.com',
+      clientId: '366804079742-1b51qcfrsjrrdf1btqd8e7ci797mlbck.apps.googleusercontent.com',
+      clientSecret: 'kFrDQ6so_ZvNhCHiXrLvhlMY',
+      refreshToken: '1/Bfd916IPNMj1xvDhU1UnRaPzbDUa8vHWzd_NKCHNhY0'
     }
   }
 });
@@ -600,7 +600,8 @@ exports.committeeByID = function(req, res, next, id) { Committee.findById(id).po
  * Committee authorization middleware
  */
 exports.hasAuthorization = function(req, res, next) {
-	if (req.committee.user.id !== req.user.id) {
+	console.log(req.user.role);
+	if (req.user.role !== 'Admin') {
 		return res.status(403).send('User is not authorized');
 	}
 	next();
