@@ -50,10 +50,10 @@
                 </form>
             </section>
 
-            <section data-ng-controller="SchedulesController" data-ng-init="findOne(committee.schedules[0])">
+            <section data-ng-controller="SchedulesController">
                
                 <h1>New Schedule</h1>
-                <button type="button" class="btn btn-primary" ng-click="create()">Add Schedule</button>
+                <button type="button" class="btn btn-primary" ng-click="createSchedule()">Add Schedule</button>
                 <input type="text" data-ng-model="newEvent.name" id="name" class="form-control" placeholder="Event Name" required value="Crazy Event">
                 <input type="text" data-ng-model="newEvent.startY" id="start" class="form-control" placeholder="Start Time Y" required value="2014">
                 <input type="text" data-ng-model="newEvent.startM" id="start" class="form-control" placeholder="Start Time M" required value="11">
