@@ -1,12 +1,10 @@
 'use strict';
 
 // Committees controller
-angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParams', '$location', 'Authentication', 'Users', 'Committees', '$q', '$log',
-	function($scope, $stateParams, $location, Authentication, Users, Committees, $q, $log) {
+angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParams', '$location', 'Authentication', 'Users', 'Committees', '$q', '$log', 'Schedules',
+	function($scope, $stateParams, $location, Authentication, Users, Committees, $q, $log, Schedules) {
 
 		$log.debug('Entered CommitteeCtrl');
-
-		$scope.testfunc();
 		
 		/* Committee Link Permissions */
 		if($scope.role.admin)
@@ -20,47 +18,54 @@ angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParam
 		$scope.findCommittee().then(function() {
 			$scope.getChair();
 			$scope.getMembers();
+			$log.debug('Committee Object');
+			$log.debug($scope.committee);
+			$scope.findSchedule();
 		});
 
 		/* Committee Functions */
 		// Create new Committee
-		$scope.create = function($scope) {
-			// Create new Committee object
+		// $scope.createCommittee = function($scope) {
+		// 	// Create new Committee object
 
-			$log.debug('Entered create function');
+		// 	$log.debug('Entered create function');
 
-			var committee = new Committees.Committees({
-				name: this.committee.name,
-				chair: this.chair.id
-			});
+		// 	var committee = new Committees.Committees({
+		// 		name: this.committee.name,
+		// 		chair: this.chair.id
+		// 	});
 
-			$log.debug('Committee Resource Object');
-			$log.debug(committee);
+		// 	$log.debug('Committee Resource Object');
+		// 	$log.debug(committee);
 			
-			$log.debug('Before save committee');
+		// 	$log.debug('Before save committee');
 
-			$scope.createSchedule();
+		// 	$scope.createSchedule();
 
-			// Redirect after save
-			committee.$save(function(response) {
-				$log.debug('Entered save committee function');
+		// 	// Redirect after save
+		// 	committee.$save(function(response) {
+		// 		$log.debug('Entered save committee function');
 
-				$location.path('committees/' + response._id);
+		// 		$location.path('committees/' + response._id);
 		
-				// Clear form fields
-				this.committee.name = '';
-				this.chair.id = '';
-			}, function(errorResponse) { 
-				$scope.error = errorResponse.data.message;
-			});
+		// 		// Clear form fields
+		// 		this.committee.name = '';
+		// 		this.chair.id = '';
+		// 	}, function(errorResponse) { 
+		// 		$scope.error = errorResponse.data.message;
+		// 	});
 
-			$log.debug('After save committee');
+		// 	$log.debug('After save committee');
 
-			//Clear form fields
-			this.committee.name = '';
-			this.chair.id = '';
+		// 	//Clear form fields
+		// 	this.committee.name = '';
+		// 	this.chair.id = '';
 
-		};
+		// };
+
+		$scope.testfunc = function() {
+            $log.debug('Entered testfunc');
+        };
 
 		// Remove existing Committee
 		$scope.remove = function( committee ) {
@@ -131,10 +136,14 @@ angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParam
 		};
 
 		$scope.addSchedule = function(schedule){
+			$log.debug('Entered addSchedule');
+
 			var committee = $scope.committee;
 			var scheduleById = schedule._id;
-			console.log('committee: '+committee._id);
-			console.log('committee: '+scheduleById);
+
+			console.log('committee id: '+committee._id);
+			console.log('schedule id: '+scheduleById);
+
 			$scope.committee.schedules.push(schedule._id);
 			$scope.committee.$update(function() {
 				// $location.path('committees/' + committee._id);
@@ -203,6 +212,22 @@ angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParam
 				$scope.membersPresent--;
 			}
 		};
+
+		$scope.findSchedule = function() {
+			$log.debug('Entered findSchedule');
+			$log.debug('Schedule id:');
+			$log.debug($scope.committee.schedules[0]);
+
+			Schedules.Schedules.get({ 
+				scheduleId: $scope.committee.schdules[0]
+			}).$promise.then(function (data) { 
+				$log.debug('$scope.schedule set with data from findOne function:');
+				$log.debug(data);
+				$scope.schedule = data;
+				$log.debug('Schedule was returned');
+			});
+
+		};;
 
 		/* Committee Function Calls */
 

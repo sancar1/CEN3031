@@ -1,18 +1,19 @@
 'use strict';
 
 // Schedules controller
-angular.module('schedules').controller('SchedulesController', ['$scope', '$stateParams', '$location', 'Authentication','Committees', 'Schedules', '$log',
-	function($scope, $stateParams, $location, Authentication,Committees, Schedules, $log ) {
+angular.module('schedules').controller('SchedulesController', ['$scope', '$stateParams', '$location', 'Authentication','Committees', 'Schedules', '$log', '$timeout',
+	function($scope, $stateParams, $location, Authentication,Committees, Schedules, $log, $timeout) {
 		$scope.authentication = Authentication;
 		
         $log.debug('Entered SchedulesController');
 
-        $scope.testfunc = function() {
-            $log.debug('Entered testfunc');
-        };
-
 		// Create new Schedule
 		$scope.createSchedule = function() {
+      $log.debug('Entered createSchedule');
+
+      $log.debug('Committee Object: ');
+      $log.debug($scope.committee);
+
 			// Create new Schedule object
 			var schedule = new Schedules.Schedules({
 				name: $scope.committee.name + ' Schedule'
@@ -23,8 +24,9 @@ angular.module('schedules').controller('SchedulesController', ['$scope', '$state
 				//$location.path('schedules/' + response._id);
 
 				// Clear form fields
-                console.log('schedule: '+schedule._id);
-                console.log('schedule: '+$scope.committee._id);
+                console.log('Saving schedule in createSchedule');
+                console.log('committee id: '+$scope.committee._id);
+                console.log('schedule id: '+schedule._id);
                // $scope.addSchedule(schedule);
               
                $scope.addSchedule(schedule);
@@ -33,6 +35,13 @@ angular.module('schedules').controller('SchedulesController', ['$scope', '$state
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
 			});
+
+      $log.debug('Schedule was created');
+      $log.debug('Schedule Object:');
+      $log.debug($scope.schedule);
+      $log.debug('Committee Object:');
+      $log.debug($scope.committee);
+
 		};
 
 		// Remove existing Schedule
@@ -70,6 +79,7 @@ angular.module('schedules').controller('SchedulesController', ['$scope', '$state
 		// Find existing Schedule
 		// Find existing Schedule
 		$scope.findOne = function(id) {
+      $log.debug('Entered findOne');
       $log.debug('Schedule id:');
       $log.debug(id);
 			Schedules.Schedules.get({ 
@@ -78,8 +88,9 @@ angular.module('schedules').controller('SchedulesController', ['$scope', '$state
           $log.debug('$scope.schedule set with data from findOne function:');
           $log.debug(data);
           $scope.schedule = data;
+          $log.debug('Schedule was returned');
       });
-		};
+		};;
 
     $scope.addNewEvent = function(){
       var schedule = $scope.schedule;
