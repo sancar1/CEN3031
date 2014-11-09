@@ -39,15 +39,35 @@
                 <form name="userForm"  data-ng-init = "getMembers()" class="form-horizontal" novalidate>
                     <div class = "list-group" class = "list-group-item">
                         <h1 class = "list-group-item-text">Committee Members</h1>
+                        
                         <div class="list-group"> 
                             <a data-ng-repeat="member in members"  data-ng-click = "removeMember(member)" class="list-group-item">
                                 <small class="list-group-item-text">
-                                    <span data-ng-bind="member.displayName"></span>
+                                    <span data-ng-bind="member.displayName">
+                                    </span>
                                 </small> 
                             </a>
                         </div>
                     </div>
+                    <br>
+
                 </form>
+            </section>
+
+            <section data-ng-controller="UsersController">
+                    
+
+                    <div class="btn-group" dropdown is-open="status.isopen">
+                      <button type="button" class="btn btn-primary dropdown-toggle" ng-disabled="disabled" >
+                        Add Member
+                        <span class="caret"></span>
+                      </button>
+                      <ul class="dropdown-menu" role="menu">
+                        <li><a data-ng-repeat="user in users" ng-click="addMember(user)"><span data-ng-bind="user.firstName | date:'medium'"></span></a></li>
+                      </ul>
+                    </div>
+
+
             </section>
 
             <section data-ng-controller="SchedulesController">
@@ -81,20 +101,7 @@
                     </fieldset>
                 </form>
             </div> -->
-            <section data-ng-controller="UsersController">
-                <form name="userForm" class="form-horizontal" novalidate>
-                    <div class="page-header">
-                        <h1>Users In Database</h1>
-                    </div>
-                    <div class="list-group">
-                        <a data-ng-repeat="user in users" data-ng-click = "addMember(user)" data-ng-hide = "inCommittee(user)"class="list-group-item">
-                            <small class="list-group-item-text">
-                                <span data-ng-bind="user.firstName | date:'medium'"></span>
-                            </small>
-                        </a>
-                    </div>
-                </form>
-            </section>
+            
         </form>    
     </div>
 </section>
