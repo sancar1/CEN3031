@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('core').controller('CommitteesCtrl', ['$scope', '$log', '$q', '$stateParams', '$location', '$filter', 'Authentication', 'Committees', 'Users',
-	function($scope, $log, $q, $stateParams, $location, $filter, Authentication, Committees, Users) {
+angular.module('core').controller('CommitteesCtrl', ['$scope', '$log', '$q', '$stateParams', '$location', '$filter', 'Authentication', 'Committees', 'Users', 'Roles',
+	function($scope, $log, $q, $stateParams, $location, $filter, Authentication, Committees, Users, Roles) {
 		// This provides Authentication context.
 		$scope.authentication = Authentication;
 		$scope.currentUser = Authentication.user;
@@ -11,13 +11,6 @@ angular.module('core').controller('CommitteesCtrl', ['$scope', '$log', '$q', '$s
 			$scope.currentUser = Authentication.user;
 			$location.path('/');
 		}
-
-		/* Application Default Values */
-		// Default values for Roles
-		$scope.role = {
-			'admin' : false,
-			'user' : false,
-		};
 
 		// Default values for Committee
 		$scope.committeeTemplates = {
@@ -35,12 +28,6 @@ angular.module('core').controller('CommitteesCtrl', ['$scope', '$log', '$q', '$s
 		});
 
 		/* Application Functions */
-		$scope.getRole = function() {
-			if($filter('lowercase')($scope.currentUser.role) === 'admin')
-				$scope.role.admin = true;
-			if($filter('lowercase')($scope.currentUser.role) === 'user')
-				$scope.role.user = true;
-		};
 
 		// Checks if user is owner of a committee
 		$scope.checkOwner = function(committee){
@@ -76,8 +63,9 @@ angular.module('core').controller('CommitteesCtrl', ['$scope', '$log', '$q', '$s
 
 			// $log.debug('Debug Statement:');
 			// $log.debug(debugObj);
+			// $log.debug('Entered viewCommittee');
 			
-			if($scope.role.admin === true || $scope.checkOwner(committee) === true || $scope.userInCommittee(committee) === true){
+			if(Roles.get().admin === true || $scope.checkOwner(committee) === true || $scope.userInCommittee(committee) === true){
 				return true;
 			}
 			return false;
@@ -108,7 +96,6 @@ angular.module('core').controller('CommitteesCtrl', ['$scope', '$log', '$q', '$s
 		};
 
 		/* Application Function Calls */
-		$scope.getRole();
 
 	}
 ]);

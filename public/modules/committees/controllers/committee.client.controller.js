@@ -1,13 +1,13 @@
 'use strict';
 
 // Committees controller
-angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParams', '$location', 'Authentication', 'Users', 'Committees', '$q', '$log', 'Schedules',
-	function($scope, $stateParams, $location, Authentication, Users, Committees, $q, $log, Schedules) {
+angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParams', '$location', 'Authentication', 'Users', 'Committees', '$q', '$log', 'Schedules', 'Roles',
+	function($scope, $stateParams, $location, Authentication, Users, Committees, $q, $log, Schedules, Roles) {
 
 		$log.debug('Entered CommitteeCtrl');
 		
 		/* Committee Link Permissions */
-		if($scope.role.admin)
+		if(Roles.get().admin)
 			$scope.committeeTemplates.edit = true;
 
 		$scope.committeeTemplates.attendance = true;
