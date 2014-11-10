@@ -28,31 +28,6 @@ angular.module('core').controller('CommitteesCtrl', ['$scope', '$log', '$q', '$s
 		});
 
 		/* Application Functions */
-
-		// Checks if user is owner of a committee
-		// $scope.checkOwner = function(committee){
-		// 	if($scope.currentUser.displayName===committee.user.displayName){
-		// 		return true;
-		// 	}
-		// 	else{
-		// 		return false;
-		// 	}
-		// };
-
-		// Checks if user is in a committee
-		// $scope.userInCommittee = function(committee){
-
-		// 	if(typeof committee !== 'undefined'){
-		// 		for(var i = 0; i < committee.members.length; i++){
-		// 			if($scope.currentUser._id === committee.members[i]){
-		// 				return true;
-		// 			}
-		// 		}
-		// 		return false;
-		// 	}
-		// 	return false;
-		// };
-
 		// Determines whether user can see a committee
 		$scope.viewCommittee = function(committee) {
 			// var debugObj = {
