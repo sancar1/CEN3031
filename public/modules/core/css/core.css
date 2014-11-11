@@ -81,7 +81,7 @@ background-image: none;
 /*Tab body code */
 
 .app-content {
-	margin-top: 80px;
+	margin-top: 10px;
 }
 
 .app-content .app-sidebar {
@@ -200,8 +200,8 @@ span:hover:before {
 
 /* new login UI */
   body {
-    padding-top: 120px;
-    padding-bottom: 40px;
+    padding-top: 50px;
+    padding-bottom: 4x;
     background-color: #eee;
   
   }
