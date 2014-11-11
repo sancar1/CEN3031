@@ -7,6 +7,7 @@ var mongoose = require('mongoose'),
 	errorHandler = require('./errors'),
 	User = mongoose.model('User'),
 	Meeting = mongoose.model('Meeting'),
+	Schedule = mongoose.model('Schedule'),
 	async = require('async'),
 	_ = require('lodash');
 
@@ -15,6 +16,13 @@ var mongoose = require('mongoose'),
  */
 exports.create = function(req, res) {
 	var meeting = new Meeting(req.body);
+	var start = req.startTime;
+	var end = req.endTime;
+	var allDay = req.allDay;
+
+	console.log(start);
+	console.log(end);
+	console.log(allDay);
 
 async.waterfall([
 		function(done){
@@ -28,7 +36,17 @@ async.waterfall([
 					res.jsonp(meeting);
 				}
 			});
-		},
+		},function(done){
+			Schedule.update({'_id': scheduleById}, {$addToSet:{'event': newEvent}},function(err, committee){
+				if(err){
+					return res.status(401).send({
+						message: errorHandler.getErrorMessage(err)
+					});
+				}
+				else done(err,committee);
+			});
+			
+		}/*,
 		function(meeting, done){
 			User.find({'_id': req.body.noteTaker},function(err, user){
 				if(err){
@@ -41,7 +59,7 @@ async.waterfall([
 					done(err,user[0]);
 				}
 			});
-		}/*,
+		},
 		function(user, done) {
 			res.render('templates/add-as-chair', {
 				name: user.displayName,
