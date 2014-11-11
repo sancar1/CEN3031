@@ -238,6 +238,17 @@ span:hover:before {
     background-image: url('http://training.health.ufl.edu/handouts/Templates/UF_background_orange_right_button.jpg');
     background-repeat:repeat;
   }
+  .fullscreen_bg_orange {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-size: cover;
+    background-position: 50% 50%;
+    background-image: url('http://s30.postimg.org/8qv3ojk1d/orange.png');
+    background-repeat:repeat;
+  }
   .form-signin {
     max-width: 280px;
     padding: 15px;
