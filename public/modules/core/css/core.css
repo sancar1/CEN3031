@@ -206,7 +206,7 @@ span:hover:before {
   
   }
   
-  a:hover > button{
+   button > a:hover{
 	text-decoration: none;
   }
   
