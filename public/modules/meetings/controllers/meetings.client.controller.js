@@ -11,8 +11,8 @@ angular.module('meetings').controller('MeetingsController', ['$scope', '$statePa
 			var meeting = new Meetings.Meetings ({
 				name: this.meeting.name,
 				noteTaker: this.noteTaker.id,
-				startTime: new Date(2014,11,11),
-				endTime: new Date(2014,12,12),
+				startTime: new Date(2014,11,23),
+				endTime: new Date(2014,11,25),
 				allDay: false,
 				scheduleById: $scope.committee.schedule
 

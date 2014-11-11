@@ -21,7 +21,7 @@ angular.module('committees').controller('CreateCommitteeCtrl', ['$scope', '$stat
 
 			// Create new Schedule object
 			var schedule = new Schedules.Schedules({
-				name: $scope.committee.name + ' Schedule'
+				name: committee.name + ' Schedule'
 			});
 			$scope.schedule =schedule;
 

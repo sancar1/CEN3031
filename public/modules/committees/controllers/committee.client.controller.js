@@ -4,7 +4,7 @@
 angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParams', '$location', 'Authentication', 'Users', 'Committees', '$q', '$log', 'Schedules', 'Roles',
 	function($scope, $stateParams, $location, Authentication, Users, Committees, $q, $log, Schedules, Roles) {
 
-		$log.debug('Entered CommitteeCtrl');
+		// $log.debug('Entered CommitteeCtrl');
 		
 		/* Committee Link Permissions */
 		if(Roles.get().admin)
@@ -22,10 +22,10 @@ angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParam
 		$scope.findCommittee().then(function() {
 			$scope.getChair();
 			$scope.getMembers().then(function() {
-				$scope.lastCommittee($scope.members);
+				// $scope.lastCommittee($scope.members);
 			});
-			$log.debug('Committee Object');
-			$log.debug($scope.committee);
+			// $log.debug('Committee Object');
+			// $log.debug($scope.committee);
 			$scope.findSchedule();
 		});
 
@@ -135,7 +135,7 @@ angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParam
 		$scope.getChair = function(){
 			var committee = $scope.committee;
 			Committees.Chair.get({committeeId: committee._id, chairId: committee.chair}).$promise.then(function(data) {
-				$log.debug($scope.committee.name + ' Chair: ' + data.displayName);
+				// $log.debug($scope.committee.name + ' Chair: ' + data.displayName);
 				$scope.chair = data;
 			});
 		};
@@ -160,9 +160,6 @@ angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParam
 		};
 
 		$scope.findSchedule = function() {
-			$log.debug('Entered findSchedule');
-			$log.debug('Schedule id:');
-			$log.debug($scope.committee.schedule);
 
 			return Schedules.Schedules.get({ 
 				scheduleId: $scope.committee.schedule
@@ -173,21 +170,9 @@ angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParam
 				$scope.eventSources.push(data.events);
 			  	$scope.eventSources.push([data.events]);
 
-				$log.debug('Schedule was returned');
 			});
 
 		};
-
-		// $scope.setSchedule = function(){
-		// 	Schedules.Schedules.get({ 
-		// 		scheduleId: $scope.committee.schedule
-		// 	}).$promise.then(function (data) { 
-	 //        $log.debug('$scope.schedule set with data from findSchedule function:');
-	 //        $log.debug(data);
-	 //        $scope.schedule = data;
-		// 	  $scope.eventSources.push(data.events);
-		// 	  $scope.eventSources.push([data.events]);
-		// });
 
 		/* Committee Function Calls */
 
