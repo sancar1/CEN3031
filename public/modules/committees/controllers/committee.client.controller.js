@@ -215,10 +215,10 @@ angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParam
 		$scope.findSchedule = function() {
 			$log.debug('Entered findSchedule');
 			$log.debug('Schedule id:');
-			$log.debug($scope.committee.schedules[0]);
+			$log.debug($scope.committee.schedule);
 
 			Schedules.Schedules.get({ 
-				scheduleId: $scope.committee.schdules[0]
+				scheduleId: $scope.committee.schdule
 			}).$promise.then(function (data) { 
 				$log.debug('$scope.schedule set with data from findOne function:');
 				$log.debug(data);
