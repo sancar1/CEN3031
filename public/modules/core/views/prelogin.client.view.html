@@ -34,12 +34,12 @@
 
 <div id="fullscreen_bg" class="fullscreen_bg"/>
 
-<div class="container">
+<div class="container" data-ng-controller="AuthenticationController">
 
-	<form class="form-signin">
+	<form class="form-signin" data-ng-submit="signin()">
 		<h1 class="form-signin-heading text-muted">Sign In</h1>
-		<input type="text" class="form-control" placeholder="Email address" required="" autofocus="">
-		<input type="password" class="form-control" placeholder="Password" required="">
+		<input type="text" class="form-control" placeholder="Username" data-ng-model="credentials.username" required="" autofocus="">
+		<input type="password" class="form-control" placeholder="Password" data-ng-model="credentials.password" required="">
 		<button class="btn btn-lg btn-primary btn-block" type="submit">
 			Sign In
 		</button>
