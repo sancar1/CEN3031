@@ -5,14 +5,14 @@ angular.module('committees').controller('CreateCommitteeCtrl', ['$scope', '$stat
 	function($scope, $stateParams, $location, Authentication, Users, Committees, $q, $log, Schedules) {
 
 		/* Committee Functions */
-		$scope.addSchedule = function(schedule){
+		$scope.addSchedule = function(schedule, committee){
 			$log.debug('Entered addSchedule');
-			var committee = $scope.committee;
+			var committeeById = committee._id;
 			var scheduleById = schedule._id;
 			console.log('schedule id: '+scheduleById);
-			console.log('committee id: '+committee._id);
-			$scope.committee.schedule = scheduleById;
-			$scope.committee.$update(function() {
+			console.log('committee id: '+committeeById);
+			committee.schedule = scheduleById;
+			committee.$update(function() {
 				// $location.path('committees/' + committee._id);
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
@@ -20,7 +20,7 @@ angular.module('committees').controller('CreateCommitteeCtrl', ['$scope', '$stat
 		};
 
 		// Create new Schedule
-		$scope.createSchedule = function() {
+		$scope.createSchedule = function(committee) {
 			$log.debug('Entered createSchedule');
 
 			// Create new Schedule object
@@ -39,7 +39,7 @@ angular.module('committees').controller('CreateCommitteeCtrl', ['$scope', '$stat
                 console.log('committee id: '+$scope.committee._id);
                // $scope.addSchedule(schedule);
               
-               $scope.addSchedule(schedule);
+               $scope.addSchedule(schedule, committee);
 
 				$scope.name = '';
 			}, function(errorResponse) {
@@ -70,11 +70,13 @@ angular.module('committees').controller('CreateCommitteeCtrl', ['$scope', '$stat
 			committee.$save(function(response) {
 				$log.debug('Entered save committee function');
 
-				$location.path('committees/' + response._id);
+				$scope.createSchedule(response);
 		
 				// Clear form fields
-				this.committee.name = '';
-				this.chair.id = '';
+				// this.committee.name = '';
+				// this.chair.id = '';
+
+				$location.path('committees/' + response._id);
 			}, function(errorResponse) { 
 				$scope.error = errorResponse.data.message;
 			});
@@ -84,8 +86,6 @@ angular.module('committees').controller('CreateCommitteeCtrl', ['$scope', '$stat
 			// });
 
 			console.log('After save committee');
-
-			$scope.createSchedule();
 
 			//Clear form fields
 			this.committee.name = '';
