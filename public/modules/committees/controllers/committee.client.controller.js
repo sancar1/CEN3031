@@ -143,7 +143,7 @@ angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParam
 			console.log('committee id: '+committee._id);
 			console.log('schedule id: '+scheduleById);
 
-			$scope.committee.schedules.push(schedule._id);
+			$scope.committee.schedule = scheduleById;
 			$scope.committee.$update(function() {
 				// $location.path('committees/' + committee._id);
 			}, function(errorResponse) {

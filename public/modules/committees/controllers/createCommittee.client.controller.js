@@ -11,7 +11,7 @@ angular.module('committees').controller('CreateCommitteeCtrl', ['$scope', '$stat
 			var scheduleById = schedule._id;
 			console.log('schedule id: '+scheduleById);
 			console.log('committee id: '+committee._id);
-			$scope.committee.schedules.push(schedule._id);
+			$scope.committee.schedule = scheduleById;
 			$scope.committee.$update(function() {
 				// $location.path('committees/' + committee._id);
 			}, function(errorResponse) {
