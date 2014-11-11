@@ -13,7 +13,8 @@ angular.module('meetings').controller('MeetingsController', ['$scope', '$statePa
 				noteTaker: this.noteTaker.id,
 				startTime: new Date(2014,11,11),
 				endTime: new Date(2014,12,12),
-				allDay: false
+				allDay: false,
+				scheduleById: $scope.committee.schedule
 
 			});
 
