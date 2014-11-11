@@ -16,13 +16,15 @@ var mongoose = require('mongoose'),
  */
 exports.create = function(req, res) {
 	var meeting = new Meeting(req.body);
-	var start = req.startTime;
-	var end = req.endTime;
-	var allDay = req.allDay;
+	var scheduleById = meeting.scheduleById;
+	var newEvent = null;
+	newEvent.start = req.startTime;
+	newEvent.end = req.endTime;
+	newEvent.allDay = req.allDay;
 
-	console.log(start);
-	console.log(end);
-	console.log(allDay);
+	console.log(newEvent.start);
+	console.log(newEvent.end);
+	console.log(newEvent.allDay);
 
 async.waterfall([
 		function(done){
@@ -33,17 +35,19 @@ async.waterfall([
 					});
 				} 
 				else {
-					res.jsonp(meeting);
+					done(meeting);
 				}
 			});
 		},function(done){
+			console.log(meeting);
+			newEvent.meeting = meeting._id;
 			Schedule.update({'_id': scheduleById}, {$addToSet:{'event': newEvent}},function(err, committee){
 				if(err){
 					return res.status(401).send({
 						message: errorHandler.getErrorMessage(err)
 					});
 				}
-				else done(err,committee);
+				else done(err,meeting);
 			});
 			
 		}/*,
