@@ -4,45 +4,6 @@
 angular.module('schedules').controller('SchedulesController', ['$scope', '$stateParams', '$location', 'Authentication','Committees', 'Schedules', '$log', '$timeout',
 	function($scope, $stateParams, $location, Authentication,Committees, Schedules, $log, $timeout) {
 		$scope.authentication = Authentication;
-		
-        $log.debug('Entered SchedulesController');
-
-		// Create new Schedule
-		$scope.createSchedule = function() {
-      $log.debug('Entered createSchedule');
-
-      $log.debug('Committee Object: ');
-      $log.debug($scope.committee);
-
-			// Create new Schedule object
-			var schedule = new Schedules.Schedules({
-				name: $scope.committee.name + ' Schedule'
-			});
-			$scope.schedule =schedule;
-			// Redirect after save
-			schedule.$save(function(response) {
-				//$location.path('schedules/' + response._id);
-
-				// Clear form fields
-                console.log('Saving schedule in createSchedule');
-                console.log('committee id: '+$scope.committee._id);
-                console.log('schedule id: '+schedule._id);
-               // $scope.addSchedule(schedule);
-              
-               $scope.addSchedule(schedule);
-
-				$scope.name = '';
-			}, function(errorResponse) {
-				$scope.error = errorResponse.data.message;
-			});
-
-      $log.debug('Schedule was created');
-      $log.debug('Schedule Object:');
-      $log.debug($scope.schedule);
-      $log.debug('Committee Object:');
-      $log.debug($scope.committee);
-
-		};
 
 		// Remove existing Schedule
 		$scope.remove = function( schedule ) {
@@ -252,28 +213,7 @@ angular.module('schedules').controller('SchedulesController', ['$scope', '$state
       }
     };
     /* event sources array*/
-    $scope.eventSources = [];
-	//  $scope.setSchedule = function(){
-	// 	Schedules.Schedules.get({ 
-	// 		scheduleId: $scope.committee.schedule
-	// 	}).$promise.then(function (data) { 
- //        $log.debug('$scope.schedule set with data from findOne function:');
- //        $log.debug(data);
- //        $scope.schedule = data;
-	// 	  $scope.eventSources.push(data.events);
-		  
-	// 	    $scope.eventSources.push([data.events]);
-	// });
-	//console.log($scope.schedule);
-	//$scope.eventSources = [$scope.schedules.events];
-// };
-	
-	// $scope.findCommittee().then(function() {
-	// 	$scope.setSchedule();
-	// 	//console.log($scope.schedule);
-		
-	// });
- 
+    // $scope.eventSources = [];
   
 	}
 ]);

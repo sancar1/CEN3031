@@ -15,6 +15,9 @@ angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParam
 		$scope.committeeTemplates.resources = true;
 		$scope.committeeTemplates.meetings = true;
 
+		/* Committee vars to be set */
+		$scope.eventSources = [];
+
 		/* Committee Data to be Loaded on Page Load */
 		$scope.findCommittee().then(function() {
 			$scope.getChair();
@@ -23,7 +26,7 @@ angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParam
 			});
 			$log.debug('Committee Object');
 			$log.debug($scope.committee);
-			// $scope.findSchedule();
+			$scope.findSchedule();
 		});
 
 		/* Committee Functions */
@@ -194,6 +197,7 @@ angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParam
 			$scope.committeeTemplates.attendance = false;
 			$scope.committeeTemplates.schedule = false;
 			$scope.committeeTemplates.resources = false;
+			$scope.committeeTemplates.meetings = false;
 		});
 
 	}
