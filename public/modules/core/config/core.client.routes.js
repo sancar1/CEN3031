@@ -35,7 +35,7 @@ angular.module('core').config(['$stateProvider', '$urlRouterProvider', '$logProv
 		}).
 		state('meetings', {
 			url: '/committee/:committeeId/meetings',
-			templateUrl: 'modules/committees/views/meetings.client.view.html'
+			templateUrl: 'modules/meetings/views/list-meetings.client.view.html'
 		});
 	}
 ]);
