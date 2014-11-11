@@ -15,6 +15,9 @@ angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParam
 		$scope.committeeTemplates.resources = true;
 		$scope.committeeTemplates.meetings = true;
 
+		/* Committee vars to be set */
+		$scope.eventSources = [];
+
 		/* Committee Data to be Loaded on Page Load */
 		$scope.findCommittee().then(function() {
 			$scope.getChair();
@@ -27,45 +30,6 @@ angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParam
 		});
 
 		/* Committee Functions */
-		// Create new Committee
-		// $scope.createCommittee = function($scope) {
-		// 	// Create new Committee object
-
-		// 	$log.debug('Entered create function');
-
-		// 	var committee = new Committees.Committees({
-		// 		name: this.committee.name,
-		// 		chair: this.chair.id
-		// 	});
-
-		// 	$log.debug('Committee Resource Object');
-		// 	$log.debug(committee);
-			
-		// 	$log.debug('Before save committee');
-
-		// 	$scope.createSchedule();
-
-		// 	// Redirect after save
-		// 	committee.$save(function(response) {
-		// 		$log.debug('Entered save committee function');
-
-		// 		$location.path('committees/' + response._id);
-		
-		// 		// Clear form fields
-		// 		this.committee.name = '';
-		// 		this.chair.id = '';
-		// 	}, function(errorResponse) { 
-		// 		$scope.error = errorResponse.data.message;
-		// 	});
-
-		// 	$log.debug('After save committee');
-
-		// 	//Clear form fields
-		// 	this.committee.name = '';
-		// 	this.chair.id = '';
-
-		// };
-
 		// Remove existing Committee
 		$scope.remove = function( committee ) {
 			if ( committee ) { committee.$remove();
@@ -131,23 +95,6 @@ angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParam
 			var Meetings = Committees.Meetings.query({committeeId: committee._id}).$promise.then(function(data) {
 				console.log(data);
 				$scope.meetings = data;
-			});
-		};
-
-		$scope.addSchedule = function(schedule){
-			$log.debug('Entered addSchedule');
-
-			var committee = $scope.committee;
-			var scheduleById = schedule._id;
-
-			console.log('committee id: '+committee._id);
-			console.log('schedule id: '+scheduleById);
-
-			$scope.committee.schedule = scheduleById;
-			$scope.committee.$update(function() {
-				// $location.path('committees/' + committee._id);
-			}, function(errorResponse) {
-				$scope.error = errorResponse.data.message;
 			});
 		};
 
@@ -217,16 +164,30 @@ angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParam
 			$log.debug('Schedule id:');
 			$log.debug($scope.committee.schedule);
 
-			Schedules.Schedules.get({ 
-				scheduleId: $scope.committee.schdule
+			return Schedules.Schedules.get({ 
+				scheduleId: $scope.committee.schedule
 			}).$promise.then(function (data) { 
-				$log.debug('$scope.schedule set with data from findOne function:');
+				$log.debug('$scope.schedule set with data from findSchedule function:');
 				$log.debug(data);
 				$scope.schedule = data;
+				$scope.eventSources.push(data.events);
+			  	$scope.eventSources.push([data.events]);
+
 				$log.debug('Schedule was returned');
 			});
 
 		};
+
+		// $scope.setSchedule = function(){
+		// 	Schedules.Schedules.get({ 
+		// 		scheduleId: $scope.committee.schedule
+		// 	}).$promise.then(function (data) { 
+	 //        $log.debug('$scope.schedule set with data from findSchedule function:');
+	 //        $log.debug(data);
+	 //        $scope.schedule = data;
+		// 	  $scope.eventSources.push(data.events);
+		// 	  $scope.eventSources.push([data.events]);
+		// });
 
 		/* Committee Function Calls */
 
@@ -236,6 +197,7 @@ angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParam
 			$scope.committeeTemplates.attendance = false;
 			$scope.committeeTemplates.schedule = false;
 			$scope.committeeTemplates.resources = false;
+			$scope.committeeTemplates.meetings = false;
 		});
 
 	}
