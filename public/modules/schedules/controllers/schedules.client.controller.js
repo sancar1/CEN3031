@@ -255,7 +255,7 @@ angular.module('schedules').controller('SchedulesController', ['$scope', '$state
     $scope.eventSources = [];
 	 $scope.setSchedule = function(){
 		Schedules.Schedules.get({ 
-			scheduleId: $scope.committee.schedules[0]
+			scheduleId: $scope.committee.schedule
 		}).$promise.then(function (data) { 
         $log.debug('$scope.schedule set with data from findOne function:');
         $log.debug(data);
