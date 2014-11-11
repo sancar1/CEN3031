@@ -255,6 +255,12 @@ span:hover:before {
     margin: 0 auto;
       margin-top:50px;
   }
+  .form-signup {
+    max-width: 280px;
+    padding: 15px;
+    margin: 0 auto;
+      margin-top:150px;
+  }
   .form-signin .form-signin-heading, .form-signin {
     margin-bottom: 10px;
   }
