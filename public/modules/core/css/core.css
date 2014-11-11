@@ -81,7 +81,7 @@ background-image: none;
 /*Tab body code */
 
 .app-content {
-	margin-top: 80px;
+	margin-top: 60px;
 }
 
 .app-content .app-sidebar {
@@ -198,14 +198,15 @@ span:hover:before {
   border: 1px solid #4778d9!important;
 }
 
-/* new login UI */
+/* new login UI 
   body {
-    padding-top: 120px;
-    padding-bottom: 40px;
+    padding-top: 50px;
+    padding-bottom: 4x;
     background-color: #eee;
   
   }
-  
+*/ 
+ 
    a:hover{
 	text-decoration: none;
   }
