@@ -82,15 +82,16 @@
            <br><br>
 
             <section data-ng-controller="SchedulesController">
-               
-                <h1>New Schedule</h1>
-                <br>
-                <button type="button" class="btn btn-primary" ng-click="createSchedule()">Add Schedule</button>
-                <input type="text" data-ng-model="newEvent.name" id="name" class="form-control" placeholder="Event Name" required value="Crazy Event">
-                <input type="text" data-ng-model="newEvent.startM" id="start" class="form-control" placeholder="Start Time M" required value="11">
-                <input type="text" data-ng-model="newEvent.startD" id="start" class="form-control" placeholder="Start Time D" required value="11">
+                <div class = "schedule-section">
+                    <h1>New Schedule</h1>
+                    <br>
+                    <button type="button" class="btn btn-primary" ng-click="createSchedule()">Add Schedule</button>
+                    <input type="text" data-ng-model="newEvent.name" id="name" class="form-control" placeholder="Event Name" required value="Crazy Event">
+                    <input type="text" data-ng-model="newEvent.startM" id="start" class="form-control" placeholder="Start Time M" required value="11">
+                    <input type="text" data-ng-model="newEvent.startD" id="start" class="form-control" placeholder="Start Time D" required value="11">
 
-                <button type="button" class="btn btn-primary" ng-click="addNewEvent()">Add Event</button>
+                    <button type="button" class="btn btn-primary" ng-click="addNewEvent()">Add Event</button>
+                </div>
             </section>
             <!-- <div class="col-md-12">
                 <form class="form-horizontal" data-ng-submit="create()" novalidate>

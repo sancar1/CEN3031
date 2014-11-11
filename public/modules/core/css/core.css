@@ -137,6 +137,10 @@ text-decoration: none;
 	margin-left: -1.5%;
 }
 
+.schedule-section{
+	padding-top: 560px;
+}
+
 /* Base for label styling */
 [type="checkbox"]:not(:checked),
 [type="checkbox"]:checked {
