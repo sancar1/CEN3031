@@ -1,9 +1,8 @@
-<body ng-app="myApp" ng-strict-di>
+<section data-ng-controller="CommitteeCtrl">
+	<section data-ng-controller="SchedulesController">
 
-<section data-ng-controller="SchedulesController">
+	<h1>Schedule</h1>
 
-<h1>Schedule</h1>
-
-<div ui-calendar="uiConfig.calendar" ng-model="eventSources" calendar="myCalendar"></div>
-
-</body>
+	<div ui-calendar="uiConfig.calendar" ng-model="eventSources" calendar="myCalendar"></div>
+	</section>
+</section>

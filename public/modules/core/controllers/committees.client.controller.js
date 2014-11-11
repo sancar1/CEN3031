@@ -17,7 +17,7 @@ angular.module('core').controller('CommitteesCtrl', ['$scope', '$log', '$q', '$s
 			'edit' : false,
 			'attendance' : false,
 			'schedule' : false,
-			'resources' : false
+			'meetings' : false
 		};
 
 		/* Application Services to be Loaded on Page Load */

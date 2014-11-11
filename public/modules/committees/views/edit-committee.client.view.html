@@ -26,7 +26,7 @@
                             <p ng-show="committeeForm.content.$error.required" class="text-danger">Content is required</p>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" ng-show = "user.role = 'Admin'">
                         <input type="submit" value="Update" class="btn btn-default">
                     </div>
                     <div data-ng-show="error" class="text-danger">

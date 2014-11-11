@@ -13,6 +13,7 @@ angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParam
 		$scope.committeeTemplates.attendance = true;
 		$scope.committeeTemplates.schedule = true;
 		$scope.committeeTemplates.resources = true;
+		$scope.committeeTemplates.meetings = true;
 
 		/* Committee Data to be Loaded on Page Load */
 		$scope.findCommittee().then(function() {
