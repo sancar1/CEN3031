@@ -198,14 +198,15 @@ span:hover:before {
   border: 1px solid #4778d9!important;
 }
 
-/* new login UI */
+/* new login UI 
   body {
     padding-top: 50px;
     padding-bottom: 4x;
     background-color: #eee;
   
   }
-  
+*/ 
+ 
    a:hover{
 	text-decoration: none;
   }
