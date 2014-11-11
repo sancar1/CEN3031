@@ -34,7 +34,7 @@ var CommitteeSchema = new Schema({
 		 type: String,
 	},
 	members:   [String],
-	schedules: [String],
+	schedule: String,
 	updated: {
 		type: Date
 	},
