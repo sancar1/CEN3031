@@ -10,7 +10,11 @@ angular.module('meetings').controller('MeetingsController', ['$scope', '$statePa
 			// Create new Meeting object
 			var meeting = new Meetings.Meetings ({
 				name: this.meeting.name,
-				noteTaker: this.noteTaker.id
+				noteTaker: this.noteTaker.id,
+				startTime: new Date(2014,11,11),
+				endTime: new Date(2014,12,12),
+				allDay: false
+
 			});
 
 			// Redirect after save
