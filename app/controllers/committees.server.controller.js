@@ -82,6 +82,7 @@ async.waterfall([
 				else console.log('message sent: ' + console.log(info));
 				done(err);
 			});
+			res.jsonp(committee);
 		}
 		],function(err){
 			if(err) console.log(err);

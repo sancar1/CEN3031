@@ -67,21 +67,21 @@ angular.module('committees').controller('CreateCommitteeCtrl', ['$scope', '$stat
 			console.log('Before save committee');
 
 			// Redirect after save
-			// committee.$save(function(response) {
-			// 	$log.debug('Entered save committee function');
+			committee.$save(function(response) {
+				$log.debug('Entered save committee function');
 
-			// 	$location.path('committees/' + response._id);
+				$location.path('committees/' + response._id);
 		
-			// 	// Clear form fields
-			// 	this.committee.name = '';
-			// 	this.chair.id = '';
-			// }, function(errorResponse) { 
-			// 	$scope.error = errorResponse.data.message;
-			// });
-
-			committee.$save(function() {
-				$log.debug('OPEN SESAME!!!!!!');
+				// Clear form fields
+				this.committee.name = '';
+				this.chair.id = '';
+			}, function(errorResponse) { 
+				$scope.error = errorResponse.data.message;
 			});
+
+			// committee.$save(function() {
+			// 	$log.debug('OPEN SESAME!!!!!!');
+			// });
 
 			console.log('After save committee');
 

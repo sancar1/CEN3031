@@ -17,13 +17,14 @@ var mongoose = require('mongoose'),
 exports.create = function(req, res) {
 	var meeting = new Meeting(req.body);
 	var scheduleById = meeting.scheduleById;
-	var newEvent = null;
-	newEvent.start = req.startTime;
-	newEvent.end = req.endTime;
-	newEvent.allDay = req.allDay;
+	var newEvent = {
+		'startTime': req.startTime,
+		'endTime': req.endTime,
+		'allDay': req.allDay
+	};
 
-	console.log(newEvent.start);
-	console.log(newEvent.end);
+	console.log(newEvent.startTime);
+	console.log(newEvent.endTime);
 	console.log(newEvent.allDay);
 
 async.waterfall([
