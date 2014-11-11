@@ -44,6 +44,7 @@ angular.module('schedules').controller('SchedulesController', ['$scope', '$state
 
 		};
 
+
 		// Remove existing Schedule
 		$scope.remove = function( schedule ) {
 			if ( schedule ) { schedule.$remove();

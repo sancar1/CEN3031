@@ -86,7 +86,7 @@ angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParam
 			var committee = $scope.committee ;
 
 			committee.$update(function() {
-				$location.path('committees/' + committee._id);
+				$location.path('committees/' + committee._id+'/edit');
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
 			});
@@ -226,6 +226,13 @@ angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParam
 			});
 
 		};
+		
+		$scope.updateAlert = function() {
+		    $('#alert_updateDescription').html('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><span>Your description has been updated.</span></div>')
+		    setTimeout(function() {
+		        $("div.alert").remove();
+		    }, 3000);
+		}
 
 		/* Committee Function Calls */
 
