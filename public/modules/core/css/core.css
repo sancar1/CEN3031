@@ -133,6 +133,10 @@ text-decoration: none;
 	padding-right: .5%;
 }
 
+.left-align{
+	margin-left: -1.5%;
+}
+
 /* Base for label styling */
 [type="checkbox"]:not(:checked),
 [type="checkbox"]:checked {
