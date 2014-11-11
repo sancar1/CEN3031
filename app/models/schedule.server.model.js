@@ -25,7 +25,7 @@ var ScheduleSchema = new Schema({
 		ref: 'User'
 	},
 	events:[
-      {title: String,start: Date,end: Date,allDay: Boolean, meeting: String}
+      {start: Date,end: Date,allDay: Boolean, meeting: String}
 	]
 });
 

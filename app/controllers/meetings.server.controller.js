@@ -16,16 +16,6 @@ var mongoose = require('mongoose'),
 exports.create = function(req, res) {
 	var meeting = new Meeting(req.body);
 
-	meeting.save(function(err) {
-		if (err) {
-			return res.status(400).send({
-				message: errorHandler.getErrorMessage(err)
-			});
-		} else {
-			res.jsonp(meeting);
-		}
-	});
-/*
 async.waterfall([
 		function(done){
 			meeting.save(function(err) {
@@ -39,7 +29,7 @@ async.waterfall([
 				}
 			});
 		},
-		function(committee, done){
+		function(meeting, done){
 			User.find({'_id': req.body.noteTaker},function(err, user){
 				if(err){
 					return res.status(401).send({
@@ -74,11 +64,11 @@ async.waterfall([
 				else console.log('message sent: ' + console.log(info));
 				done(err);
 			});
-		}
+		}*/
 		],function(err){
 			if(err) console.log(err);
 
-	});*/
+	});
 };
 
 /**
@@ -181,6 +171,14 @@ exports.removeNotetaker = function(req, res) {
  * List of Meetings
  */
 exports.list = function(req, res) { 
+
+	/*
+	get meeting ids from schedule
+	*/
+
+	/*
+		return meetings
+	*/
 	Meeting.find().sort('-created').populate('user', 'displayName').exec(function(err, meetings) {
 		if (err) {
 			return res.status(400).send({
