@@ -7,6 +7,7 @@ var mongoose = require('mongoose'),
 	errorHandler = require('./errors'),
 	User = mongoose.model('User'),
 	Meeting = mongoose.model('Meeting'),
+	async = require('async'),
 	_ = require('lodash');
 
 /**
@@ -14,7 +15,6 @@ var mongoose = require('mongoose'),
  */
 exports.create = function(req, res) {
 	var meeting = new Meeting(req.body);
-	meeting.user = req.user;
 
 	meeting.save(function(err) {
 		if (err) {
@@ -25,6 +25,60 @@ exports.create = function(req, res) {
 			res.jsonp(meeting);
 		}
 	});
+/*
+async.waterfall([
+		function(done){
+			meeting.save(function(err) {
+				if (err) {
+					return res.status(400).send({
+						message: errorHandler.getErrorMessage(err)
+					});
+				} 
+				else {
+					res.jsonp(meeting);
+				}
+			});
+		},
+		function(committee, done){
+			User.find({'_id': req.body.noteTaker},function(err, user){
+				if(err){
+					return res.status(401).send({
+						message: errorHandler.getErrorMessage(err)
+					});
+				}
+				else{
+					console.log(user);
+					done(err,user[0]);
+				}
+			});
+		}/*,
+		function(user, done) {
+			res.render('templates/add-as-chair', {
+				name: user.displayName,
+				committee: req.body.name,
+				appName: config.app.title
+			}, function(err, emailHTML) {
+				done(err, emailHTML, user);
+			});
+		},
+		// If valid email, send reset email using service
+		function(emailHTML, user, done) {
+			var mailOptions = {
+				to: user.email,
+				from: config.mailer.from,
+				subject: 'Added as chair of a committee',
+				html: emailHTML
+			};
+			smtpTransport.sendMail(mailOptions, function(err, info) {
+				if (err) console.log('message not sent: ' + console.log(err));
+				else console.log('message sent: ' + console.log(info));
+				done(err);
+			});
+		}
+		],function(err){
+			if(err) console.log(err);
+
+	});*/
 };
 
 /**
@@ -74,7 +128,8 @@ exports.delete = function(req, res) {
  * Get Notetaker
  */
 exports.getNotetaker = function(req, res) {
-	var noteTakerById = req.committee.noteTaker;
+	console.log('here in getNotetaker');
+	var noteTakerById = req.meeting.noteTaker;
 
 	User.find({'_id': noteTakerById}).exec(function(err, noteTaker) {
 		if (err) {

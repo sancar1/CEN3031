@@ -9,7 +9,8 @@ angular.module('meetings').controller('MeetingsController', ['$scope', '$statePa
 		$scope.create = function() {
 			// Create new Meeting object
 			var meeting = new Meetings.Meetings ({
-				name: this.name
+				name: this.meeting.name,
+				noteTaker: this.noteTaker.id
 			});
 
 			// Redirect after save
@@ -51,10 +52,12 @@ angular.module('meetings').controller('MeetingsController', ['$scope', '$statePa
 		};
 
 		// Update existing Meeting
-		$scope.getNotetaker = function(user) {
-			var meeting = $scope.meeting ;
-
-			Meetings.Notetaker.get({meetingId: meeting._id, noteTakerId: user._id}).$promise.then(function(data){
+		$scope.getNotetaker = function() {
+			var meetingById = $scope.meeting._id;
+			console.log('beforecall');
+			console.log($scope.meeting);
+			Meetings.NoteTaker.get({meetingId: meetingById}).$promise.then(function(data){
+				console.log('inside');
 				console.log(data);
 				$scope.noteTaker = data;
 			});
@@ -88,8 +91,16 @@ angular.module('meetings').controller('MeetingsController', ['$scope', '$statePa
 
 		// Find existing Meeting
 		$scope.findOne = function() {
-			$scope.meeting = Meetings.Meetings.get({ 
+			Meetings.Meetings.get({ 
 				meetingId: $stateParams.meetingId
+			}).$promise.then(function(data) {
+				$scope.meeting = data;
+				
+				// $log.debug('$scope.committee: ');
+				// $log.debug($scope.committee);
+
+				$scope.getNotetaker();
+			//	$scope.getMembers();	
 			});
 		};
 	}

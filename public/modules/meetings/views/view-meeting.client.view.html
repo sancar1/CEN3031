@@ -10,14 +10,18 @@
 			<i class="glyphicon glyphicon-trash"></i>
 		</a>
 	</div>
-	<small>
-	<small>
-		<em class="text-muted">
-			Created on
-			<span data-ng-bind="meeting.created | date:'mediumDate'"></span>
-			by
-			<span data-ng-bind="meeting.user.displayName"></span>
-		</em>
-	</small>
-	</small>
+	<section>
+        <form name="meetingForm" class="form-horizontal" novalidate>
+			<div class = "list-group" class = "list-group-item">
+				<h1 class = "list-group-item-text">Notetaker</h1>
+				<div class="list-group"> 
+					<a class="list-group-item">
+						<small class="list-group-item-text">
+							<span data-ng-bind="noteTaker.displayName"></span>
+						</small> 
+					</a>
+				</div>
+		    </div>
+		</form>
+   </section>
 </section>

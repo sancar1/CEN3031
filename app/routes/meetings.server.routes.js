@@ -14,7 +14,7 @@ module.exports = function(app) {
 		.put(users.requiresLogin, meetings.hasAuthorization, meetings.update)
 		.delete(users.requiresLogin, meetings.hasAuthorization, meetings.delete);
 
-	app.route('/meetings/noteTaker/:userId')
+	app.route('/meetings/:meetingId/noteTaker')
 		.get(meetings.getNotetaker)
 		.put(meetings.setNotetaker)
 		.delete(meetings.removeNotetaker);

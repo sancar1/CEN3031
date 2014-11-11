@@ -14,7 +14,7 @@ angular.module('meetings').config(['$stateProvider',
 			templateUrl: 'modules/meetings/views/create-meeting.client.view.html'
 		}).
 		state('viewMeeting', {
-			url: '/meetings/:meetingId',
+			url: '/committees/:committeeId/meetings/:meetingId',
 			templateUrl: 'modules/meetings/views/view-meeting.client.view.html'
 		}).
 		state('editMeeting', {
