@@ -198,7 +198,7 @@ span:hover:before {
   border: 1px solid #4778d9!important;
 }
 
-/* new login UI 
+/* new login UI for sign in
   body {
     padding-top: 120px;
     padding-bottom: 40px;
@@ -255,12 +255,6 @@ span:hover:before {
     margin: 0 auto;
       margin-top:50px;
   }
-  .form-signup {
-    max-width: 280px;
-    padding: 15px;
-    /*margin: 0 auto;*/
-      margin-top:300px;
-  }
   .form-signin .form-signin-heading, .form-signin {
     margin-bottom: 10px;
   }
@@ -302,3 +296,7 @@ span:hover:before {
     text-align: center;
     text-shadow: 0 2px 2px rgba(0,0,0,0.5);
   }
+/*	Signup	*/
+.signup {
+	margin-top: 20px;
+}
