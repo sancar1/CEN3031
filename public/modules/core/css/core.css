@@ -240,9 +240,12 @@ span:hover:before {
   }
   .fullscreen_bg_orange {
     position: fixed;
-
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
     background-size: cover;
-    background-position: 50% 50%;
+
     background-image: url('http://s30.postimg.org/8qv3ojk1d/orange.png');
     background-repeat:repeat;
   }
