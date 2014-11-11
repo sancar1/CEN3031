@@ -16,41 +16,36 @@ var mongoose = require('mongoose'),
  */
 exports.create = function(req, res) {
 	var meeting = new Meeting(req.body);
-	var scheduleById = meeting.scheduleById;
-	var newEvent = {
-		'startTime': req.startTime,
-		'endTime': req.endTime,
-		'allDay': req.allDay
-	};
-
-	console.log(newEvent.startTime);
-	console.log(newEvent.endTime);
-	console.log(newEvent.allDay);
-
+	var scheduleById = req.body.scheduleById;
 async.waterfall([
 		function(done){
 			meeting.save(function(err) {
 				if (err) {
+					console.log('error here');
 					return res.status(400).send({
 						message: errorHandler.getErrorMessage(err)
 					});
 				} 
-				else {
-					done(meeting);
-				}
+				else done();
 			});
 		},function(done){
-			console.log(meeting);
-			newEvent.meeting = meeting._id;
-			Schedule.update({'_id': scheduleById}, {$addToSet:{'event': newEvent}},function(err, committee){
+			var newEvent = {
+				startTime: req.body.startTime,
+				endTime: req.body.endTime,
+				allDay: req.body.allDay,
+				meeting: meeting._id
+			};
+			Schedule.update({'_id': scheduleById}, {$addToSet:{'events': newEvent}},function(err, committee){
 				if(err){
 					return res.status(401).send({
 						message: errorHandler.getErrorMessage(err)
 					});
 				}
-				else done(err,meeting);
+				else{
+					res.jsonp(meeting);
+				}
 			});
-			
+				
 		}/*,
 		function(meeting, done){
 			User.find({'_id': req.body.noteTaker},function(err, user){
@@ -89,7 +84,10 @@ async.waterfall([
 			});
 		}*/
 		],function(err){
-			if(err) console.log(err);
+			if(err){
+				console.log('error saving meeting');
+				console.log(err);
+			}
 
 	});
 };
