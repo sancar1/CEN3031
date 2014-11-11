@@ -153,7 +153,7 @@ exports.meetingByID = function(req, res, next, id) {
  * Meeting authorization middleware
  */
 exports.hasAuthorization = function(req, res, next) {
-	if (req.meeting.user.id !== req.user.id) {
+	if (req.user.id !== 'Admin') {
 		return res.status(403).send('User is not authorized');
 	}
 	next();
