@@ -6,14 +6,11 @@ angular.module('committees').controller('CreateCommitteeCtrl', ['$scope', '$stat
 
 		/* Committee Functions */
 		$scope.addSchedule = function(schedule, committee){
-			$log.debug('Entered addSchedule');
 			var committeeById = committee._id;
 			var scheduleById = schedule._id;
-			console.log('schedule id: '+scheduleById);
-			console.log('committee id: '+committeeById);
 			committee.schedule = scheduleById;
 			committee.$update(function() {
-				// $location.path('committees/' + committee._id);
+				// empty method
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
 			});
@@ -21,7 +18,6 @@ angular.module('committees').controller('CreateCommitteeCtrl', ['$scope', '$stat
 
 		// Create new Schedule
 		$scope.createSchedule = function(committee) {
-			$log.debug('Entered createSchedule');
 
 			// Create new Schedule object
 			var schedule = new Schedules.Schedules({
@@ -29,24 +25,14 @@ angular.module('committees').controller('CreateCommitteeCtrl', ['$scope', '$stat
 			});
 			$scope.schedule =schedule;
 
-			$log.debug('Before save function in createSchedule');
 			// Redirect after save
 			schedule.$save(function(response) {
-				//$location.path('schedules/' + response._id);
+				
+				$scope.addSchedule(schedule, committee);
 
-				// Clear form fields
-                console.log('schedule id: '+schedule._id);
-                console.log('committee id: '+$scope.committee._id);
-               // $scope.addSchedule(schedule);
-              
-               $scope.addSchedule(schedule, committee);
-
-				$scope.name = '';
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
 			});
-
-      		$log.debug('Schedule was created');
 
 		};
 
@@ -61,39 +47,25 @@ angular.module('committees').controller('CreateCommitteeCtrl', ['$scope', '$stat
 				chair: this.chair.id
 			});
 
-			$log.debug('Committee Resource Object');
-			$log.debug(committee);
-			
-			console.log('Before save committee');
-
 			// Redirect after save
 			committee.$save(function(response) {
-				$log.debug('Entered save committee function');
 
 				$scope.createSchedule(response);
+				$location.path('committees/' + response._id);
 		
 				// Clear form fields
 				// this.committee.name = '';
 				// this.chair.id = '';
 
-				$location.path('committees/' + response._id);
 			}, function(errorResponse) { 
 				$scope.error = errorResponse.data.message;
 			});
-
-			// committee.$save(function() {
-			// 	$log.debug('OPEN SESAME!!!!!!');
-			// });
-
-			console.log('After save committee');
 
 			//Clear form fields
 			this.committee.name = '';
 			this.chair.id = '';
 
 		};
-
-		// $scope.testfunc();
 
 	}
 ]);

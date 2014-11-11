@@ -253,26 +253,26 @@ angular.module('schedules').controller('SchedulesController', ['$scope', '$state
     };
     /* event sources array*/
     $scope.eventSources = [];
-	 $scope.setSchedule = function(){
-		Schedules.Schedules.get({ 
-			scheduleId: $scope.committee.schedule
-		}).$promise.then(function (data) { 
-        $log.debug('$scope.schedule set with data from findOne function:');
-        $log.debug(data);
-        $scope.schedule = data;
-		  $scope.eventSources.push(data.events);
+	//  $scope.setSchedule = function(){
+	// 	Schedules.Schedules.get({ 
+	// 		scheduleId: $scope.committee.schedule
+	// 	}).$promise.then(function (data) { 
+ //        $log.debug('$scope.schedule set with data from findOne function:');
+ //        $log.debug(data);
+ //        $scope.schedule = data;
+	// 	  $scope.eventSources.push(data.events);
 		  
-		    $scope.eventSources.push([data.events]);
-	});
+	// 	    $scope.eventSources.push([data.events]);
+	// });
 	//console.log($scope.schedule);
 	//$scope.eventSources = [$scope.schedules.events];
-};
+// };
 	
-	$scope.findCommittee().then(function() {
-		$scope.setSchedule();
-		//console.log($scope.schedule);
+	// $scope.findCommittee().then(function() {
+	// 	$scope.setSchedule();
+	// 	//console.log($scope.schedule);
 		
-	});
+	// });
  
   
 	}
