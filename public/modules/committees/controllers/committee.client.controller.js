@@ -10,6 +10,7 @@ angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParam
 		if(Roles.get().admin)
 			$scope.committeeTemplates.edit = true;
 
+		$scope.committeeTemplates.current = true;
 		$scope.committeeTemplates.attendance = true;
 		$scope.committeeTemplates.schedule = true;
 		$scope.committeeTemplates.resources = true;
@@ -178,6 +179,7 @@ angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParam
 
 		/* Clean Up on Exit */
 		$scope.$on('$destroy', function() {
+			$scope.committeeTemplates.current = false;
 			$scope.committeeTemplates.edit = false;
 			$scope.committeeTemplates.attendance = false;
 			$scope.committeeTemplates.schedule = false;

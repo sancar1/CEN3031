@@ -4,13 +4,14 @@ angular.module('core').controller('CommitteesCtrl', ['$scope', '$log', '$q', '$s
 	function($scope, $log, $q, $stateParams, $location, $filter, Authentication, Committees, Users, Roles) {
 		// Redirect to home page if logged in
 		if(Authentication.user) $location.path('/');
-		
+
 		// This provides Authentication context.
 		$scope.authentication = Authentication;
 		$scope.currentUser = Authentication.user;
 
 		// Default values for Committee
 		$scope.committeeTemplates = {
+			'current' : false,
 			'edit' : false,
 			'attendance' : false,
 			'schedule' : false,
