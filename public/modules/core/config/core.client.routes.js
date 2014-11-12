@@ -19,10 +19,13 @@ angular.module('core').config(['$stateProvider', '$urlRouterProvider', '$logProv
 			url: '/',
 			templateUrl: 'modules/committees/views/list-committees.client.view.html'
 		}).
-		state('edit', {
+		state('viewCommittee', {
+			url: '/committees/:committeeId',
+			templateUrl: 'modules/committees/views/view-committee.client.view.html'
+		}).
+		state('editCommittee', {
 			url: '/committees/:committeeId/edit',
 			templateUrl: 'modules/committees/views/edit-committee.client.view.html'
-			// controller: 'CommitteesController'
 		}).
 		state('attendance', {
 			url: '/committee/attendance',

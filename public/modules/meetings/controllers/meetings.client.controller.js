@@ -10,7 +10,12 @@ angular.module('meetings').controller('MeetingsController', ['$scope', '$statePa
 			// Create new Meeting object
 			var meeting = new Meetings.Meetings ({
 				name: this.meeting.name,
-				noteTaker: this.noteTaker.id
+				noteTaker: this.noteTaker.id,
+				startTime: new Date(2014,11,23),
+				endTime: new Date(2014,11,25),
+				allDay: false,
+				scheduleById: $scope.committee.schedule
+
 			});
 
 			// Redirect after save
@@ -54,11 +59,11 @@ angular.module('meetings').controller('MeetingsController', ['$scope', '$statePa
 		// Update existing Meeting
 		$scope.getNotetaker = function() {
 			var meetingById = $scope.meeting._id;
-			console.log('beforecall');
-			console.log($scope.meeting);
+			//console.log('beforecall');
+			//console.log($scope.meeting);
 			Meetings.NoteTaker.get({meetingId: meetingById}).$promise.then(function(data){
-				console.log('inside');
-				console.log(data);
+				//console.log('inside');
+				//console.log(data);
 				$scope.noteTaker = data;
 			});
 		};
@@ -68,7 +73,7 @@ angular.module('meetings').controller('MeetingsController', ['$scope', '$statePa
 			var meeting = $scope.meeting ;
 
 			Meetings.Notetaker.update({meetingId: meeting._id, noteTakerId: user._id}).$promise.then(function(data){
-				console.log(data);
+				// console.log(data);
 				$scope.meeting = data;
 			});
 		};
@@ -78,7 +83,7 @@ angular.module('meetings').controller('MeetingsController', ['$scope', '$statePa
 			var meeting = $scope.meeting ;
 
 			Meetings.Notetaker.delete({meetingId: meeting._id, noteTakerId: user._id}).$promise.then(function(data){
-				console.log(data);
+				// console.log(data);
 				$scope.meeting = data;
 			});
 				
