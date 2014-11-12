@@ -16,10 +16,10 @@ angular.module('committees').config(['$stateProvider',
 		state('viewCommittee', {
 			url: '/committees/:committeeId',
 			templateUrl: 'modules/committees/views/view-committee.client.view.html'
-		}).
-		 state('editCommittee', {
-		 	url: '/committees/:committeeId/edit',
-		 	templateUrl: 'modules/committees/views/edit-committee.client.view.html'
-		 });
+		});
+		// state('editCommittee', {
+		// 	url: '/committees/:committeeId/edit',
+		// 	templateUrl: 'modules/committees/views/edit-committee.client.view.html'
+		// });
 	}
 ]);

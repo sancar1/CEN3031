@@ -32,74 +32,53 @@ angular.module('schedules').controller('SchedulesController', ['$scope', '$state
 			});
 		};
 
-		// Find a list of Schedules
-		$scope.find = function() {
-			$scope.schedules = Schedules.Schedules.query();
-		};
+//     $scope.addNewEvent = function(){
+//       var schedule = $scope.schedule;
+//       // $scope.schedule.eventToAdd = schedule.events[index];
 
-		// Find existing Schedule
-		// Find existing Schedule
-		$scope.findOne = function(id) {
-      $log.debug('Entered findOne');
-      $log.debug('Schedule id:');
-      $log.debug(id);
-			Schedules.Schedules.get({ 
-				scheduleId: id
-			}).$promise.then(function (data) { 
-          $log.debug('$scope.schedule set with data from findOne function:');
-          $log.debug(data);
-          $scope.schedule = data;
-          $log.debug('Schedule was returned');
-      });
-		};
+//       $log.debug('Entered addEvent');
 
-    $scope.addNewEvent = function(){
-      var schedule = $scope.schedule;
-      // $scope.schedule.eventToAdd = schedule.events[index];
-
-      $log.debug('Entered addEvent');
-
-      var tempEventObject = {
-          'title' : $scope.newEvent.name,
-          'start' : new Date($scope.newEvent.startY,$scope.newEvent.startM-1,$scope.newEvent.startD),
-          'end'   : new Date($scope.newEvent.endY,$scope.newEvent.endM-1,$scope.newEvent.endD)
-      };
-
-      // var tempEventObject = {
-//           'title' : 'Crazy Event',
-//           'start' : new Date(2014,11,11),
-//           'end'   : new Date(2014,12,12),
-//           'allDay': false
+//       var tempEventObject = {
+//           'title' : $scope.newEvent.name,
+//           'start' : new Date($scope.newEvent.startY,$scope.newEvent.startM-1,$scope.newEvent.startD),
+//           'end'   : new Date($scope.newEvent.endY,$scope.newEvent.endM-1,$scope.newEvent.endD)
 //       };
-      JSON.stringify(tempEventObject);
-      $scope.schedule.events.push(tempEventObject);
-      $scope.schedule.$update();
-      // $log.debug('tempEventObject:');
-      // $log.debug(tempEventObject);
 
-      // $scope.events.push(tempEventObject);
+//       // var tempEventObject = {
+// //           'title' : 'Crazy Event',
+// //           'start' : new Date(2014,11,11),
+// //           'end'   : new Date(2014,12,12),
+// //           'allDay': false
+// //       };
+//       JSON.stringify(tempEventObject);
+//       $scope.schedule.events.push(tempEventObject);
+//       $scope.schedule.$update();
+//       // $log.debug('tempEventObject:');
+//       // $log.debug(tempEventObject);
 
-      // $log.debug('Events Array:');
-      // $log.debug($scope.events);
+//       // $scope.events.push(tempEventObject);
 
-      // $log.debug('Schedule:');
-      // $log.debug($scope.schedule);     
+//       // $log.debug('Events Array:');
+//       // $log.debug($scope.events);
 
-      // var index = $scope.events.length-1;
-      // $scope.eventToAdd = $scope.events[index];
+//       // $log.debug('Schedule:');
+//       // $log.debug($scope.schedule);     
 
-      // $log.debug('Event to Add:');
-      // $log.debug($scope.eventToAdd);
+//       // var index = $scope.events.length-1;
+//       // $scope.eventToAdd = $scope.events[index];
 
-      // $log.debug('Schedule id:');
-      // $log.debug(schedule._id);
+//       // $log.debug('Event to Add:');
+//       // $log.debug($scope.eventToAdd);
 
-      // Schedules.Event.update({scheduleId: schedule._id}).$promise.then(function(data) {
-      //   $log.debug('Data from Sucessful Added Event:');
-      //   $log.debug(data);
-      //   $scope.schedule = data;
-      // });
-    };
+//       // $log.debug('Schedule id:');
+//       // $log.debug(schedule._id);
+
+//       // Schedules.Event.update({scheduleId: schedule._id}).$promise.then(function(data) {
+//       //   $log.debug('Data from Sucessful Added Event:');
+//       //   $log.debug(data);
+//       //   $scope.schedule = data;
+//       // });
+//     };
 
       $scope.removeEvent = function(index){
       var schedule = $scope.schedule;
