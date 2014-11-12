@@ -1,13 +1,13 @@
 <section data-ng-controller="UsersController" data-ng-init="find()">
 	<div class="page-header">
-		<h1>Users</h1>
+		<h1>User Contact Information</h1>
 	</div>
 	<div class="list-group">
 		<a data-ng-repeat="user in users" data-ng-href="#!/users/{{user._id}}" class="list-group-item">
-			<small class="list-group-item-text">
-				<span data-ng-bind="user.firstName"></span>
+			<h4 class="list-group-item-text">
+				<span data-ng-bind="user.firstName + ' ' + user.lastName"></span>
 			</small>
-			<h4 class="list-group-item-heading" data-ng-bind="user.lastName"></h4>
+			<h3 class="list-group-item-heading" data-ng-bind="user.email"></h4>
 			<p class="list-group-item-text" data-ng-bind="user.role"></p>
 		</a>
 	</div>
