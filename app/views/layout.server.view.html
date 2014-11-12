@@ -57,7 +57,7 @@
 			<div data-ng-controller="CommitteesCtrl">
 
 				<div class ="app-sidebar">
-					<ul class="nav nav-pills nav-stacked" data-ng-show="authentication.user">
+					<ul class="nav nav-pills nav-stacked" data-ng-if="authentication.user">
 					  	<li ui-sref-active="active"><a ui-sref="home">Home</a></li>
 					  	<li ui-sref-active="active" ng-if="committeeTemplates.edit"><a ui-sref="edit({committeeId: committee._id})">Edit Committee</a></li>
 					  	<li ui-sref-active="active" ng-if="committeeTemplates.attendance"><a ui-sref="attendance">Attendance</a></li>
