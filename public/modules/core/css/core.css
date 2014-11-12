@@ -127,8 +127,19 @@ color: #0021A5;
 text-decoration: none;
 }
 
-/*code for attendance page*/
+/*code for edit committee page*/
+.memberfunctions{
+	float: left;
+	padding-right: .5%;
+}
 
+.left-align{
+	margin-left: -1.5%;
+}
+
+.schedule-section{
+	padding-top: 560px;
+}
 
 /* Base for label styling */
 [type="checkbox"]:not(:checked),

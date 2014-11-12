@@ -38,7 +38,7 @@
 
             <section data-ng-controller="CommitteesController">
                 <form name="userForm"  data-ng-init = "getMembers()" class="form-horizontal" novalidate>
-                    <div class = "list-group" class = "list-group-item">
+                    <div class = "list-group left-align" class = "list-group-item">
                         <h1 class = "list-group-item-text">Committee Members</h1>
                         <br>
                         <div class="list-group"> 
@@ -51,9 +51,9 @@
                         </div>
                     </div>
 
-                     <section data-ng-controller="UsersController">
+                <section data-ng-controller="UsersController">
                     
-
+                <div class = "memberfunctions">
                     <div class="btn-group" dropdown is-open="status.isopen">
                       <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" >
                         Add Member
@@ -63,10 +63,7 @@
                         <li><a data-ng-repeat="user in users" ng-click="addMember(user)"><span data-ng-bind="user.firstName | date:'medium'"></span></a></li>
                       </ul>
                     </div>
-
-
                     </section>
-                    <br>
                     
                     <div class="btn-group" dropdown is-open="status.isopen">
                       <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" >
@@ -77,7 +74,7 @@
                         <li><a data-ng-repeat="member in members" ng-click="removeMember(member)"><span data-ng-bind="member.displayName"></span></a></li>
                       </ul>
                     </div>
-
+                </div>
 
                 </form>
 					 
@@ -87,24 +84,21 @@
             </section>
 
            <br>
+           <br><br>
 
             <section data-ng-controller="SchedulesController">
-               
-										
-					
-					
-					
-                <h1>New Schedule</h1>
-                <br>
-                <button type="button" class="btn btn-primary" ng-click="createSchedule()">Add Schedule</button>
-                <input type="text" data-ng-model="newEvent.name" id="name" class="form-control" placeholder="Event Name" required value="Crazy Event">
-                <input type="text" data-ng-model="newEvent.startY" id="start" class="form-control" placeholder="Start Time Y" required value="2014">
-                <input type="text" data-ng-model="newEvent.startM" id="start" class="form-control" placeholder="Start Time M" required value="11">
-                <input type="text" data-ng-model="newEvent.startD" id="start" class="form-control" placeholder="Start Time D" required value="11">
-                <input type="text" data-ng-model="newEvent.endY" id="start" class="form-control" placeholder="End Time Y" required value="2014">
-                <input type="text" data-ng-model="newEvent.endM" id="start" class="form-control" placeholder="End Time M" required value="12">
-                <input type="text" data-ng-model="newEvent.endD" id="start" class="form-control" placeholder="End Time D" required value="12">
-                <button type="button" class="btn btn-primary" ng-click="addNewEvent()">Add Event</button>
+
+                <div class = "schedule-section">
+                    <h1>New Schedule</h1>
+                    <br>
+                    <button type="button" class="btn btn-primary" ng-click="createSchedule()">Add Schedule</button>
+                    <input type="text" data-ng-model="newEvent.name" id="name" class="form-control" placeholder="Event Name" required value="Crazy Event">
+                    <input type="text" data-ng-model="newEvent.startM" id="start" class="form-control" placeholder="Start Time M" required value="11">
+                    <input type="text" data-ng-model="newEvent.startD" id="start" class="form-control" placeholder="Start Time D" required value="11">
+
+                    <button type="button" class="btn btn-primary" ng-click="addNewEvent()">Add Event</button>
+                </div>
+
             </section>
             <!-- <div class="col-md-12">
                 <form class="form-horizontal" data-ng-submit="create()" novalidate>
