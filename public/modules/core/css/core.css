@@ -299,5 +299,9 @@ span:hover:before {
 	z-index: -1;
   }
 .signup {
-	margin-top: 75px;
+	margin-top: 25px;
+	margin-left: -30px;
+}
+.signup-fieldset {
+	margin-left: 50px;
 }
