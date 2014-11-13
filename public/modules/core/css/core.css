@@ -209,7 +209,7 @@ span:hover:before {
   border: 1px solid #4778d9!important;
 }
 
-/* new login UI 
+/* new login UI for sign in
   body {
     padding-top: 50px;
     padding-bottom: 4x;
@@ -306,3 +306,20 @@ span:hover:before {
     text-align: center;
     text-shadow: 0 2px 2px rgba(0,0,0,0.5);
   }
+/*	Signup	*/
+.fullscreen_bg_orange {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-size: cover;
+    background-position: 50% 50%;
+    background-image: url('http://s30.postimg.org/8qv3ojk1d/orange.png');
+    background-repeat:repeat;
+	z-index: -1;
+  }
+.signup {
+	margin-top: 25px;
+	margin-left: -30px;
+}
