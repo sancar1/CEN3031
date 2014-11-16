@@ -38,7 +38,7 @@ $scope.find = function(){
 				console.log($scope.meetings);
 				// $log.info('List of Meetings Loaded');
 			});
-}
+};
 		// Remove existing Meeting
 		$scope.remove = function( meeting ) {
 			if ( meeting ) { meeting.$remove();

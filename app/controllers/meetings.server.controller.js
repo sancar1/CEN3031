@@ -104,10 +104,10 @@ exports.read = function(req, res) {
 						message: errorHandler.getErrorMessage(err)
 					});
 				} else {
-					res.jsonp(meeting);
+					res.jsonp(meeting[0]);
 				}
 			});
-}
+};
 /**
  * Update a Meeting
  */
