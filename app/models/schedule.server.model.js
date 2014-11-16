@@ -16,16 +16,8 @@ var ScheduleSchema = new Schema({
 		required: 'Please fill Schedule name',
 		trim: true
 	},
-	created: {
-		type: Date,
-		default: Date.now
-	},
-	user: {
-		type: Schema.ObjectId,
-		ref: 'User'
-	},
 	events:[
-      {title: String,start: Date,end: Date,allDay: Boolean, meeting: String}
+      {startTime: Date,endTime: Date,allDay: Boolean, meeting: String}
 	]
 });
 

@@ -4,45 +4,6 @@
 angular.module('schedules').controller('SchedulesController', ['$scope', '$stateParams', '$location', 'Authentication','Committees', 'Schedules', '$log', '$timeout',
 	function($scope, $stateParams, $location, Authentication,Committees, Schedules, $log, $timeout) {
 		$scope.authentication = Authentication;
-		
-        $log.debug('Entered SchedulesController');
-
-		// Create new Schedule
-		$scope.createSchedule = function() {
-      $log.debug('Entered createSchedule');
-
-      $log.debug('Committee Object: ');
-      $log.debug($scope.committee);
-
-			// Create new Schedule object
-			var schedule = new Schedules.Schedules({
-				name: $scope.committee.name + ' Schedule'
-			});
-			$scope.schedule =schedule;
-			// Redirect after save
-			schedule.$save(function(response) {
-				//$location.path('schedules/' + response._id);
-
-				// Clear form fields
-                console.log('Saving schedule in createSchedule');
-                console.log('committee id: '+$scope.committee._id);
-                console.log('schedule id: '+schedule._id);
-               // $scope.addSchedule(schedule);
-              
-               $scope.addSchedule(schedule);
-
-				$scope.name = '';
-			}, function(errorResponse) {
-				$scope.error = errorResponse.data.message;
-			});
-
-      $log.debug('Schedule was created');
-      $log.debug('Schedule Object:');
-      $log.debug($scope.schedule);
-      $log.debug('Committee Object:');
-      $log.debug($scope.committee);
-
-		};
 
 
 		// Remove existing Schedule
@@ -72,74 +33,53 @@ angular.module('schedules').controller('SchedulesController', ['$scope', '$state
 			});
 		};
 
-		// Find a list of Schedules
-		$scope.find = function() {
-			$scope.schedules = Schedules.Schedules.query();
-		};
+//     $scope.addNewEvent = function(){
+//       var schedule = $scope.schedule;
+//       // $scope.schedule.eventToAdd = schedule.events[index];
 
-		// Find existing Schedule
-		// Find existing Schedule
-		$scope.findOne = function(id) {
-      $log.debug('Entered findOne');
-      $log.debug('Schedule id:');
-      $log.debug(id);
-			Schedules.Schedules.get({ 
-				scheduleId: id
-			}).$promise.then(function (data) { 
-          $log.debug('$scope.schedule set with data from findOne function:');
-          $log.debug(data);
-          $scope.schedule = data;
-          $log.debug('Schedule was returned');
-      });
-		};
+//       $log.debug('Entered addEvent');
 
-    $scope.addNewEvent = function(){
-      var schedule = $scope.schedule;
-      // $scope.schedule.eventToAdd = schedule.events[index];
-
-      $log.debug('Entered addEvent');
-
-      var tempEventObject = {
-          'title' : $scope.newEvent.name,
-          'start' : new Date($scope.newEvent.startY,$scope.newEvent.startM-1,$scope.newEvent.startD),
-          'end'   : new Date($scope.newEvent.endY,$scope.newEvent.endM-1,$scope.newEvent.endD)
-      };
-
-      // var tempEventObject = {
-//           'title' : 'Crazy Event',
-//           'start' : new Date(2014,11,11),
-//           'end'   : new Date(2014,12,12),
-//           'allDay': false
+//       var tempEventObject = {
+//           'title' : $scope.newEvent.name,
+//           'start' : new Date($scope.newEvent.startY,$scope.newEvent.startM-1,$scope.newEvent.startD),
+//           'end'   : new Date($scope.newEvent.endY,$scope.newEvent.endM-1,$scope.newEvent.endD)
 //       };
-      JSON.stringify(tempEventObject);
-      $scope.schedule.events.push(tempEventObject);
-      $scope.schedule.$update();
-      // $log.debug('tempEventObject:');
-      // $log.debug(tempEventObject);
 
-      // $scope.events.push(tempEventObject);
+//       // var tempEventObject = {
+// //           'title' : 'Crazy Event',
+// //           'start' : new Date(2014,11,11),
+// //           'end'   : new Date(2014,12,12),
+// //           'allDay': false
+// //       };
+//       JSON.stringify(tempEventObject);
+//       $scope.schedule.events.push(tempEventObject);
+//       $scope.schedule.$update();
+//       // $log.debug('tempEventObject:');
+//       // $log.debug(tempEventObject);
 
-      // $log.debug('Events Array:');
-      // $log.debug($scope.events);
+//       // $scope.events.push(tempEventObject);
 
-      // $log.debug('Schedule:');
-      // $log.debug($scope.schedule);     
+//       // $log.debug('Events Array:');
+//       // $log.debug($scope.events);
 
-      // var index = $scope.events.length-1;
-      // $scope.eventToAdd = $scope.events[index];
+//       // $log.debug('Schedule:');
+//       // $log.debug($scope.schedule);     
 
-      // $log.debug('Event to Add:');
-      // $log.debug($scope.eventToAdd);
+//       // var index = $scope.events.length-1;
+//       // $scope.eventToAdd = $scope.events[index];
 
-      // $log.debug('Schedule id:');
-      // $log.debug(schedule._id);
+//       // $log.debug('Event to Add:');
+//       // $log.debug($scope.eventToAdd);
 
-      // Schedules.Event.update({scheduleId: schedule._id}).$promise.then(function(data) {
-      //   $log.debug('Data from Sucessful Added Event:');
-      //   $log.debug(data);
-      //   $scope.schedule = data;
-      // });
-    };
+//       // $log.debug('Schedule id:');
+//       // $log.debug(schedule._id);
+
+//       // Schedules.Event.update({scheduleId: schedule._id}).$promise.then(function(data) {
+//       //   $log.debug('Data from Sucessful Added Event:');
+//       //   $log.debug(data);
+//       //   $scope.schedule = data;
+//       // });
+//     };
 
       $scope.removeEvent = function(index){
       var schedule = $scope.schedule;
@@ -253,28 +193,7 @@ angular.module('schedules').controller('SchedulesController', ['$scope', '$state
       }
     };
     /* event sources array*/
-    $scope.eventSources = [];
-	 $scope.setSchedule = function(){
-		Schedules.Schedules.get({ 
-			scheduleId: $scope.committee.schedule
-		}).$promise.then(function (data) { 
-        $log.debug('$scope.schedule set with data from findOne function:');
-        $log.debug(data);
-        $scope.schedule = data;
-		  $scope.eventSources.push(data.events);
-		  
-		    $scope.eventSources.push([data.events]);
-	});
-	//console.log($scope.schedule);
-	//$scope.eventSources = [$scope.schedules.events];
-};
-	
-	$scope.findCommittee().then(function() {
-		$scope.setSchedule();
-		//console.log($scope.schedule);
-		
-	});
- 
+    // $scope.eventSources = [];
   
 	}
 ]);
