@@ -1,6 +1,6 @@
 <section data-ng-controller="CommitteeCtrl">
     
-    <h1>Edit Committee</h1>
+    <h1><b>Edit Committee</b></h1>
     <div class="pull-right" data-ng-show="authentication.user._id == committee.user._id">
         <a class="btn btn-primary" data-ng-click="remove();">
             <i class="glyphicon glyphicon-trash"></i>
@@ -36,8 +36,8 @@
 					 	<div id = "alert_updateDescription"></div>
             </div>
 
-            <section>
-                <form name="userForm" class="form-horizontal" novalidate>
+            <section data-ng-controller="CommitteesController">
+                <form name="userForm"  data-ng-init = "getMembers()" class="form-horizontal" novalidate>
                     <div class = "list-group" class = "list-group-item">
                         <h1 class = "list-group-item-text">Committee Members</h1>
                         <br>
@@ -85,40 +85,6 @@
 
            <br>
            <br><br>
-
-            <section data-ng-controller="SchedulesController">
-
-                <div class = "schedule-section">
-                    <h1>New Schedule</h1>
-                    <br>
-                    <button type="button" class="btn btn-primary" ng-click="createSchedule()">Add Schedule</button>
-                    <input type="text" data-ng-model="newEvent.name" id="name" class="form-control" placeholder="Event Name" required value="Crazy Event">
-                    <input type="text" data-ng-model="newEvent.startM" id="start" class="form-control" placeholder="Start Time M" required value="11">
-                    <input type="text" data-ng-model="newEvent.startD" id="start" class="form-control" placeholder="Start Time D" required value="11">
-
-                    <button type="button" class="btn btn-primary" ng-click="addNewEvent()">Add Event</button>
-                </div>
-
-            </section>
-            <!-- <div class="col-md-12">
-                <form class="form-horizontal" data-ng-submit="create()" novalidate>
-                    <fieldset>
-                        <div class="form-group">
-                            <label class="control-label" for="name">Name</label>
-                            <div class="controls">
-                                <input type="text" data-ng-model="name" id="name" class="form-control" placeholder="Name" required>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <input type="submit" class="btn btn-default">
-                        </div>
-                        <div data-ng-show="error" class="text-danger">
-                            <strong data-ng-bind="error"></strong>
-                        </div>
-                    </fieldset>
-                </form>
-            </div> -->
-            
         </form>    
     </div>
 </section>

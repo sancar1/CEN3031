@@ -1,6 +1,8 @@
 <section data-ng-controller = "CommitteeCtrl">
         <section data-ng-controller="MeetingsController">
-            <div class="page-header">
+            
+				
+				<div class="page-header">
                 <h1>New Meeting</h1>
             </div>
             <div class="col-md-12">
@@ -16,7 +18,30 @@
                                 </p>
                             </div>
                         </div>
+											<!-- > Code for Date Picker Popup </!-->
+																			    <div>
+																			      <label class="control-label" for="name">Date</label>
+																			            <p class="input-group">
+																			              <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="dt" is-open="opened" min-date="minDate" max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+																			              <span class="input-group-btn">
+																			                <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+																			              </span>
+																			            </p>
 
+																			    </div>
+											<!-- > End of Code for Date Picker Popup </! -->		 
+							 
+													 
+					<br>
+					<div>
+						<label class="control-label" for="name">Start Time</label>
+					<timepicker ng-model="mytime" ng-change="changed()" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></timepicker>
+					<br>
+						<label class="control-label" for="name">End Time</label>
+					<timepicker ng-model="mytime" ng-change="changed()" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></timepicker>
+<br>   
+				</div>
+				<br>
 
                         <div class="form-group">
                             <input type="submit" class="btn btn-default">
@@ -27,5 +52,6 @@
                     </fieldset>
                 </form>
             </div>
+				
         </section>
 </section>
