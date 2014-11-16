@@ -4,7 +4,7 @@
 angular.module('meetings').controller('MeetingsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Meetings',
 	function($scope, $stateParams, $location, Authentication, Meetings ) {
 		$scope.authentication = Authentication;
-		Meetings.Meetings.query({
+		Meetings.List.query({
 			committeeId: $stateParams.committeeId
 		}).$promise.then(function(data) {
 				$scope.meetings = data;
