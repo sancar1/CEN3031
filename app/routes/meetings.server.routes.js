@@ -25,5 +25,5 @@ module.exports = function(app) {
 	// Finish by binding the Meeting middleware
 	app.param('meetingId', meetings.meetingByID);
 	app.param('userId', users.userByID);
-	app.param('committeeId', committees.committeeByID);
+	// app.param('committeeId', committees.committeeByID);
 };
