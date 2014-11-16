@@ -30,6 +30,7 @@ async.waterfall([
 			});
 		},function(done){
 			var newEvent = {
+				title: req.body.name,
 				start: req.body.startTime,
 				end: req.body.endTime,
 				allDay: req.body.allDay,
