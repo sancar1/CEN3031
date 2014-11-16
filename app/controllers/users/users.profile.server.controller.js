@@ -59,7 +59,7 @@ exports.me = function(req, res) {
  * List of Users
  */
 exports.list = function(req, res) {	
-	User.find().sort('-firstName').populate('user', 'displayName').exec(function(err, users) {
+	User.find().sort('lastName').exec(function(err, users) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
