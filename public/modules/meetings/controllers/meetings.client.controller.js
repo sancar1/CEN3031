@@ -1,10 +1,21 @@
 'use strict';
 
 // Meetings controller
-angular.module('meetings').controller('MeetingsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Meetings',
-	function($scope, $stateParams, $location, Authentication, Meetings ) {
+angular.module('meetings').controller('MeetingsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Meetings', '$log',
+	function($scope, $stateParams, $location, Authentication, Meetings, $log) {
 		$scope.authentication = Authentication;
 		$scope.dateTime = new Date();
+
+		console.log('$stateParams.committeeId');
+		console.log($stateParams.committeeId);
+
+		// Find a list of Meetings
+		Meetings.Meetings.query({
+			committeeId: $stateParams.committeeId
+		}).$promise.then(function(data) {
+			$scope.meetings = data;
+			$log.info('List of Meetings Loaded');
+		});
 
 		// Create new Meeting
 		$scope.create = function() {
@@ -88,11 +99,6 @@ angular.module('meetings').controller('MeetingsController', ['$scope', '$statePa
 				$scope.meeting = data;
 			});
 				
-		};
-
-		// Find a list of Meetings
-		$scope.find = function() {
-			$scope.meetings = Meetings.Meetings.query();
 		};
 
 		// Find existing Meeting
