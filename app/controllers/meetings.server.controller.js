@@ -262,7 +262,7 @@ exports.list = function(req, res) {
  * Meeting middleware
  */
 exports.meetingByID = function(req, res, next, id) { 
-	Meeting.findById(id).populate('user', 'displayName').exec(function(err, meeting) {
+	Meeting.findById(id).exec(function(err, meeting) {
 		if (err) return next(err);
 		if (! meeting) return next(new Error('Failed to load Meeting ' + id));
 		req.meeting = meeting ;

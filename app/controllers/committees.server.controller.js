@@ -163,24 +163,6 @@ exports.getMembers = function(req, res) {
 		}
 	});
 };
-
-/**
- * List of Meetings
- */
-exports.getMeetings = function(req, res){
-	var committee = req.committee;
-
-	User.find({'_id':{$in: committee.meetings}}).exec(function(err, meetings) {
-		if (err) {
-			return res.status(400).send({
-				message: errorHandler.getErrorMessage(err)
-			});
-		} else {
-			res.jsonp(meetings);
-		}
-	});
-};
-
 /**
  * Add Committee Member
  */

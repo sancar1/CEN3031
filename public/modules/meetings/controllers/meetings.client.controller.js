@@ -99,6 +99,7 @@ angular.module('meetings').controller('MeetingsController', ['$scope', '$statePa
 
 		// Find existing Meeting
 		$scope.findOne = function() {
+			console.log('in findOne for meeting');
 			Meetings.Meeting.get({ 
 				meetingId: $stateParams.meetingId
 			}).$promise.then(function(data) {
