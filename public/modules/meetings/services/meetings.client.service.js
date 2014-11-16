@@ -4,7 +4,8 @@
 angular.module('meetings').factory('Meetings', ['$resource',
 	function($resource) {
 		return {
-			List: 		$resource('meetings/:committeeId', {committeeId: 'committeeId'},{query: {method: 'GET', isArray: true}}),
+			Meetings: 	$resource('meetings', {committeeId: 'committeeId'},{query: {method: 'GET', isArray: true}}),
+			List:       $resource('listMeetings/:committeeId',{committeeId: 'committeeId'},{query: {method: 'GET', isArray: true}}), 
 			Meeting: 	$resource('meetings/:meetingId', { meetingId: '@_id', committeeId: 'committeeId'}, {update: {method: 'PUT'}}),
 			NoteTaker: 	$resource('meetings/:meetingId/noteTaker', { meetingId: '@_id'}, {update: {method: 'PUT'}}),
 		};

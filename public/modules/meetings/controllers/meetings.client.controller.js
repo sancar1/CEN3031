@@ -8,7 +8,7 @@ angular.module('meetings').controller('MeetingsController', ['$scope', '$statePa
 		// Create new Meeting
 		$scope.create = function() {
 			// Create new Meeting object
-			var meeting = new Meetings.Meetings ({
+			var meeting = new Meetings.Meetings({
 				name: this.meeting.name,
 				noteTaker: this.noteTaker.id,
 				startTime: new Date(2014,11,23),
@@ -90,7 +90,6 @@ angular.module('meetings').controller('MeetingsController', ['$scope', '$statePa
 		};
 
 		$scope.find = function() {
-			console.log('committeeId: ' +$scope.committee._Id);
 			$scope.meetings = Meetings.List.query({
 				committeeId: '5468ccabccd9227eb04e7835'
 			});

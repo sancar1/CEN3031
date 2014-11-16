@@ -593,7 +593,7 @@ exports.removeChair = function(req, res) {
 /**
  * Committee middleware
  */
-exports.committeeByID = function(req, res, next, id) { Committee.findById(id).populate('user', 'displayName').exec(function(err, committee) {
+exports.committeeByID = function(req, res, next, id) { Committee.findById(id).exec(function(err, committee) {
 		if (err) return next(err);
 		if (! committee) return next(new Error('Failed to load Committee ' + id));
 		req.committee = committee ;

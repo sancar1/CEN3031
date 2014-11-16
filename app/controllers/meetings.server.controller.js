@@ -8,6 +8,7 @@ var mongoose = require('mongoose'),
 	User = mongoose.model('User'),
 	Meeting = mongoose.model('Meeting'),
 	Schedule = mongoose.model('Schedule'),
+	Committee = mongoose.model('Committee'),
 	async = require('async'),
 	_ = require('lodash');
 
@@ -194,6 +195,7 @@ exports.removeNotetaker = function(req, res) {
 exports.list = function(req, res) { 
 	//var committeeById = req.body.committee._id;
 	var committeeById = req.params.committeeId;
+	console.log('here');
 	async.waterfall([
 		//Find the committee
 		function(done){
