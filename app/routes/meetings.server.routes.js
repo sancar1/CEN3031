@@ -12,7 +12,7 @@ module.exports = function(app) {
 	app.route('/meetings/:committeeId')
 		.get(meetings.list);
 		
-	app.route('/meetings/:meetingId')
+	app.route('/meetings/:meetingId/:committeeId')
 		.get(meetings.read)
 		.put(users.requiresLogin, meetings.hasAuthorization, meetings.update)
 		.delete(users.requiresLogin, meetings.hasAuthorization, meetings.delete);
@@ -25,5 +25,5 @@ module.exports = function(app) {
 	// Finish by binding the Meeting middleware
 	app.param('meetingId', meetings.meetingByID);
 	app.param('userId', users.userByID);
-	// app.param('committeeId', committees.committeeByID);
+	app.param('committeeId', committees.committeeByID);
 };

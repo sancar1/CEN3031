@@ -4,12 +4,6 @@
 angular.module('meetings').controller('MeetingsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Meetings',
 	function($scope, $stateParams, $location, Authentication, Meetings ) {
 		$scope.authentication = Authentication;
-		Meetings.List.query({
-			committeeId: $stateParams.committeeId
-		}).$promise.then(function(data) {
-				$scope.meetings = data;
-				$log.info('List of Meetings Loaded');
-			});
 		// Create new Meeting
 		$scope.create = function() {
 			// Create new Meeting object
@@ -36,7 +30,15 @@ angular.module('meetings').controller('MeetingsController', ['$scope', '$statePa
 				$scope.error = errorResponse.data.message;
 			});
 		};
-
+$scope.find = function(){
+	Meetings.List.query({
+			committeeId: $stateParams.committeeId
+		}).$promise.then(function(data) {
+				$scope.meetings = data;
+				console.log($scope.meetings);
+				// $log.info('List of Meetings Loaded');
+			});
+}
 		// Remove existing Meeting
 		$scope.remove = function( meeting ) {
 			if ( meeting ) { meeting.$remove();
@@ -101,7 +103,8 @@ angular.module('meetings').controller('MeetingsController', ['$scope', '$statePa
 		$scope.findOne = function() {
 			console.log('in findOne for meeting');
 			Meetings.Meeting.get({ 
-				meetingId: $stateParams.meetingId
+				meetingId: $stateParams.meetingId,
+				committeeId: $stateParams.committeeId
 			}).$promise.then(function(data) {
 				$scope.meeting = data;
 				

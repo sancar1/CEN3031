@@ -97,18 +97,7 @@ async.waterfall([
  * Show the current Meeting
  */
 exports.read = function(req, res) {
-	var meetingById = req.meeting._id;
-	console.log('here to find a meeting');
-	Meeting.find({'_id':meetingById}).exec(function(err, meeting) {
-		if (err) {
-			console.log(err);
-			return res.status(400).send({
-				message: errorHandler.getErrorMessage(err)
-			});
-		} else {
-			res.jsonp(meeting[0]);
-		}
-	});
+	res.jsonp(req.article);
 };
 
 /**
@@ -245,7 +234,6 @@ exports.list = function(req, res) {
 						message: errorHandler.getErrorMessage(err)
 					});
 				} else {
-					done(meetings);
 					res.jsonp(meetings);
 				}
 			});
