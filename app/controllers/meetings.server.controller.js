@@ -195,26 +195,21 @@ exports.removeNotetaker = function(req, res) {
 exports.list = function(req, res) { 
 	//var committeeById = req.body.committee._id;
 	var committeeById = req.params.committeeId;
-	console.log('here');
 	async.waterfall([
 		//Find the committee
 		function(done){
-			console.log('finding committee: '+committeeById);
 			Committee.find({'_id': committeeById}).exec(function(err, committee) {
 				if (err) {
-					console.log('error here');
 					return res.status(400).send({
 						message: errorHandler.getErrorMessage(err)
 					});
 				} 
 				else{
-					console.log('got the fuckin committee');
 					done(null,committee[0]);
 				}
 			});
 		},function(committee, done){
 			var scheduleById = committee.schedule;
-			console.log('finding schedule: '+scheduleById);
 			Schedule.find({'_id': scheduleById}).exec(function(err, schedule){
 				if(err){
 					return res.status(401).send({
@@ -222,28 +217,23 @@ exports.list = function(req, res) {
 					});
 				}
 				else{
-					console.log('got the fuckin schedule');
-					console.log(schedule);
 					done(null, schedule[0]);
 				}
 			});
 		},function(schedule, done){
-			console.log('finding meetings');
 			var meetings = [];
 			console.log(schedule.events.length);
 			for(var i = 0; i < schedule.events.length; i++){
-				meetings[i] = schedule.events[i].meeting;
-				console.log(meetings[i]);
+				var temp = schedule.events[i].meeting;
+				meetings[i] = mongoose.Types.ObjectId(temp);
 			}
-			Meeting.find({'_id':{$in: [meetings]}}).exec(function(err, meetings) {
+			Meeting.find({'_id':{$in: meetings}}).exec(function(err, meetings) {
 				if (err) {
 					console.log(err);
 					return res.status(400).send({
 						message: errorHandler.getErrorMessage(err)
 					});
 				} else {
-					console.log('got the fuckin meetings');
-					console.log(meetings);
 					done(meetings);
 					res.jsonp(meetings);
 				}
@@ -251,7 +241,6 @@ exports.list = function(req, res) {
 		}
 		],function(err){
 			if(err){
-				console.log('error finding meetings');
 				console.log(err);
 			}
 		}

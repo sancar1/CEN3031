@@ -4,10 +4,18 @@
 angular.module('meetings').controller('MeetingsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Meetings',
 	function($scope, $stateParams, $location, Authentication, Meetings ) {
 		$scope.authentication = Authentication;
-
+		Meetings.Meetings.query({
+			committeeId: $stateParams.committeeId
+		}).$promise.then(function(data) {
+				$scope.meetings = data;
+				$log.info('List of Meetings Loaded');
+			});
 		// Create new Meeting
 		$scope.create = function() {
 			// Create new Meeting object
+
+
+
 			var meeting = new Meetings.Meetings({
 				name: this.meeting.name,
 				noteTaker: this.noteTaker.id,
@@ -88,13 +96,6 @@ angular.module('meetings').controller('MeetingsController', ['$scope', '$statePa
 			});
 				
 		};
-
-		$scope.find = function() {
-			$scope.meetings = Meetings.List.query({
-				committeeId: '5468ccabccd9227eb04e7835'
-			});
-		};
-		
 
 		// Find existing Meeting
 		$scope.findOne = function() {
