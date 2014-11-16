@@ -4,68 +4,33 @@
 angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParams', '$location', 'Authentication', 'Users', 'Committees', '$q', '$log', 'Schedules', 'Roles',
 	function($scope, $stateParams, $location, Authentication, Users, Committees, $q, $log, Schedules, Roles) {
 
-		$log.debug('Entered CommitteeCtrl');
+		// $log.debug('Entered CommitteeCtrl');
 		
 		/* Committee Link Permissions */
 		if(Roles.get().admin)
 			$scope.committeeTemplates.edit = true;
 
+		$scope.committeeTemplates.current = true;
 		$scope.committeeTemplates.attendance = true;
 		$scope.committeeTemplates.schedule = true;
 		$scope.committeeTemplates.resources = true;
 		$scope.committeeTemplates.meetings = true;
 
+		/* Committee vars to be set */
+		$scope.eventSources = [];
+
 		/* Committee Data to be Loaded on Page Load */
 		$scope.findCommittee().then(function() {
 			$scope.getChair();
 			$scope.getMembers().then(function() {
-				$scope.lastCommittee($scope.members);
+				// $scope.lastCommittee($scope.members);
 			});
-			$log.debug('Committee Object');
-			$log.debug($scope.committee);
+			// $log.debug('Committee Object');
+			// $log.debug($scope.committee);
 			$scope.findSchedule();
 		});
 
 		/* Committee Functions */
-		// Create new Committee
-		// $scope.createCommittee = function($scope) {
-		// 	// Create new Committee object
-
-		// 	$log.debug('Entered create function');
-
-		// 	var committee = new Committees.Committees({
-		// 		name: this.committee.name,
-		// 		chair: this.chair.id
-		// 	});
-
-		// 	$log.debug('Committee Resource Object');
-		// 	$log.debug(committee);
-			
-		// 	$log.debug('Before save committee');
-
-		// 	$scope.createSchedule();
-
-		// 	// Redirect after save
-		// 	committee.$save(function(response) {
-		// 		$log.debug('Entered save committee function');
-
-		// 		$location.path('committees/' + response._id);
-		
-		// 		// Clear form fields
-		// 		this.committee.name = '';
-		// 		this.chair.id = '';
-		// 	}, function(errorResponse) { 
-		// 		$scope.error = errorResponse.data.message;
-		// 	});
-
-		// 	$log.debug('After save committee');
-
-		// 	//Clear form fields
-		// 	this.committee.name = '';
-		// 	this.chair.id = '';
-
-		// };
-
 		// Remove existing Committee
 		$scope.remove = function( committee ) {
 			if ( committee ) { committee.$remove();
@@ -134,23 +99,6 @@ angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParam
 			});
 		};
 
-		$scope.addSchedule = function(schedule){
-			$log.debug('Entered addSchedule');
-
-			var committee = $scope.committee;
-			var scheduleById = schedule._id;
-
-			console.log('committee id: '+committee._id);
-			console.log('schedule id: '+scheduleById);
-
-			$scope.committee.schedule = scheduleById;
-			$scope.committee.$update(function() {
-				// $location.path('committees/' + committee._id);
-			}, function(errorResponse) {
-				$scope.error = errorResponse.data.message;
-			});
-		};
-
 		$scope.addMeeting = function(meeting){
 			var committee = $scope.committee;
 			var meetingById = meeting._id;
@@ -188,7 +136,7 @@ angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParam
 		$scope.getChair = function(){
 			var committee = $scope.committee;
 			Committees.Chair.get({committeeId: committee._id, chairId: committee.chair}).$promise.then(function(data) {
-				$log.debug($scope.committee.name + ' Chair: ' + data.displayName);
+				// $log.debug($scope.committee.name + ' Chair: ' + data.displayName);
 				$scope.chair = data;
 			});
 		};
@@ -213,17 +161,16 @@ angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParam
 		};
 
 		$scope.findSchedule = function() {
-			$log.debug('Entered findSchedule');
-			$log.debug('Schedule id:');
-			$log.debug($scope.committee.schedule);
 
-			Schedules.Schedules.get({ 
-				scheduleId: $scope.committee.schdule
+			return Schedules.Schedules.get({ 
+				scheduleId: $scope.committee.schedule
 			}).$promise.then(function (data) { 
-				$log.debug('$scope.schedule set with data from findOne function:');
+				$log.debug('$scope.schedule set with data from findSchedule function:');
 				$log.debug(data);
 				$scope.schedule = data;
-				$log.debug('Schedule was returned');
+				$scope.eventSources.push(data.events);
+			  	$scope.eventSources.push([data.events]);
+
 			});
 
 		};
@@ -239,10 +186,12 @@ angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParam
 
 		/* Clean Up on Exit */
 		$scope.$on('$destroy', function() {
+			$scope.committeeTemplates.current = false;
 			$scope.committeeTemplates.edit = false;
 			$scope.committeeTemplates.attendance = false;
 			$scope.committeeTemplates.schedule = false;
 			$scope.committeeTemplates.resources = false;
+			$scope.committeeTemplates.meetings = false;
 		});
 
 	}

@@ -32,8 +32,8 @@
 </section>
 -->
 
-<div id="fullscreen_bg" class="fullscreen_bg"/>
-<div class="container" data-ng-controller="AuthenticationController">
+<div data-ng-cloak id="fullscreen_bg" class="fullscreen_bg ng-cloak"/>
+<div data-ng-cloak class="container ng-cloak" data-ng-controller="AuthenticationController">
 	<form class="form-signin" data-ng-submit="signin()" autocomplete="on">
 		<h1 class="form-signin-heading text-muted">Sign In</h1>
 		<input type="text" class="form-control" placeholder="Username" data-ng-model="credentials.username" required="" autofocus="">

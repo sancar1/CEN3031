@@ -82,6 +82,7 @@ async.waterfall([
 				else console.log('message sent: ' + console.log(info));
 				done(err);
 			});
+			res.jsonp(committee);
 		}
 		],function(err){
 			if(err) console.log(err);
@@ -234,6 +235,7 @@ exports.addMember = function(req, res) {
 				else console.log('message sent: ' + console.log(info));
 				done(err);
 			});
+			res.jsonp(user);
 		}
 		],function(err){
 			if(err) console.log(err);
@@ -437,6 +439,7 @@ exports.removeMember = function(req, res) {
 				else console.log('message sent: ' + console.log(info));
 				done(err);
 			});
+			res.jsonp(user);
 		}
 		],function(err){
 			if(err) console.log(err);
@@ -516,6 +519,7 @@ exports.setChair = function(req, res) {
 				else console.log('message sent: ' + console.log(info));
 				done(err);
 			});
+			res.jsonp(user);
 		}
 		],function(err){
 			if(err) console.log(err);
@@ -578,6 +582,7 @@ exports.removeChair = function(req, res) {
 				else console.log('message sent: ' + console.log(info));
 				done(err);
 			});
+			res.jsonp(user);
 		}
 		],function(err){
 			if(err) console.log(err);
