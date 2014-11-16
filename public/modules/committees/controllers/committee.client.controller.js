@@ -168,8 +168,10 @@ angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParam
 				$log.debug('$scope.schedule set with data from findSchedule function:');
 				$log.debug(data);
 				$scope.schedule = data;
-				$scope.eventSources.push(data.events);
-			  	$scope.eventSources.push([data.events]);
+				//$scope.eventSources.push(data.events);
+			  	$scope.eventSources.push(data.events);
+				console.log(data.events);
+				
 
 			});
 

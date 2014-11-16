@@ -30,8 +30,8 @@ async.waterfall([
 			});
 		},function(done){
 			var newEvent = {
-				startTime: req.body.startTime,
-				endTime: req.body.endTime,
+				start: req.body.startTime,
+				end: req.body.endTime,
 				allDay: req.body.allDay,
 				meeting: meeting._id
 			};
