@@ -97,9 +97,17 @@ async.waterfall([
  * Show the current Meeting
  */
 exports.read = function(req, res) {
-	res.jsonp(req.article);
-};
-
+	Meeting.find({'_id': req.meeting._id}).exec(function(err, meeting) {
+				if (err) {
+					console.log(err);
+					return res.status(400).send({
+						message: errorHandler.getErrorMessage(err)
+					});
+				} else {
+					res.jsonp(meeting);
+				}
+			});
+}
 /**
  * Update a Meeting
  */
@@ -141,7 +149,8 @@ exports.delete = function(req, res) {
  */
 exports.getNotetaker = function(req, res) {
 	console.log('here in getNotetaker');
-	var noteTakerById = req.meeting.noteTaker;
+	var temp = req.meeting.noteTaker;
+	var noteTakerById = mongoose.Types.ObjectId(temp);
 
 	User.find({'_id': noteTakerById}).exec(function(err, noteTaker) {
 		if (err) {
