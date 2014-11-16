@@ -5,7 +5,7 @@
 	describe('Committees Controller Tests', function() {
 		// Initialize global variables
 		var UsersController,
-			CommitteesController,
+			CommitteeCtrl,
 			userScope,
 			committeeScope,
 		$httpBackend,
@@ -51,14 +51,14 @@
 			UsersController = $controller('UsersController', {
 				$scope: userScope
 			});
-			CommitteesController = $controller('CommitteesController', {
+			CommitteeCtrl = $controller('CommitteeCtrl', {
 				$scope: committeeScope
 			});
 		}));
 
-		it('$scope.find() should create an array with at least one Committee object fetched from XHR', inject(function(Committees) {
+		it('$scope.findCommittee() should create an array with at least one Committee object fetched from XHR', inject(function(Committees) {
 			// Create sample Committee using the Committees service
-			var sampleCommittee = new Committees.Committees({
+			var sampleCommittee = new Committee.Committee({
 				name: 'New Committee'
 			});
 
@@ -71,7 +71,7 @@
 			$httpBackend.expectGET('committees').respond(sampleCommittees);
 
 			// Run controller functionality
-			committeeScope.find();
+			committeeScope.findCommittee();
 			$httpBackend.flush();
 
 			// Test scope value

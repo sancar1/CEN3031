@@ -4,6 +4,7 @@
 angular.module('meetings').controller('MeetingsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Meetings',
 	function($scope, $stateParams, $location, Authentication, Meetings ) {
 		$scope.authentication = Authentication;
+		$scope.dateTime = new Date();
 
 		// Create new Meeting
 		$scope.create = function() {
@@ -11,8 +12,8 @@ angular.module('meetings').controller('MeetingsController', ['$scope', '$statePa
 			var meeting = new Meetings.Meetings ({
 				name: this.meeting.name,
 				noteTaker: this.noteTaker.id,
-				startTime: new Date(2014,11,23),
-				endTime: new Date(2014,11,25),
+				startTime: $scope.dateTime,
+				endTime: new Date(2014,10,25),
 				allDay: false,
 				scheduleById: $scope.committee.schedule
 
@@ -173,6 +174,9 @@ angular.module('meetings').controller('MeetingsController', ['$scope', '$statePa
 
     $scope.changed = function () {
       console.log('Time changed to: ' + $scope.mytime);
+		console.log('Date d = ' + $scope.dt.getDay());
+		$scope.dateTime = new Date($scope.dt.getFullYear(),$scope.dt.getMonth(),$scope.dt.getDate(),$scope.mytime.getHours(),$scope.mytime.getMinutes())
+		console.log('Object Date= ' + $scope.dateTime);
     };
 
     $scope.clear = function() {
