@@ -192,23 +192,68 @@ exports.removeNotetaker = function(req, res) {
  * List of Meetings
  */
 exports.list = function(req, res) { 
-
-	/*
-	get meeting ids from schedule
-	*/
-
-	/*
-		return meetings
-	*/
-	Meeting.find().sort('-created').populate('user', 'displayName').exec(function(err, meetings) {
-		if (err) {
-			return res.status(400).send({
-				message: errorHandler.getErrorMessage(err)
+	//var committeeById = req.body.committee._id;
+	var committeeById = req.params.committeeId;
+	async.waterfall([
+		//Find the committee
+		function(done){
+			console.log('finding committee: '+committeeById);
+			Committee.find({'_id': committeeById}).exec(function(err, committee) {
+				if (err) {
+					console.log('error here');
+					return res.status(400).send({
+						message: errorHandler.getErrorMessage(err)
+					});
+				} 
+				else{
+					console.log('got the fuckin committee');
+					done(null,committee[0]);
+				}
 			});
-		} else {
-			res.jsonp(meetings);
+		},function(committee, done){
+			var scheduleById = committee.schedule;
+			console.log('finding schedule: '+scheduleById);
+			Schedule.find({'_id': scheduleById}).exec(function(err, schedule){
+				if(err){
+					return res.status(401).send({
+						message: errorHandler.getErrorMessage(err)
+					});
+				}
+				else{
+					console.log('got the fuckin schedule');
+					console.log(schedule);
+					done(null, schedule[0]);
+				}
+			});
+		},function(schedule, done){
+			console.log('finding meetings');
+			var meetings = [];
+			console.log(schedule.events.length);
+			for(var i = 0; i < schedule.events.length; i++){
+				meetings[i] = schedule.events[i].meeting;
+				console.log(meetings[i]);
+			}
+			Meeting.find({'_id':{$in: [meetings]}}).exec(function(err, meetings) {
+				if (err) {
+					console.log(err);
+					return res.status(400).send({
+						message: errorHandler.getErrorMessage(err)
+					});
+				} else {
+					console.log('got the fuckin meetings');
+					console.log(meetings);
+					done(meetings);
+					res.jsonp(meetings);
+				}
+			});
 		}
-	});
+		],function(err){
+			if(err){
+				console.log('error finding meetings');
+				console.log(err);
+			}
+		}
+	);
 };
 
 /**

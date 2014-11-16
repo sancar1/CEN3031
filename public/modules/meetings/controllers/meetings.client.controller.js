@@ -89,10 +89,13 @@ angular.module('meetings').controller('MeetingsController', ['$scope', '$statePa
 				
 		};
 
-		// Find a list of Meetings
 		$scope.find = function() {
-			$scope.meetings = Meetings.Meetings.query();
+			console.log('committeeId: ' +$scope.committee._Id);
+			$scope.meetings = Meetings.List.query({
+				committeeId: '5468ccabccd9227eb04e7835'
+			});
 		};
+		
 
 		// Find existing Meeting
 		$scope.findOne = function() {
