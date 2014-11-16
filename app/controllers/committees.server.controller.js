@@ -82,6 +82,7 @@ async.waterfall([
 				else console.log('message sent: ' + console.log(info));
 				done(err);
 			});
+			res.jsonp(committee);
 		}
 		],function(err){
 			if(err) console.log(err);
@@ -152,7 +153,7 @@ exports.list = function(req, res) {
 exports.getMembers = function(req, res) { 
 	var committee = req.committee;
 	
-	User.find({'_id':{$in: committee.members}}).exec(function(err, members) {
+	User.find({'_id':{$in: committee.members}}).sort('lastName').exec(function(err, members) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
@@ -234,6 +235,7 @@ exports.addMember = function(req, res) {
 				else console.log('message sent: ' + console.log(info));
 				done(err);
 			});
+			res.jsonp(user);
 		}
 		],function(err){
 			if(err) console.log(err);
@@ -437,6 +439,7 @@ exports.removeMember = function(req, res) {
 				else console.log('message sent: ' + console.log(info));
 				done(err);
 			});
+			res.jsonp(user);
 		}
 		],function(err){
 			if(err) console.log(err);
@@ -516,6 +519,7 @@ exports.setChair = function(req, res) {
 				else console.log('message sent: ' + console.log(info));
 				done(err);
 			});
+			res.jsonp(user);
 		}
 		],function(err){
 			if(err) console.log(err);
@@ -578,6 +582,7 @@ exports.removeChair = function(req, res) {
 				else console.log('message sent: ' + console.log(info));
 				done(err);
 			});
+			res.jsonp(user);
 		}
 		],function(err){
 			if(err) console.log(err);

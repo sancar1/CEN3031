@@ -7,6 +7,7 @@ var mongoose = require('mongoose'),
 	errorHandler = require('./errors'),
 	User = mongoose.model('User'),
 	Meeting = mongoose.model('Meeting'),
+	Schedule = mongoose.model('Schedule'),
 	async = require('async'),
 	_ = require('lodash');
 
@@ -15,31 +16,38 @@ var mongoose = require('mongoose'),
  */
 exports.create = function(req, res) {
 	var meeting = new Meeting(req.body);
-
-	meeting.save(function(err) {
-		if (err) {
-			return res.status(400).send({
-				message: errorHandler.getErrorMessage(err)
-			});
-		} else {
-			res.jsonp(meeting);
-		}
-	});
-/*
+	var scheduleById = req.body.scheduleById;
 async.waterfall([
 		function(done){
 			meeting.save(function(err) {
 				if (err) {
+					console.log('error here');
 					return res.status(400).send({
 						message: errorHandler.getErrorMessage(err)
 					});
 				} 
-				else {
+				else done();
+			});
+		},function(done){
+			var newEvent = {
+				startTime: req.body.startTime,
+				endTime: req.body.endTime,
+				allDay: req.body.allDay,
+				meeting: meeting._id
+			};
+			Schedule.update({'_id': scheduleById}, {$addToSet:{'events': newEvent}},function(err, committee){
+				if(err){
+					return res.status(401).send({
+						message: errorHandler.getErrorMessage(err)
+					});
+				}
+				else{
 					res.jsonp(meeting);
 				}
 			});
-		},
-		function(committee, done){
+				
+		}/*,
+		function(meeting, done){
 			User.find({'_id': req.body.noteTaker},function(err, user){
 				if(err){
 					return res.status(401).send({
@@ -51,7 +59,7 @@ async.waterfall([
 					done(err,user[0]);
 				}
 			});
-		}/*,
+		},
 		function(user, done) {
 			res.render('templates/add-as-chair', {
 				name: user.displayName,
@@ -74,11 +82,14 @@ async.waterfall([
 				else console.log('message sent: ' + console.log(info));
 				done(err);
 			});
-		}
+		}*/
 		],function(err){
-			if(err) console.log(err);
+			if(err){
+				console.log('error saving meeting');
+				console.log(err);
+			}
 
-	});*/
+	});
 };
 
 /**
@@ -181,6 +192,14 @@ exports.removeNotetaker = function(req, res) {
  * List of Meetings
  */
 exports.list = function(req, res) { 
+
+	/*
+	get meeting ids from schedule
+	*/
+
+	/*
+		return meetings
+	*/
 	Meeting.find().sort('-created').populate('user', 'displayName').exec(function(err, meetings) {
 		if (err) {
 			return res.status(400).send({
