@@ -153,7 +153,7 @@ exports.list = function(req, res) {
 exports.getMembers = function(req, res) { 
 	var committee = req.committee;
 	
-	User.find({'_id':{$in: committee.members}}).sort('-lastName').exec(function(err, members) {
+	User.find({'_id':{$in: committee.members}}).sort('lastName').exec(function(err, members) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
