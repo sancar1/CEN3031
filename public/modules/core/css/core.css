@@ -32,9 +32,11 @@ p,div{
 	color:#fffff;
 }
 
+/*
 #name{
 	width: 50%;
 }
+*/ 
 
 #chair,#users,#start{
 	width: 25%;
@@ -231,7 +233,7 @@ span:hover:before {
    border-bottom:none;
    border-left:none;
    border-right:none;
-   box-shadow:inset 2px -3px rgba(0,0,0,0.15);
+   /*box-shadow:inset 2px -3px rgba(0,0,0,0.15);*/
   }
   .btn:focus
   {
@@ -323,4 +325,22 @@ span:hover:before {
 .signup {
 	margin-top: 25px;
 	margin-left: -30px;
+}
+
+/* Create Meeting Page*/
+.width-set{
+  max-width: 200px;
+}
+
+.timepicker{
+  margin-left: 30%;
+margin-top: -23.7%;
+}
+
+.datepicker{
+margin-top: -35px;
+}
+
+.submitButton{
+  padding-top: 15px;
 }
