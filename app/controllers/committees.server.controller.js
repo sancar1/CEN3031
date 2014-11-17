@@ -31,12 +31,11 @@ var smtpTransport = nodemailer.createTransport('SMTP', {
 exports.create = function(req, res) {
 	var pass = req.committee;
 	var committee = new Committee(req.body);
+	var chair;
 	committee.user = req.user;
-
-console.log(req.body.chair);
-
 async.waterfall([
 		function(done){
+			console.log('Find committee: ');
 			committee.save(function(err) {
 				if (err) {
 					return res.status(400).send({
@@ -46,18 +45,8 @@ async.waterfall([
 					done(null,committee);
 				}
 			});
-		},
-		function(committee, done){
-			Committee.update({'_id': committee._id}, {$addToSet:{'members': req.body.chair}},function(err, garbage){
-				if(err){
-					return res.status(401).send({
-						message: errorHandler.getErrorMessage(err)
-					});
-				}
-				else done(null, committee);
-			});
-		},
-		function(committee, done){
+		},function(committee, done){
+			console.log('Find chair: ');
 			User.find({'_id': req.body.chair},function(err, user){
 				if(err){
 					return res.status(401).send({
@@ -66,23 +55,24 @@ async.waterfall([
 				}
 				else{
 					console.log(user);
-					done(null,user[0]);
+					chair = user[0];
+					done(null,chair);
 				}
 			});
 		},
-		function(user, done) {
+		function(chair, done) {
 			res.render('templates/add-as-chair', {
-				name: user.displayName,
+				name: chair.displayName,
 				committee: req.body.name,
 				appName: config.app.title
 			}, function(err, emailHTML) {
-				done(err, emailHTML, user);
+				done(err, emailHTML, chair);
 			});
 		},
 		// If valid email, send reset email using service
-		function(emailHTML, user, done) {
+		function(emailHTML, chair, done) {
 			var mailOptions = {
-				to: user.email,
+				to: chair.email,
 				from: config.mailer.from,
 				subject: 'Added as chair of a committee',
 				html: emailHTML
