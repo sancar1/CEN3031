@@ -22,11 +22,7 @@ angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParam
 		/* Committee Data to be Loaded on Page Load */
 		$scope.findCommittee().then(function() {
 			$scope.getChair();
-			$scope.getMembers().then(function() {
-				// $scope.lastCommittee($scope.members);
-			});
-			// $log.debug('Committee Object');
-			// $log.debug($scope.committee);
+			$scope.getMembers();
 			$scope.findSchedule();
 		});
 
