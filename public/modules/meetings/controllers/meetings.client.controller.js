@@ -23,7 +23,7 @@ angular.module('meetings').controller('MeetingsController', ['$scope', '$statePa
 
 			// Redirect after save
 			meeting.$save(function(response) {
-				$location.path('meetings/' + response._id);
+				$location.path('committees/' + $stateParams.committeeId + '/meetings/' + response._id);
 
 				// Clear form fields
 				$scope.name = '';
