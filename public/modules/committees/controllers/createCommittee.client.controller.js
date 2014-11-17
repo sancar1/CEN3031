@@ -44,7 +44,8 @@ angular.module('committees').controller('CreateCommitteeCtrl', ['$scope', '$stat
 
 			var committee = new Committees.Committees({
 				name: this.committee.name,
-				chair: this.chair.id
+				chair: this.chair.id,
+				members:[this.chair.id]
 			});
 
 			// Redirect after save
