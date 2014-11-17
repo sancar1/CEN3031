@@ -191,8 +191,25 @@ $scope.find = function(){
       $scope.mytime = null;
     };
   //End Time Picker Code
-	
-	
-	
+
+    /* Attendance Checking */
+        $scope.membersPresent = 0;
+
+        $scope.checkMembersPresent = function(isPresent){
+            // $log.debug('Committee Members:');
+            // $log.debug($scope.members);
+
+            // $log.debug('isPresent:');
+            // $log.debug(isPresent);
+
+            if(isPresent === true){
+                $scope.membersPresent++;
+            }
+
+            if(isPresent === false){
+                $scope.membersPresent--;
+            }
+        };	
 	}
+
 ]);
