@@ -163,24 +163,6 @@ exports.getMembers = function(req, res) {
 		}
 	});
 };
-
-/**
- * List of Meetings
- */
-exports.getMeetings = function(req, res){
-	var committee = req.committee;
-
-	User.find({'_id':{$in: committee.meetings}}).exec(function(err, meetings) {
-		if (err) {
-			return res.status(400).send({
-				message: errorHandler.getErrorMessage(err)
-			});
-		} else {
-			res.jsonp(meetings);
-		}
-	});
-};
-
 /**
  * Add Committee Member
  */
@@ -593,7 +575,7 @@ exports.removeChair = function(req, res) {
 /**
  * Committee middleware
  */
-exports.committeeByID = function(req, res, next, id) { Committee.findById(id).populate('user', 'displayName').exec(function(err, committee) {
+exports.committeeByID = function(req, res, next, id) { Committee.findById(id).exec(function(err, committee) {
 		if (err) return next(err);
 		if (! committee) return next(new Error('Failed to load Committee ' + id));
 		req.committee = committee ;

@@ -20,12 +20,9 @@ module.exports = function(app) {
 	app.route('/committees/:committeeId/members')		
 		.get(committees.getMembers);
 
-	app.route('/committees/:committeeId/meetings')		
-		.get(committees.getMeetings);
-
-	app.route('/committees/:committeeId/meetings/:meetingId')
-		.put(committees.addMeeting)
-		.delete(committees.removeMeeting);
+	// app.route('/committees/:committeeId/meetings/:meetingId')
+	// 	.put(committees.addMeeting)
+	// 	.delete(committees.removeMeeting);
 
 	app.route('/committees/:committeeId/:userId')
 		.put(committees.addMember)

@@ -28,16 +28,16 @@ angular.module('core').config(['$stateProvider', '$urlRouterProvider', '$logProv
 			templateUrl: 'modules/committees/views/edit-committee.client.view.html'
 		}).
 		state('attendance', {
-			url: '/committee/attendance',
+			url: '/committees/attendance',
 			templateUrl: 'modules/committees/views/attendance.client.view.html'
 			// controller: 'CommitteesController'
 		}).
 		state('schedule', {
-			url: '/committee/schedule',
+			url: '/committees/schedule',
 			templateUrl: 'modules/schedules/views/schedule.client.view.html'
 		}).
 		state('meetings', {
-			url: '/committee/:committeeId/meetings',
+			url: '/committees/:committeeId/meetings',
 			templateUrl: 'modules/meetings/views/list-meetings.client.view.html'
 		});
 	}

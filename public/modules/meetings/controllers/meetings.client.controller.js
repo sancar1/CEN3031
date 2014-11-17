@@ -5,22 +5,13 @@ angular.module('meetings').controller('MeetingsController', ['$scope', '$statePa
 	function($scope, $stateParams, $location, Authentication, Meetings, $log) {
 		$scope.authentication = Authentication;
 		$scope.dateTime = new Date();
-
-		console.log('$stateParams.committeeId');
-		console.log($stateParams.committeeId);
-
-		// Find a list of Meetings
-		Meetings.Meetings.query({
-			committeeId: $stateParams.committeeId
-		}).$promise.then(function(data) {
-			$scope.meetings = data;
-			$log.info('List of Meetings Loaded');
-		});
-
 		// Create new Meeting
 		$scope.create = function() {
 			// Create new Meeting object
-			var meeting = new Meetings.Meetings ({
+
+
+
+			var meeting = new Meetings.Meetings({
 				name: this.meeting.name,
 				noteTaker: this.noteTaker.id,
 				startTime: $scope.dateTime,
@@ -40,7 +31,15 @@ angular.module('meetings').controller('MeetingsController', ['$scope', '$statePa
 				$scope.error = errorResponse.data.message;
 			});
 		};
-
+$scope.find = function(){
+	Meetings.List.query({
+			committeeId: $stateParams.committeeId
+		}).$promise.then(function(data) {
+				$scope.meetings = data;
+				console.log($scope.meetings);
+				// $log.info('List of Meetings Loaded');
+			});
+};
 		// Remove existing Meeting
 		$scope.remove = function( meeting ) {
 			if ( meeting ) { meeting.$remove();
@@ -70,10 +69,11 @@ angular.module('meetings').controller('MeetingsController', ['$scope', '$statePa
 
 		// Update existing Meeting
 		$scope.getNotetaker = function() {
-			var meetingById = $scope.meeting._id;
+			var userById = $scope.meeting.noteTaker;
+			console.log('userId: '+userById);
 			//console.log('beforecall');
 			//console.log($scope.meeting);
-			Meetings.NoteTaker.get({meetingId: meetingById}).$promise.then(function(data){
+			Meetings.NoteTaker.get({meetingId: $scope.meeting._id, userId: userById, committeeId: $stateParams.committeeId}).$promise.then(function(data){
 				//console.log('inside');
 				//console.log(data);
 				$scope.noteTaker = data;
@@ -103,11 +103,13 @@ angular.module('meetings').controller('MeetingsController', ['$scope', '$statePa
 
 		// Find existing Meeting
 		$scope.findOne = function() {
-			Meetings.Meetings.get({ 
-				meetingId: $stateParams.meetingId
+			console.log('in findOne for meeting');
+			Meetings.Meeting.get({ 
+				meetingId: $stateParams.meetingId,
+				committeeId: $stateParams.committeeId
 			}).$promise.then(function(data) {
 				$scope.meeting = data;
-				
+				console.log('data: '+data);
 				// $log.debug('$scope.committee: ');
 				// $log.debug($scope.committee);
 

@@ -5,7 +5,7 @@ angular.module('committees').factory('Committees', ['$resource', 'Authentication
 	function($resource, Authentication) {
 		return {
 			Committees:	$resource('committees/:committeeId', { committeeId: '@_id'}, {update: {method: 'PUT'},query: {method: 'GET', isArray: true}}),
-			Meetings: 	$resource('committees/:committeeId/meetings',{committeeId: '@_id'}), 
+			// Meetings: 	$resource('committees/:committeeId/meetings',{committeeId: '@_id'}), 
 			Schedule: 	$resource('committees/:committeeId/:scheduleId',{committeeId: '@committeeId', scheduleId: '@scheduleId'}), 
 			Members:    $resource('committees/:committeeId/members',{committeeId: '@_id'}),
 			Member:     $resource('committees/:committeeId/:userId',{committeeId: '@committeeId', userId: '@userId'}, {update: {method: 'PUT'}}), 
