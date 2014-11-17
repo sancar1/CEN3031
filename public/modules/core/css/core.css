@@ -334,7 +334,7 @@ span:hover:before {
 
 .timepicker{
   margin-left: 30%;
-margin-top: -22.7%;
+margin-top: -23.7%;
 }
 
 .datepicker{
@@ -342,5 +342,5 @@ margin-top: -35px;
 }
 
 .submitButton{
-  padding-top: 5px;
+  padding-top: 15px;
 }
