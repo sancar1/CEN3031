@@ -183,7 +183,7 @@ $scope.find = function(){
     $scope.changed = function () {
       console.log('Time changed to: ' + $scope.mytime);
 		console.log('Date d = ' + $scope.dt.getDay());
-		$scope.dateTime = new Date($scope.dt.getFullYear(),$scope.dt.getMonth(),$scope.dt.getDate(),$scope.mytime.getHours(),$scope.mytime.getMinutes())
+		$scope.dateTime = new Date($scope.dt.getFullYear(),$scope.dt.getMonth(),$scope.dt.getDate(),$scope.mytime.getHours(),$scope.mytime.getMinutes());
 		console.log('Object Date= ' + $scope.dateTime);
     };
 
