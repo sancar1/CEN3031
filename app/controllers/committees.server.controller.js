@@ -43,8 +43,18 @@ async.waterfall([
 						message: errorHandler.getErrorMessage(err)
 					});
 				} else {
-					done(err,committee);
+					done(null,committee);
 				}
+			});
+		},
+		function(committee, done){
+			Committee.update({'_id': committee._id}, {$addToSet:{'members': req.body.chair}},function(err, garbage){
+				if(err){
+					return res.status(401).send({
+						message: errorHandler.getErrorMessage(err)
+					});
+				}
+				else done(null, committee);
 			});
 		},
 		function(committee, done){
@@ -56,7 +66,7 @@ async.waterfall([
 				}
 				else{
 					console.log(user);
-					done(err,user[0]);
+					done(null,user[0]);
 				}
 			});
 		},
