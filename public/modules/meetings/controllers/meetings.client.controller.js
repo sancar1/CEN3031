@@ -68,11 +68,11 @@ $scope.find = function(){
 
 		// Update existing Meeting
 		$scope.getNotetaker = function() {
-			var meetingById = $scope.meeting._id;
-			console.log('meetingId: '+meetingById);
+			var userById = $scope.meeting.noteTaker;
+			console.log('userId: '+userById);
 			//console.log('beforecall');
 			//console.log($scope.meeting);
-			Meetings.NoteTaker.get({meetingId: meetingById}).$promise.then(function(data){
+			Meetings.NoteTaker.get({meetingId: $scope.meeting._id, userId: userById, committeeId: $stateParams.committeeId}).$promise.then(function(data){
 				//console.log('inside');
 				//console.log(data);
 				$scope.noteTaker = data;

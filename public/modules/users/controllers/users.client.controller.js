@@ -7,11 +7,11 @@ angular.module('users').controller('UsersController', ['$scope', '$stateParams',
 		/*//Find users in the db
 		$scope.users= Users.query();*/
 
-		/*$scope.findOne = function() {
+		$scope.findOne = function() {
 			$scope.user = Users.get({
 				userId: $stateParams.userId
 			});
-		};*/
+		};
 		$scope.users= Users.query();
 		$scope.inCommittee = function(user){
 			if(typeof $scope.committee !== 'undefined'){
