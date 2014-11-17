@@ -6,15 +6,6 @@ angular.module('meetings').controller('MeetingsController', ['$scope', '$statePa
 		$scope.authentication = Authentication;
 		$scope.dateTime = new Date();
 
-        // Gets a list of meetings on controller initialization
-        Meetings.List.query({
-            committeeId: $stateParams.committeeId
-        }).$promise.then(function(data) {
-                $scope.meetings = data;
-                console.log($scope.meetings);
-                // $log.info('List of Meetings Loaded');
-        });
-
 		// Create new Meeting
 		$scope.create = function() {
 			// Create new Meeting object

@@ -1,8 +1,8 @@
 'use strict';
 
 // Committees controller
-angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParams', '$location', 'Authentication', 'Users', 'Committees', '$q', '$log', 'Schedules', 'Roles',
-	function($scope, $stateParams, $location, Authentication, Users, Committees, $q, $log, Schedules, Roles) {
+angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParams', '$location', 'Authentication', 'Users', 'Committees', '$q', '$log', 'Schedules', 'Roles', 'Meetings',
+	function($scope, $stateParams, $location, Authentication, Users, Committees, $q, $log, Schedules, Roles, Meetings) {
 
 		// $log.debug('Entered CommitteeCtrl');
 		
@@ -24,6 +24,14 @@ angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParam
 			$scope.getChair();
 			$scope.getMembers();
 			$scope.findSchedule();
+
+			// Gets a list of meetings on controller initialization
+	        Meetings.List.query({
+	            committeeId: $stateParams.committeeId
+	        }).$promise.then(function(data) {
+                $scope.meetings = data;
+                $log.info('List of Meetings Loaded');
+	        });
 		});
 
 		/* Committee Functions */
