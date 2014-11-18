@@ -159,44 +159,6 @@ angular.module('meetings').controller('MeetingsController', ['$scope', '$statePa
 			
 		//End of Date Picker Code	
 		//Start Time Picker Code
-		
-<<<<<<< HEAD
-	   $scope.myStartTime = new Date();
-	 	$scope.myEndTime = new Date();
-	    $scope.hstep = 1;
-	    $scope.mstep = 15;
-
-	    // $scope.options = {
-	//       hstep: [1, 2, 3],
-	//       mstep: [1, 5, 10, 15, 25, 30]
-	//     };
-
-	    $scope.ismeridian = true;
-	    // $scope.toggleMode = function() {
-	//       $scope.ismeridian = ! $scope.ismeridian;
-	//     };
-
-	    $scope.update = function() {
-	      var d = new Date();
-	      d.setHours( 14 );
-	      d.setMinutes( 0 );
-	      $scope.mytime = d;
-	    };
-
-	    $scope.changed = function () {
-	      console.log('Time changed to: ' + $scope.mytime);
-			console.log('Date d = ' + $scope.dt.getDay());
-			$scope.dateTime = new Date($scope.dt.getFullYear(),$scope.dt.getMonth(),$scope.dt.getDate(),$scope.mytime.getHours(),$scope.mytime.getMinutes());
-			console.log('Object Date= ' + $scope.dateTime);
-	    };
-
-	    $scope.clear = function() {
-	      $scope.mytime = null;
-	    };
-	  //End Time Picker Code
-=======
-	//End of Date Picker Code	
-	//Start Time Picker Code
 	
    $scope.myStartTime = new Date();
  	$scope.myEndTime = new Date();
@@ -232,7 +194,6 @@ angular.module('meetings').controller('MeetingsController', ['$scope', '$statePa
       $scope.myStartTime = null;
     };
   //End Time Picker Code
->>>>>>> 486b09cafdb79e1322bf308e18a87fafe2560360
 
     /* Attendance Checking */
         $scope.membersPresent = 0;
