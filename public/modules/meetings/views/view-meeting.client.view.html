@@ -25,11 +25,11 @@
 			    </div>
 			</form>
 	   	</section>
-	   	<div>
+	   	<div data-ng-show = "committee.chair == authentication.user._id">
 	   		<div>
 		   		<div>
 		   			<div class="memberspresent">Members Present: </div>
-					<div data-ng-bind="membersPresent"></div>
+					<div data-ng-bind="meeting.membersPresent"></div>
 		   		</div>
 		   		<br>
 		   		<div>
@@ -37,37 +37,45 @@
 		   			<div data-ng-bind="committee.members.length"></div>
 		   		</div>
 		   	</div>
+		   	<br>
 		   	<div>
-		   		<br>
 				<div data-ng-show="committee.members.length">Take Attendance</div>
 				<div data-ng-repeat="member in members">
 					<label class="memberlabel">
-						<input type="checkbox" data-ng-init="member.isPresent=false" data-ng-model="member.isPresent" data-ng-change="checkMembersPresent(member.isPresent)">
+						<input type="checkbox" data-ng-model="member.isPresent" data-ng-change="checkMembersPresent(member.isPresent)">
 						<span data-ng-bind="member.firstName + ' ' + member.lastName"></span>
 					</label>
 				</div>
+				<br>
+				<div>
+					<div>
+						<button class="btn btn-primary" data-ng-click="saveAttendance()">Save Attendance</button>
+					</div>
+					<br>
+					<div data-ng-bind="saveMessage"></div>
+				</div>
 			</div>
 	   	</div>
-
-		<form name="meetingForm" class="form-horizontal" data-ng-submit="update(meetingForm.$valid)" novalidate>
-			<fieldset>
-				<div class="form-group" ng-class="{ 'has-error' : submitted && meetingForm.notes.$invalid}">
-					<label class="control-label" for="notes">Notes</label>
-					<div class="controls">
-						<textarea name="notes" data-ng-model="meeting.notes" id="notes" class="form-control" cols="30" rows="10" placeholder="Notes" required></textarea>
+	   	<div data-ng-show = "meeting.noteTaker == authentication.user._id">
+			<form name="meetingForm" class="form-horizontal" data-ng-submit="updateMeeting(meetingForm.$valid)" novalidate>
+				<fieldset>
+					<div ng-class="{ 'has-error' : submitted && meetingForm.notes.$invalid}">
+						<label class="control-label" for="notes">Notes</label>
+						<div class="controls">
+							<textarea name="notes" data-ng-model="meeting.notes" id="notes" class="form-control" cols="30" rows="10" placeholder="Notes" required></textarea>
+						</div>
+						<div ng-show="submitted && meetingForm.notes.$invalid" class="help-block">
+							<p ng-show="meetingForm.notes.$error.required" class="text-danger">Content is required</p>
+						</div>
 					</div>
-					<div ng-show="submitted &&meetingForm.notes.$invalid" class="help-block">
-						<p ng-show="meetingForm.notes.$error.required" class="text-danger">Content is required</p>
+					<div class="form-group">
+						<input type="submit" value="Update" class="btn btn-default">
 					</div>
-				</div>
-				<div class="form-group">
-					<input type="submit" value="Update" class="btn btn-default">
-				</div>
-				<div data-ng-show="error" class="text-danger">
-					<strong data-ng-bind="error"></strong>
-				</div>
-			</fieldset>
-		</form>
-
+					<div data-ng-show="error" class="text-danger">
+						<strong data-ng-bind="error"></strong>
+					</div>
+				</fieldset>
+			</form>
+		</div>
 	</section>
 </section>

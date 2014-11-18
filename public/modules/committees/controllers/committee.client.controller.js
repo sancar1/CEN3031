@@ -1,8 +1,8 @@
 'use strict';
 
 // Committees controller
-angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParams', '$location', 'Authentication', 'Users', 'Committees', '$q', '$log', 'Schedules', 'Roles',
-	function($scope, $stateParams, $location, Authentication, Users, Committees, $q, $log, Schedules, Roles) {
+angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParams', '$location', 'Authentication', 'Users', 'Committees', '$q', '$log', 'Schedules', 'Roles', 'Meetings',
+	function($scope, $stateParams, $location, Authentication, Users, Committees, $q, $log, Schedules, Roles, Meetings) {
 
 		// $log.debug('Entered CommitteeCtrl');
 		
@@ -11,9 +11,6 @@ angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParam
 			$scope.committeeTemplates.edit = true;
 
 		$scope.committeeTemplates.current = true;
-		$scope.committeeTemplates.attendance = true;
-		$scope.committeeTemplates.schedule = true;
-		$scope.committeeTemplates.resources = true;
 		$scope.committeeTemplates.meetings = true;
 
 		/* Committee vars to be set */
@@ -22,12 +19,16 @@ angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParam
 		/* Committee Data to be Loaded on Page Load */
 		$scope.findCommittee().then(function() {
 			$scope.getChair();
-			$scope.getMembers().then(function() {
-				// $scope.lastCommittee($scope.members);
-			});
-			// $log.debug('Committee Object');
-			// $log.debug($scope.committee);
+			$scope.getMembers();
 			$scope.findSchedule();
+
+			// Gets a list of meetings on controller initialization
+	        Meetings.List.query({
+	            committeeId: $stateParams.committeeId
+	        }).$promise.then(function(data) {
+                $scope.meetings = data;
+                $log.info('List of Meetings Loaded');
+	        });
 		});
 
 		/* Committee Functions */
@@ -191,9 +192,6 @@ angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParam
 		$scope.$on('$destroy', function() {
 			$scope.committeeTemplates.current = false;
 			$scope.committeeTemplates.edit = false;
-			$scope.committeeTemplates.attendance = false;
-			$scope.committeeTemplates.schedule = false;
-			$scope.committeeTemplates.resources = false;
 			$scope.committeeTemplates.meetings = false;
 		});
 

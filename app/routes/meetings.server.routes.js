@@ -7,14 +7,14 @@ module.exports = function(app) {
 
 	// Meetings Routes
 	app.route('/meetings')
-		.post(users.requiresLogin, meetings.create);
+		.post(users.requiresLogin, meetings.create)
+		.put(users.requiresLogin, meetings.hasAuthorization, meetings.update);
 		
 	app.route('/meetings/:committeeId')
 		.get(meetings.list);
 		
 	app.route('/meetings/:meetingId/:committeeId')
 		.get(meetings.read)
-		.put(users.requiresLogin, meetings.hasAuthorization, meetings.update)
 		.delete(users.requiresLogin, meetings.hasAuthorization, meetings.delete);
 
 	app.route('/meetings/:meetingId/:committeeId/:userId')

@@ -1,21 +1,20 @@
 'use strict';
 
 // Meetings controller
-angular.module('meetings').controller('MeetingsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Meetings', '$log',
-	function($scope, $stateParams, $location, Authentication, Meetings, $log) {
+angular.module('meetings').controller('MeetingsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Meetings', '$log', '$timeout',
+	function($scope, $stateParams, $location, Authentication, Meetings, $log, $timeout) {
 		$scope.authentication = Authentication;
-		$scope.dateTime = new Date();
+		$scope.StartDateTime = new Date();
+		$scope.EndDateTime = new Date();
+
 		// Create new Meeting
 		$scope.create = function() {
 			// Create new Meeting object
-
-
-
 			var meeting = new Meetings.Meetings({
 				name: this.meeting.name,
 				noteTaker: this.noteTaker.id,
-				startTime: $scope.dateTime,
-				endTime: new Date(2014,10,25),
+				startTime: $scope.StartDateTime,
+				endTime: $scope.EndDateTime,
 				allDay: false,
 				scheduleById: $scope.committee.schedule
 
@@ -31,15 +30,7 @@ angular.module('meetings').controller('MeetingsController', ['$scope', '$statePa
 				$scope.error = errorResponse.data.message;
 			});
 		};
-$scope.find = function(){
-	Meetings.List.query({
-			committeeId: $stateParams.committeeId
-		}).$promise.then(function(data) {
-				$scope.meetings = data;
-				console.log($scope.meetings);
-				// $log.info('List of Meetings Loaded');
-			});
-};
+
 		// Remove existing Meeting
 		$scope.remove = function( meeting ) {
 			if ( meeting ) { meeting.$remove();
@@ -57,10 +48,9 @@ $scope.find = function(){
 		};
 
 		// Update existing Meeting
-		$scope.update = function() {
-			console.log('here to update');
+		$scope.updateMeeting = function() {
 			var meeting = $scope.meeting ;
-
+			console.log(meeting);
 			meeting.$update(function() {
 				$location.path('meetings/' + meeting._id);
 			}, function(errorResponse) {
@@ -115,49 +105,52 @@ $scope.find = function(){
 				// $log.debug($scope.committee);
 
 				$scope.getNotetaker();
-			//	$scope.getMembers();	
+
+				if((typeof $scope.meeting.membersPresent) === 'undefined')
+        			$scope.meeting.membersPresent = 0;
+
 			});
 		};
-	//Start of Date Picker Code
-	
-	
-	$scope.today = function() {
-	    $scope.dt = new Date();
-	  };
-	  $scope.today();
-
-	  $scope.clear = function () {
-	    $scope.dt = null;
-	  };
-
-	  // Disable weekend selection
-	  // $scope.disabled = function(date, mode) {
- // 	    return ( mode === 'day' && ( date.getDay() === 0 || date.getDay() === 6 ) );
- // 	  };
-
-	  $scope.toggleMin = function() {
-	    $scope.minDate = $scope.minDate ? null : new Date();
-	  };
-	  $scope.toggleMin();
-
-	  $scope.open = function($event) {
-	    $event.preventDefault();
-	    $event.stopPropagation();
-
-	    $scope.opened = true;
-	  };
-
-	  $scope.dateOptions = {
-	    formatYear: 'yy',
-	    startingDay: 1
-	  };
-
-	  $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
-	  $scope.format = $scope.formats[3];
+		//Start of Date Picker Code
 		
 		
-	//End of Date Picker Code	
-	//Start Time Picker Code
+		$scope.today = function() {
+		    $scope.dt = new Date();
+		  };
+		  $scope.today();
+
+		  $scope.clear = function () {
+		    $scope.dt = null;
+		  };
+
+		  // Disable weekend selection
+		  // $scope.disabled = function(date, mode) {
+	 // 	    return ( mode === 'day' && ( date.getDay() === 0 || date.getDay() === 6 ) );
+	 // 	  };
+
+		  $scope.toggleMin = function() {
+		    $scope.minDate = $scope.minDate ? null : new Date();
+		  };
+		  $scope.toggleMin();
+
+		  $scope.open = function($event) {
+		    $event.preventDefault();
+		    $event.stopPropagation();
+
+		    $scope.opened = true;
+		  };
+
+		  $scope.dateOptions = {
+		    formatYear: 'yy',
+		    startingDay: 1
+		  };
+
+		  $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+		  $scope.format = $scope.formats[3];
+			
+			
+		//End of Date Picker Code	
+		//Start Time Picker Code
 	
    $scope.myStartTime = new Date();
  	$scope.myEndTime = new Date();
@@ -174,28 +167,27 @@ $scope.find = function(){
 //       $scope.ismeridian = ! $scope.ismeridian;
 //     };
 
-    $scope.update = function() {
-      var d = new Date();
-      d.setHours( 14 );
-      d.setMinutes( 0 );
-      $scope.mytime = d;
-    };
-
+    // $scope.update = function() {
+ //      var d = new Date();
+ //      d.setHours( 14 );
+ //      d.setMinutes( 0 );
+ //      $scope.myStartTime = d;
+ //    };
+ 
+//Why is it -5?
     $scope.changed = function () {
-      console.log('Time changed to: ' + $scope.mytime);
-		console.log('Date d = ' + $scope.dt.getDay());
-		$scope.dateTime = new Date($scope.dt.getFullYear(),$scope.dt.getMonth(),$scope.dt.getDate(),$scope.mytime.getHours(),$scope.mytime.getMinutes());
-		console.log('Object Date= ' + $scope.dateTime);
+		$scope.StartDateTime = new Date($scope.dt.getFullYear(),$scope.dt.getMonth(),$scope.dt.getDate(),$scope.myStartTime.getHours()-5,$scope.myStartTime.getMinutes());
+		$scope.EndDateTime = new Date($scope.dt.getFullYear(),$scope.dt.getMonth(),$scope.dt.getDate(),$scope.myEndTime.getHours()-5,$scope.myEndTime.getMinutes());
+		console.log('Start Hour= ' + $scope.StartDateTime.getHours());
+		console.log('End Hour= ' + $scope.EndDateTime.getHours());
     };
 
     $scope.clear = function() {
-      $scope.mytime = null;
+      $scope.myStartTime = null;
     };
   //End Time Picker Code
 
-    /* Attendance Checking */
-        $scope.membersPresent = 0;
-
+    	/* Attendance Checking */
         $scope.checkMembersPresent = function(isPresent){
             // $log.debug('Committee Members:');
             // $log.debug($scope.members);
@@ -204,13 +196,47 @@ $scope.find = function(){
             // $log.debug(isPresent);
 
             if(isPresent === true){
-                $scope.membersPresent++;
+                $scope.meeting.membersPresent++;
             }
 
             if(isPresent === false){
-                $scope.membersPresent--;
+                $scope.meeting.membersPresent--;
             }
-        };	
-	}
+        };
 
+        $scope.saveAttendance = function() {
+        	var meeting = $scope.meeting ;
+        	var now = new Date();
+
+        	var currentTime = {
+        		'hour' : now.getHours(),
+        		'minutes' : now.getMinutes(),
+        		'seconds' : now.getSeconds()
+        	};
+
+        	if(now.getHours() > 11) {
+                currentTime.hour = currentTime.hour - 12;
+        		currentTime.period = 'pm';
+            }
+        	else
+        		currentTime.period = 'am';
+
+        	if(now.getMinutes() < 10)
+        		currentTime.minutes = '0' + currentTime.minutes;
+
+        	// $scope.saveMessage = 'Attendance last saved at ' + currentTime.hour + ':' + currentTime.minutes + currentTime.period;
+
+			meeting.$update(function() {
+                $scope.saveMessage = 'Attendance last saved at ' + currentTime.hour + ':' + currentTime.minutes + currentTime.period;
+				// $scope.saveMessage = 'Attendance Saved Successfully';
+				// $timeout(function() {
+				// 	$scope.saveMessage = '';
+				// }, 3000);
+			}, function(errorResponse) {
+				$scope.error = errorResponse.data.message;
+			});
+        };
+	// }
+
+	}
 ]);
