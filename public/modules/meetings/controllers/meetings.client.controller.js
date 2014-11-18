@@ -234,7 +234,7 @@ angular.module('meetings').controller('MeetingsController', ['$scope', '$statePa
 			// 	$scope.error = errorResponse.data.message;
 			// });
         };
-	}
+	// }
 
 	}
 ]);
