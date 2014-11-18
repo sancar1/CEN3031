@@ -11,9 +11,9 @@ angular.module('core').service('Roles', ['Authentication', '$filter',
 		var func = {
 			get : function() {
 
-				if($filter('lowercase')(Authentication.user.role) === 'admin')
+				if($filter('lowercase')(authentication.user.role) === 'admin')
 					userRoles.admin = true;
-				if($filter('lowercase')(Authentication.user.role) === 'user')
+				if($filter('lowercase')(authentication.user.role) === 'user')
 					userRoles.user = true;
 
 				return userRoles;
