@@ -1,8 +1,8 @@
 'use strict';
 
 // Meetings controller
-angular.module('meetings').controller('MeetingsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Meetings', '$log',
-	function($scope, $stateParams, $location, Authentication, Meetings, $log) {
+angular.module('meetings').controller('MeetingsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Meetings', '$log', '$timeout',
+	function($scope, $stateParams, $location, Authentication, Meetings, $log, $timeout) {
 		$scope.authentication = Authentication;
 		$scope.dateTime = new Date();
 
@@ -104,7 +104,13 @@ angular.module('meetings').controller('MeetingsController', ['$scope', '$statePa
 				// $log.debug($scope.committee);
 
 				$scope.getNotetaker();
-			//	$scope.getMembers();	
+
+				console.log(typeof $scope.meeting.membersPresent);
+
+				if((typeof $scope.meeting.membersPresent) === 'undefined')
+        			$scope.meeting.membersPresent = 0;
+
+        		console.log(typeof $scope.meeting.membersPresent);
 			});
 		};
 	//Start of Date Picker Code
@@ -182,9 +188,7 @@ angular.module('meetings').controller('MeetingsController', ['$scope', '$statePa
     };
   //End Time Picker Code
 
-    /* Attendance Checking */
-        $scope.membersPresent = 0;
-
+    	/* Attendance Checking */
         $scope.checkMembersPresent = function(isPresent){
             // $log.debug('Committee Members:');
             // $log.debug($scope.members);
@@ -193,13 +197,43 @@ angular.module('meetings').controller('MeetingsController', ['$scope', '$statePa
             // $log.debug(isPresent);
 
             if(isPresent === true){
-                $scope.membersPresent++;
+                $scope.meeting.membersPresent++;
             }
 
             if(isPresent === false){
-                $scope.membersPresent--;
+                $scope.meeting.membersPresent--;
             }
-        };	
+        };
+
+        $scope.saveAttendance = function() {
+        	var meeting = $scope.meeting ;
+        	var currentTime = new Date();
+
+        	var lastUpdate = {
+        		'hour' : currentTime.getHours() % 11,
+        		'minutes' : currentTime.getMinutes(),
+        		'seconds' : currentTime.getSeconds()
+        	};
+
+        	if(currentTime.getHours() > 11)
+        		lastUpdate.period = 'pm';
+        	else
+        		lastUpdate.period = 'am';
+
+        	if(currentTime.getMinutes() < 10)
+        		lastUpdate.minutes = '0' + lastUpdate.minutes;
+
+        	$scope.saveMessage = 'Attendance last saved at ' + lastUpdate.hour + ':' + lastUpdate.minutes + lastUpdate.period;
+
+			// meeting.$update(function() {
+				// $scope.saveMessage = 'Attendance Saved Successfully';
+				// $timeout(function() {
+				// 	$scope.saveMessage = '';
+				// }, 3000);
+			// }, function(errorResponse) {
+			// 	$scope.error = errorResponse.data.message;
+			// });
+        };
 	}
 
 ]);
