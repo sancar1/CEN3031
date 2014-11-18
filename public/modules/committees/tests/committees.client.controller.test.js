@@ -253,5 +253,35 @@
 			expect(committeeScope.committees.length).toBe(0);
 		}));
 
+		it('$scope.addMeeting() should add a meeting to the calendar'), inject(function(Committees, Users){
+			
+			var sampleMeetingPostData = new Meetings.Meetings({
+				name: 'New Meeting'
+			});
+
+			// Create a sample Meeting response
+			var sampleMeetingResponse = new Meetings.Meetings({
+				_id: '525cf20451979dea2c000001',
+				name: 'New Meeting'
+			});
+
+			// Fixture mock form input values
+			scope.name = 'New Meeting';
+
+			// Set POST response
+			$httpBackend.expectPOST('meetings', sampleMeetingPostData).respond(sampleMeetingResponse);
+
+			// Run controller functionality
+			scope.create();
+			$httpBackend.flush();
+
+			// Test form inputs are reset
+			expect(scope.name).toEqual('');
+
+			// Test URL redirection after the Meeting was created
+			expect($location.path()).toBe('/committees/' + sampleMeetingResponse._id + '/meetings');
+
+		}));
+
 	});
 }());
