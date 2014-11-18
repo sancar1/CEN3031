@@ -157,7 +157,7 @@
 			$httpBackend.expectPUT(/committees\/([0-9a-fA-F]{24})$/).respond();
 
 			// Run controller functionality
-			committeeScope.update();
+			committeesScope.update();
 			$httpBackend.flush();
 
 			// Test URL location to new object
@@ -182,7 +182,7 @@
 			});
 
 			// Mock Committee in scope
-			committeeScope.committee = sampleCommitteePutData;
+			committeesScope.committee = sampleCommitteePutData;
 
 			// Set PUT response
 			$httpBackend.expectGET('users').respond();
