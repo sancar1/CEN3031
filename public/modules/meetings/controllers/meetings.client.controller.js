@@ -1,17 +1,15 @@
 'use strict';
 
 // Meetings controller
-angular.module('meetings').controller('MeetingsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Meetings', '$log',
-	function($scope, $stateParams, $location, Authentication, Meetings, $log) {
+angular.module('meetings').controller('MeetingsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Meetings', '$log', '$timeout',
+	function($scope, $stateParams, $location, Authentication, Meetings, $log, $timeout) {
 		$scope.authentication = Authentication;
 		$scope.StartDateTime = new Date();
 		$scope.EndDateTime = new Date();
+
 		// Create new Meeting
 		$scope.create = function() {
 			// Create new Meeting object
-
-
-
 			var meeting = new Meetings.Meetings({
 				name: this.meeting.name,
 				noteTaker: this.noteTaker.id,
@@ -32,15 +30,7 @@ angular.module('meetings').controller('MeetingsController', ['$scope', '$statePa
 				$scope.error = errorResponse.data.message;
 			});
 		};
-		$scope.find = function(){
-			Meetings.List.query({
-					committeeId: $stateParams.committeeId
-				}).$promise.then(function(data) {
-						$scope.meetings = data;
-						console.log($scope.meetings);
-						// $log.info('List of Meetings Loaded');
-					});
-		};
+
 		// Remove existing Meeting
 		$scope.remove = function( meeting ) {
 			if ( meeting ) { meeting.$remove();
@@ -116,7 +106,10 @@ angular.module('meetings').controller('MeetingsController', ['$scope', '$statePa
 				// $log.debug($scope.committee);
 
 				$scope.getNotetaker();
-			//	$scope.getMembers();	
+
+				if((typeof $scope.meeting.membersPresent) === 'undefined')
+        			$scope.meeting.membersPresent = 0;
+
 			});
 		};
 		//Start of Date Picker Code
@@ -195,9 +188,7 @@ angular.module('meetings').controller('MeetingsController', ['$scope', '$statePa
     };
   //End Time Picker Code
 
-    /* Attendance Checking */
-        $scope.membersPresent = 0;
-
+    	/* Attendance Checking */
         $scope.checkMembersPresent = function(isPresent){
             // $log.debug('Committee Members:');
             // $log.debug($scope.members);
@@ -206,13 +197,44 @@ angular.module('meetings').controller('MeetingsController', ['$scope', '$statePa
             // $log.debug(isPresent);
 
             if(isPresent === true){
-                $scope.membersPresent++;
+                $scope.meeting.membersPresent++;
             }
 
             if(isPresent === false){
-                $scope.membersPresent--;
+                $scope.meeting.membersPresent--;
             }
         };
+
+        $scope.saveAttendance = function() {
+        	var meeting = $scope.meeting ;
+        	var now = new Date();
+
+        	var currentTime = {
+        		'hour' : (now.getHours() % 11).toString(),
+        		'minutes' : (now.getMinutes()).toString(),
+        		'seconds' : (now.getSeconds()).toString()
+        	};
+
+        	if(now.getHours() > 11)
+        		currentTime.period = 'pm';
+        	else
+        		currentTime.period = 'am';
+
+        	if(now.getMinutes() < 10)
+        		currentTime.minutes = '0' + currentTime.minutes;
+
+        	$scope.saveMessage = 'Attendance last saved at ' + currentTime.hour + ':' + currentTime.minutes + currentTime.period;
+
+			// meeting.$update(function() {
+				// $scope.saveMessage = 'Attendance Saved Successfully';
+				// $timeout(function() {
+				// 	$scope.saveMessage = '';
+				// }, 3000);
+			// }, function(errorResponse) {
+			// 	$scope.error = errorResponse.data.message;
+			// });
+        };
+	}
 
 	}
 ]);
