@@ -49,9 +49,7 @@ angular.module('meetings').controller('MeetingsController', ['$scope', '$statePa
 
 		// Update existing Meeting
 		$scope.updateMeeting = function() {
-			console.log('here to update');
 			var meeting = $scope.meeting ;
-
 			meeting.$update(function() {
 				$location.path('meetings/' + meeting._id);
 			}, function(errorResponse) {
