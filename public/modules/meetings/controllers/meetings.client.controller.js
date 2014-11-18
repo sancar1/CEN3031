@@ -4,7 +4,8 @@
 angular.module('meetings').controller('MeetingsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Meetings', '$log',
 	function($scope, $stateParams, $location, Authentication, Meetings, $log) {
 		$scope.authentication = Authentication;
-		$scope.dateTime = new Date();
+		$scope.StartDateTime = new Date();
+		$scope.EndDateTime = new Date();
 		// Create new Meeting
 		$scope.create = function() {
 			// Create new Meeting object
@@ -14,8 +15,8 @@ angular.module('meetings').controller('MeetingsController', ['$scope', '$statePa
 			var meeting = new Meetings.Meetings({
 				name: this.meeting.name,
 				noteTaker: this.noteTaker.id,
-				startTime: $scope.dateTime,
-				endTime: new Date(2014,10,25),
+				startTime: $scope.StartDateTime,
+				endTime: $scope.EndDateTime,
 				allDay: false,
 				scheduleById: $scope.committee.schedule
 
@@ -174,22 +175,23 @@ $scope.find = function(){
 //       $scope.ismeridian = ! $scope.ismeridian;
 //     };
 
-    $scope.update = function() {
-      var d = new Date();
-      d.setHours( 14 );
-      d.setMinutes( 0 );
-      $scope.mytime = d;
-    };
-
+    // $scope.update = function() {
+ //      var d = new Date();
+ //      d.setHours( 14 );
+ //      d.setMinutes( 0 );
+ //      $scope.myStartTime = d;
+ //    };
+ 
+//Why is it -5?
     $scope.changed = function () {
-      console.log('Time changed to: ' + $scope.mytime);
-		console.log('Date d = ' + $scope.dt.getDay());
-		$scope.dateTime = new Date($scope.dt.getFullYear(),$scope.dt.getMonth(),$scope.dt.getDate(),$scope.mytime.getHours(),$scope.mytime.getMinutes());
-		console.log('Object Date= ' + $scope.dateTime);
+		$scope.StartDateTime = new Date($scope.dt.getFullYear(),$scope.dt.getMonth(),$scope.dt.getDate(),$scope.myStartTime.getHours()-5,$scope.myStartTime.getMinutes());
+		$scope.EndDateTime = new Date($scope.dt.getFullYear(),$scope.dt.getMonth(),$scope.dt.getDate(),$scope.myEndTime.getHours()-5,$scope.myEndTime.getMinutes());
+		console.log('Start Hour= ' + $scope.StartDateTime.getHours());
+		console.log('End Hour= ' + $scope.EndDateTime.getHours());
     };
 
     $scope.clear = function() {
-      $scope.mytime = null;
+      $scope.myStartTime = null;
     };
   //End Time Picker Code
 
