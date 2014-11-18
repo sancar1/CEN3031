@@ -50,7 +50,7 @@ angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParam
 		// Update existing Committee
 		$scope.update = function() {
 			var committee = $scope.committee ;
-
+			console.log('here to update');
 			committee.$update(function() {
 				$location.path('committees/' + committee._id+'/edit');
 			}, function(errorResponse) {
@@ -141,24 +141,24 @@ angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParam
 			});
 		};
 
-		/* Attendance Checking */
-		$scope.membersPresent = 0;
+		// /* Attendance Checking */
+		// $scope.membersPresent = 0;
 
-		$scope.checkMembersPresent = function(isChecked){
-			// $log.debug('Committee Members:');
-			// $log.debug($scope.members);
+		// $scope.checkMembersPresent = function(isPresent){
+		// 	// $log.debug('Committee Members:');
+		// 	// $log.debug($scope.members);
 
-			// $log.debug('isChecked:');
-			// $log.debug(isChecked);
+		// 	// $log.debug('isPresent:');
+		// 	// $log.debug(isPresent);
 
-			if(isChecked === true){
-				$scope.membersPresent++;
-			}
+		// 	if(isPresent === true){
+		// 		$scope.membersPresent++;
+		// 	}
 
-			if(isChecked === false){
-				$scope.membersPresent--;
-			}
-		};
+		// 	if(isPresent === false){
+		// 		$scope.membersPresent--;
+		// 	}
+		// };
 
 		$scope.findSchedule = function() {
 
@@ -168,8 +168,11 @@ angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParam
 				$log.debug('$scope.schedule set with data from findSchedule function:');
 				$log.debug(data);
 				$scope.schedule = data;
-				$scope.eventSources.push(data.events);
-			  	$scope.eventSources.push([data.events]);
+				//$scope.eventSources.push(data.events);
+				$scope.eventSources.pop();
+			  	$scope.eventSources.push(data.events);
+				console.log(data.events);
+				
 
 			});
 

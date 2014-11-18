@@ -31,23 +31,22 @@ var smtpTransport = nodemailer.createTransport('SMTP', {
 exports.create = function(req, res) {
 	var pass = req.committee;
 	var committee = new Committee(req.body);
+	var chair;
 	committee.user = req.user;
-
-console.log(req.body.chair);
-
 async.waterfall([
 		function(done){
+			console.log('Find committee: ');
 			committee.save(function(err) {
 				if (err) {
 					return res.status(400).send({
 						message: errorHandler.getErrorMessage(err)
 					});
 				} else {
-					done(err,committee);
+					done(null,committee);
 				}
 			});
-		},
-		function(committee, done){
+		},function(committee, done){
+			console.log('Find chair: ');
 			User.find({'_id': req.body.chair},function(err, user){
 				if(err){
 					return res.status(401).send({
@@ -56,23 +55,24 @@ async.waterfall([
 				}
 				else{
 					console.log(user);
-					done(err,user[0]);
+					chair = user[0];
+					done(null,chair);
 				}
 			});
 		},
-		function(user, done) {
+		function(chair, done) {
 			res.render('templates/add-as-chair', {
-				name: user.displayName,
+				name: chair.displayName,
 				committee: req.body.name,
 				appName: config.app.title
 			}, function(err, emailHTML) {
-				done(err, emailHTML, user);
+				done(err, emailHTML, chair);
 			});
 		},
 		// If valid email, send reset email using service
-		function(emailHTML, user, done) {
+		function(emailHTML, chair, done) {
 			var mailOptions = {
-				to: user.email,
+				to: chair.email,
 				from: config.mailer.from,
 				subject: 'Added as chair of a committee',
 				html: emailHTML
@@ -163,24 +163,6 @@ exports.getMembers = function(req, res) {
 		}
 	});
 };
-
-/**
- * List of Meetings
- */
-exports.getMeetings = function(req, res){
-	var committee = req.committee;
-
-	User.find({'_id':{$in: committee.meetings}}).exec(function(err, meetings) {
-		if (err) {
-			return res.status(400).send({
-				message: errorHandler.getErrorMessage(err)
-			});
-		} else {
-			res.jsonp(meetings);
-		}
-	});
-};
-
 /**
  * Add Committee Member
  */
@@ -593,7 +575,7 @@ exports.removeChair = function(req, res) {
 /**
  * Committee middleware
  */
-exports.committeeByID = function(req, res, next, id) { Committee.findById(id).populate('user', 'displayName').exec(function(err, committee) {
+exports.committeeByID = function(req, res, next, id) { Committee.findById(id).exec(function(err, committee) {
 		if (err) return next(err);
 		if (! committee) return next(new Error('Failed to load Committee ' + id));
 		req.committee = committee ;

@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = {
-	db: 'mongodb://dev:dev@ds035250.mongolab.com:35250/dev',
+	db: 'mongodb://cen3031:cen3031@dogen.mongohq.com:10080/CEN3031',
 	app: {
 		title: 'CACTUS Committee Manager - Development Environment'
 	},

@@ -17,7 +17,7 @@ var ScheduleSchema = new Schema({
 		trim: true
 	},
 	events:[
-      {startTime: Date,endTime: Date,allDay: Boolean, meeting: String}
+      {title:String,start: Date,end: Date,allDay: Boolean, meeting: String}
 	]
 });
 

@@ -1,18 +1,21 @@
 'use strict';
 
 // Meetings controller
-angular.module('meetings').controller('MeetingsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Meetings',
-	function($scope, $stateParams, $location, Authentication, Meetings ) {
+angular.module('meetings').controller('MeetingsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Meetings', '$log',
+	function($scope, $stateParams, $location, Authentication, Meetings, $log) {
 		$scope.authentication = Authentication;
-
+		$scope.dateTime = new Date();
 		// Create new Meeting
 		$scope.create = function() {
 			// Create new Meeting object
-			var meeting = new Meetings.Meetings ({
+
+
+
+			var meeting = new Meetings.Meetings({
 				name: this.meeting.name,
 				noteTaker: this.noteTaker.id,
-				startTime: new Date(2014,11,23),
-				endTime: new Date(2014,11,25),
+				startTime: $scope.dateTime,
+				endTime: new Date(2014,10,25),
 				allDay: false,
 				scheduleById: $scope.committee.schedule
 
@@ -20,7 +23,7 @@ angular.module('meetings').controller('MeetingsController', ['$scope', '$statePa
 
 			// Redirect after save
 			meeting.$save(function(response) {
-				$location.path('meetings/' + response._id);
+				$location.path('committees/' + $stateParams.committeeId + '/meetings/' + response._id);
 
 				// Clear form fields
 				$scope.name = '';
@@ -28,7 +31,15 @@ angular.module('meetings').controller('MeetingsController', ['$scope', '$statePa
 				$scope.error = errorResponse.data.message;
 			});
 		};
-
+$scope.find = function(){
+	Meetings.List.query({
+			committeeId: $stateParams.committeeId
+		}).$promise.then(function(data) {
+				$scope.meetings = data;
+				console.log($scope.meetings);
+				// $log.info('List of Meetings Loaded');
+			});
+};
 		// Remove existing Meeting
 		$scope.remove = function( meeting ) {
 			if ( meeting ) { meeting.$remove();
@@ -47,6 +58,7 @@ angular.module('meetings').controller('MeetingsController', ['$scope', '$statePa
 
 		// Update existing Meeting
 		$scope.update = function() {
+			console.log('here to update');
 			var meeting = $scope.meeting ;
 
 			meeting.$update(function() {
@@ -58,10 +70,11 @@ angular.module('meetings').controller('MeetingsController', ['$scope', '$statePa
 
 		// Update existing Meeting
 		$scope.getNotetaker = function() {
-			var meetingById = $scope.meeting._id;
+			var userById = $scope.meeting.noteTaker;
+			console.log('userId: '+userById);
 			//console.log('beforecall');
 			//console.log($scope.meeting);
-			Meetings.NoteTaker.get({meetingId: meetingById}).$promise.then(function(data){
+			Meetings.NoteTaker.get({meetingId: $scope.meeting._id, userId: userById, committeeId: $stateParams.committeeId}).$promise.then(function(data){
 				//console.log('inside');
 				//console.log(data);
 				$scope.noteTaker = data;
@@ -89,18 +102,15 @@ angular.module('meetings').controller('MeetingsController', ['$scope', '$statePa
 				
 		};
 
-		// Find a list of Meetings
-		$scope.find = function() {
-			$scope.meetings = Meetings.Meetings.query();
-		};
-
 		// Find existing Meeting
 		$scope.findOne = function() {
-			Meetings.Meetings.get({ 
-				meetingId: $stateParams.meetingId
+			console.log('in findOne for meeting');
+			Meetings.Meeting.get({ 
+				meetingId: $stateParams.meetingId,
+				committeeId: $stateParams.committeeId
 			}).$promise.then(function(data) {
 				$scope.meeting = data;
-				
+				console.log('data: '+data);
 				// $log.debug('$scope.committee: ');
 				// $log.debug($scope.committee);
 
@@ -173,14 +183,34 @@ angular.module('meetings').controller('MeetingsController', ['$scope', '$statePa
 
     $scope.changed = function () {
       console.log('Time changed to: ' + $scope.mytime);
+		console.log('Date d = ' + $scope.dt.getDay());
+		$scope.dateTime = new Date($scope.dt.getFullYear(),$scope.dt.getMonth(),$scope.dt.getDate(),$scope.mytime.getHours(),$scope.mytime.getMinutes());
+		console.log('Object Date= ' + $scope.dateTime);
     };
 
     $scope.clear = function() {
       $scope.mytime = null;
     };
   //End Time Picker Code
-	
-	
-	
+
+    /* Attendance Checking */
+        $scope.membersPresent = 0;
+
+        $scope.checkMembersPresent = function(isPresent){
+            // $log.debug('Committee Members:');
+            // $log.debug($scope.members);
+
+            // $log.debug('isPresent:');
+            // $log.debug(isPresent);
+
+            if(isPresent === true){
+                $scope.membersPresent++;
+            }
+
+            if(isPresent === false){
+                $scope.membersPresent--;
+            }
+        };	
 	}
+
 ]);

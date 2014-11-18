@@ -8,6 +8,7 @@ var mongoose = require('mongoose'),
 	User = mongoose.model('User'),
 	Meeting = mongoose.model('Meeting'),
 	Schedule = mongoose.model('Schedule'),
+	Committee = mongoose.model('Committee'),
 	async = require('async'),
 	_ = require('lodash');
 
@@ -30,8 +31,9 @@ async.waterfall([
 			});
 		},function(done){
 			var newEvent = {
-				startTime: req.body.startTime,
-				endTime: req.body.endTime,
+				title: req.body.name,
+				start: req.body.startTime,
+				end: req.body.endTime,
 				allDay: req.body.allDay,
 				meeting: meeting._id
 			};
@@ -96,9 +98,17 @@ async.waterfall([
  * Show the current Meeting
  */
 exports.read = function(req, res) {
-	res.jsonp(req.meeting);
+	Meeting.find({'_id': req.meeting._id}).exec(function(err, meeting) {
+				if (err) {
+					console.log(err);
+					return res.status(400).send({
+						message: errorHandler.getErrorMessage(err)
+					});
+				} else {
+					res.jsonp(meeting[0]);
+				}
+			});
 };
-
 /**
  * Update a Meeting
  */
@@ -140,7 +150,8 @@ exports.delete = function(req, res) {
  */
 exports.getNotetaker = function(req, res) {
 	console.log('here in getNotetaker');
-	var noteTakerById = req.meeting.noteTaker;
+	var temp = req.meeting.noteTaker;
+	var noteTakerById = mongoose.Types.ObjectId(temp);
 
 	User.find({'_id': noteTakerById}).exec(function(err, noteTaker) {
 		if (err) {
@@ -192,30 +203,64 @@ exports.removeNotetaker = function(req, res) {
  * List of Meetings
  */
 exports.list = function(req, res) { 
-
-	/*
-	get meeting ids from schedule
-	*/
-
-	/*
-		return meetings
-	*/
-	Meeting.find().sort('-created').populate('user', 'displayName').exec(function(err, meetings) {
-		if (err) {
-			return res.status(400).send({
-				message: errorHandler.getErrorMessage(err)
+	//var committeeById = req.body.committee._id;
+	var committeeById = req.params.committeeId;
+	async.waterfall([
+		//Find the committee
+		function(done){
+			Committee.find({'_id': committeeById}).exec(function(err, committee) {
+				if (err) {
+					return res.status(400).send({
+						message: errorHandler.getErrorMessage(err)
+					});
+				} 
+				else{
+					done(null,committee[0]);
+				}
 			});
-		} else {
-			res.jsonp(meetings);
+		},function(committee, done){
+			var scheduleById = committee.schedule;
+			Schedule.find({'_id': scheduleById}).exec(function(err, schedule){
+				if(err){
+					return res.status(401).send({
+						message: errorHandler.getErrorMessage(err)
+					});
+				}
+				else{
+					done(null, schedule[0]);
+				}
+			});
+		},function(schedule, done){
+			var meetings = [];
+			console.log(schedule.events.length);
+			for(var i = 0; i < schedule.events.length; i++){
+				var temp = schedule.events[i].meeting;
+				meetings[i] = mongoose.Types.ObjectId(temp);
+			}
+			Meeting.find({'_id':{$in: meetings}}).exec(function(err, meetings) {
+				if (err) {
+					console.log(err);
+					return res.status(400).send({
+						message: errorHandler.getErrorMessage(err)
+					});
+				} else {
+					res.jsonp(meetings);
+				}
+			});
 		}
-	});
+		],function(err){
+			if(err){
+				console.log(err);
+			}
+		}
+	);
 };
 
 /**
  * Meeting middleware
  */
 exports.meetingByID = function(req, res, next, id) { 
-	Meeting.findById(id).populate('user', 'displayName').exec(function(err, meeting) {
+	Meeting.findById(id).exec(function(err, meeting) {
 		if (err) return next(err);
 		if (! meeting) return next(new Error('Failed to load Meeting ' + id));
 		req.meeting = meeting ;

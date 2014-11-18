@@ -3,7 +3,17 @@
 angular.module('core').controller('CommitteesCtrl', ['$scope', '$log', '$q', '$stateParams', '$location', '$filter', 'Authentication', 'Committees', 'Users', 'Roles',
 	function($scope, $log, $q, $stateParams, $location, $filter, Authentication, Committees, Users, Roles) {
 		// Redirect to home page if logged in
-		if(Authentication.user) $location.path('/');
+		if(Authentication.user) {
+			if($location.path() === '/prelogin') {
+				$location.path('/');
+			}
+			else if ($location.path() === null) {
+				$location.path('/');
+			}
+			else if ($location.path() === '') {
+				$location.path('/');
+			}
+		}
 
 		// This provides Authentication context.
 		$scope.authentication = Authentication;
