@@ -105,12 +105,9 @@ angular.module('meetings').controller('MeetingsController', ['$scope', '$statePa
 
 				$scope.getNotetaker();
 
-				console.log(typeof $scope.meeting.membersPresent);
-
 				if((typeof $scope.meeting.membersPresent) === 'undefined')
         			$scope.meeting.membersPresent = 0;
 
-        		console.log(typeof $scope.meeting.membersPresent);
 			});
 		};
 	//Start of Date Picker Code
@@ -207,23 +204,23 @@ angular.module('meetings').controller('MeetingsController', ['$scope', '$statePa
 
         $scope.saveAttendance = function() {
         	var meeting = $scope.meeting ;
-        	var currentTime = new Date();
+        	var now = new Date();
 
-        	var lastUpdate = {
-        		'hour' : currentTime.getHours() % 11,
-        		'minutes' : currentTime.getMinutes(),
-        		'seconds' : currentTime.getSeconds()
+        	var currentTime = {
+        		'hour' : (now.getHours() % 11).toString(),
+        		'minutes' : (now.getMinutes()).toString(),
+        		'seconds' : (now.getSeconds()).toString()
         	};
 
-        	if(currentTime.getHours() > 11)
-        		lastUpdate.period = 'pm';
+        	if(now.getHours() > 11)
+        		currentTime.period = 'pm';
         	else
-        		lastUpdate.period = 'am';
+        		currentTime.period = 'am';
 
-        	if(currentTime.getMinutes() < 10)
-        		lastUpdate.minutes = '0' + lastUpdate.minutes;
+        	if(now.getMinutes() < 10)
+        		currentTime.minutes = '0' + currentTime.minutes;
 
-        	$scope.saveMessage = 'Attendance last saved at ' + lastUpdate.hour + ':' + lastUpdate.minutes + lastUpdate.period;
+        	$scope.saveMessage = 'Attendance last saved at ' + currentTime.hour + ':' + currentTime.minutes + currentTime.period;
 
 			// meeting.$update(function() {
 				// $scope.saveMessage = 'Attendance Saved Successfully';
