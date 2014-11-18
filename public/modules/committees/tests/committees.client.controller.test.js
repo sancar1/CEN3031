@@ -253,7 +253,7 @@
 			expect(committeeScope.committees.length).toBe(0);
 		}));
 
-		it('$scope.addMeeting() should add a meeting to the calendar'), inject(function(Committees, Users){
+		/*it('$scope.addMeeting() should add a meeting to the calendar'), inject(function(Committees, Users){
 			
 			var sampleMeetingPostData = new Meetings.Meetings({
 				name: 'New Meeting'
@@ -281,7 +281,7 @@
 			// Test URL redirection after the Meeting was created
 			expect($location.path()).toBe('/committees/' + sampleMeetingResponse._id + '/meetings');
 
-		}));
+		}));*/
 
 	});
 }());
