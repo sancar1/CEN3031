@@ -27,7 +27,11 @@
 				</div>
 				<div class="form-group">
 					<label for="role">Role</label>
-					<input type="text" id="role" name="role" class="form-control" data-ng-model="credentials.role" placeholder="Role">
+					<select id="role" name="role" class="form-control" data-ng-model="credentials.role" placeholder="Role">
+						<option value="Admin">Admin</option>
+						<option value="Staff">Staff</option>
+						<option value="Faculty">Faculty</option>
+					</select>
 				</div>
 				<div class="form-group">
 					<label for="password">Password</label>

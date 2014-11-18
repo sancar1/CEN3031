@@ -4,7 +4,8 @@
 angular.module('meetings').controller('MeetingsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Meetings', '$log',
 	function($scope, $stateParams, $location, Authentication, Meetings, $log) {
 		$scope.authentication = Authentication;
-		$scope.dateTime = new Date();
+		$scope.StartDateTime = new Date();
+		$scope.EndDateTime = new Date();
 		// Create new Meeting
 		$scope.create = function() {
 			// Create new Meeting object
@@ -14,8 +15,8 @@ angular.module('meetings').controller('MeetingsController', ['$scope', '$statePa
 			var meeting = new Meetings.Meetings({
 				name: this.meeting.name,
 				noteTaker: this.noteTaker.id,
-				startTime: $scope.dateTime,
-				endTime: new Date(2014,10,25),
+				startTime: $scope.StartDateTime,
+				endTime: $scope.EndDateTime,
 				allDay: false,
 				scheduleById: $scope.committee.schedule
 
@@ -159,6 +160,7 @@ angular.module('meetings').controller('MeetingsController', ['$scope', '$statePa
 		//End of Date Picker Code	
 		//Start Time Picker Code
 		
+<<<<<<< HEAD
 	   $scope.myStartTime = new Date();
 	 	$scope.myEndTime = new Date();
 	    $scope.hstep = 1;
@@ -192,6 +194,45 @@ angular.module('meetings').controller('MeetingsController', ['$scope', '$statePa
 	      $scope.mytime = null;
 	    };
 	  //End Time Picker Code
+=======
+	//End of Date Picker Code	
+	//Start Time Picker Code
+	
+   $scope.myStartTime = new Date();
+ 	$scope.myEndTime = new Date();
+    $scope.hstep = 1;
+    $scope.mstep = 15;
+
+    // $scope.options = {
+//       hstep: [1, 2, 3],
+//       mstep: [1, 5, 10, 15, 25, 30]
+//     };
+
+    $scope.ismeridian = true;
+    // $scope.toggleMode = function() {
+//       $scope.ismeridian = ! $scope.ismeridian;
+//     };
+
+    // $scope.update = function() {
+ //      var d = new Date();
+ //      d.setHours( 14 );
+ //      d.setMinutes( 0 );
+ //      $scope.myStartTime = d;
+ //    };
+ 
+//Why is it -5?
+    $scope.changed = function () {
+		$scope.StartDateTime = new Date($scope.dt.getFullYear(),$scope.dt.getMonth(),$scope.dt.getDate(),$scope.myStartTime.getHours()-5,$scope.myStartTime.getMinutes());
+		$scope.EndDateTime = new Date($scope.dt.getFullYear(),$scope.dt.getMonth(),$scope.dt.getDate(),$scope.myEndTime.getHours()-5,$scope.myEndTime.getMinutes());
+		console.log('Start Hour= ' + $scope.StartDateTime.getHours());
+		console.log('End Hour= ' + $scope.EndDateTime.getHours());
+    };
+
+    $scope.clear = function() {
+      $scope.myStartTime = null;
+    };
+  //End Time Picker Code
+>>>>>>> 486b09cafdb79e1322bf308e18a87fafe2560360
 
     /* Attendance Checking */
         $scope.membersPresent = 0;
