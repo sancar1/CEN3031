@@ -148,6 +148,18 @@ async.waterfall([
 				} 
 				else{
 					done(null);
+				}
+			});
+		},
+		function(done){
+			Meeting.update({'_id': meeting._id},{'noteTaker': meeting.noteTaker}).exec(function(err) {
+				if (err) {
+					return res.status(400).send({
+						message: errorHandler.getErrorMessage(err)
+					});
+				} 
+				else{
+					done(null);
 					res.jsonp();
 				}
 			});
