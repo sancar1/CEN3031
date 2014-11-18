@@ -209,29 +209,32 @@ angular.module('meetings').controller('MeetingsController', ['$scope', '$statePa
         	var now = new Date();
 
         	var currentTime = {
-        		'hour' : (now.getHours() % 11).toString(),
-        		'minutes' : (now.getMinutes()).toString(),
-        		'seconds' : (now.getSeconds()).toString()
+        		'hour' : now.getHours(),
+        		'minutes' : now.getMinutes(),
+        		'seconds' : now.getSeconds()
         	};
 
-        	if(now.getHours() > 11)
+        	if(now.getHours() > 11) {
+                currentTime.hour = currentTime.hour - 12;
         		currentTime.period = 'pm';
+            }
         	else
         		currentTime.period = 'am';
 
         	if(now.getMinutes() < 10)
         		currentTime.minutes = '0' + currentTime.minutes;
 
-        	$scope.saveMessage = 'Attendance last saved at ' + currentTime.hour + ':' + currentTime.minutes + currentTime.period;
+        	// $scope.saveMessage = 'Attendance last saved at ' + currentTime.hour + ':' + currentTime.minutes + currentTime.period;
 
-			// meeting.$update(function() {
+			meeting.$update(function() {
+                $scope.saveMessage = 'Attendance last saved at ' + currentTime.hour + ':' + currentTime.minutes + currentTime.period;
 				// $scope.saveMessage = 'Attendance Saved Successfully';
 				// $timeout(function() {
 				// 	$scope.saveMessage = '';
 				// }, 3000);
-			// }, function(errorResponse) {
-			// 	$scope.error = errorResponse.data.message;
-			// });
+			}, function(errorResponse) {
+				$scope.error = errorResponse.data.message;
+			});
         };
 	// }
 
