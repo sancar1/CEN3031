@@ -101,7 +101,7 @@
 			//$httpBackend.expectGET('committees/'+$stateParams.committeeId).respond(sampleCommittee);
 
 			// Run controller functionality
-			committeeScope.findOne();
+			//committeeScope.findOne();
 			$httpBackend.flush();
 
 			// Test scope value
