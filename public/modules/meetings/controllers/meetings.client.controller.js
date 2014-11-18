@@ -58,6 +58,7 @@ $scope.find = function(){
 
 		// Update existing Meeting
 		$scope.update = function() {
+			console.log('here to update');
 			var meeting = $scope.meeting ;
 
 			meeting.$update(function() {

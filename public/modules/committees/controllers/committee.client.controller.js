@@ -50,7 +50,7 @@ angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParam
 		// Update existing Committee
 		$scope.update = function() {
 			var committee = $scope.committee ;
-
+			console.log('here to update');
 			committee.$update(function() {
 				$location.path('committees/' + committee._id+'/edit');
 			}, function(errorResponse) {
