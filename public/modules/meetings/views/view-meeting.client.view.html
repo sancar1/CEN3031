@@ -48,26 +48,26 @@
 				</div>
 			</div>
 	   	</div>
-
-		<form name="meetingForm" class="form-horizontal" data-ng-submit="update(meetingForm.$valid)" novalidate>
-			<fieldset>
-				<div ng-class="{ 'has-error' : submitted && meetingForm.notes.$invalid}">
-					<label class="control-label" for="notes">Notes</label>
-					<div class="controls">
-						<textarea name="notes" data-ng-model="meeting.notes" id="notes" class="form-control" cols="30" rows="10" placeholder="Notes" required></textarea>
+	   	<div>
+			<form name="meetingForm" class="form-horizontal" data-ng-submit="updateMeeting(meetingForm.$valid)" novalidate>
+				<fieldset>
+					<div ng-class="{ 'has-error' : submitted && meetingForm.notes.$invalid}">
+						<label class="control-label" for="notes">Notes</label>
+						<div class="controls">
+							<textarea name="notes" data-ng-model="meeting.notes" id="notes" class="form-control" cols="30" rows="10" placeholder="Notes" required></textarea>
+						</div>
+						<div ng-show="submitted && meetingForm.notes.$invalid" class="help-block">
+							<p ng-show="meetingForm.notes.$error.required" class="text-danger">Content is required</p>
+						</div>
 					</div>
-					<div ng-show="submitted &&meetingForm.notes.$invalid" class="help-block">
-						<p ng-show="meetingForm.notes.$error.required" class="text-danger">Content is required</p>
+					<div class="form-group">
+						<input type="submit" value="Update" class="btn btn-default">
 					</div>
-				</div>
-				<div class="submitButton">
-					<input type="submit" value="Update" class="btn btn-default">
-				</div>
-				<div data-ng-show="error" class="text-danger">
-					<strong data-ng-bind="error"></strong>
-				</div>
-			</fieldset>
-		</form>
-
+					<div data-ng-show="error" class="text-danger">
+						<strong data-ng-bind="error"></strong>
+					</div>
+				</fieldset>
+			</form>
+		</div>
 	</section>
 </section>

@@ -31,15 +31,15 @@ angular.module('meetings').controller('MeetingsController', ['$scope', '$statePa
 				$scope.error = errorResponse.data.message;
 			});
 		};
-$scope.find = function(){
-	Meetings.List.query({
-			committeeId: $stateParams.committeeId
-		}).$promise.then(function(data) {
-				$scope.meetings = data;
-				console.log($scope.meetings);
-				// $log.info('List of Meetings Loaded');
-			});
-};
+		$scope.find = function(){
+			Meetings.List.query({
+					committeeId: $stateParams.committeeId
+				}).$promise.then(function(data) {
+						$scope.meetings = data;
+						console.log($scope.meetings);
+						// $log.info('List of Meetings Loaded');
+					});
+		};
 		// Remove existing Meeting
 		$scope.remove = function( meeting ) {
 			if ( meeting ) { meeting.$remove();
@@ -57,7 +57,7 @@ $scope.find = function(){
 		};
 
 		// Update existing Meeting
-		$scope.update = function() {
+		$scope.updateMeeting = function() {
 			console.log('here to update');
 			var meeting = $scope.meeting ;
 
@@ -118,80 +118,80 @@ $scope.find = function(){
 			//	$scope.getMembers();	
 			});
 		};
-	//Start of Date Picker Code
-	
-	
-	$scope.today = function() {
-	    $scope.dt = new Date();
-	  };
-	  $scope.today();
-
-	  $scope.clear = function () {
-	    $scope.dt = null;
-	  };
-
-	  // Disable weekend selection
-	  // $scope.disabled = function(date, mode) {
- // 	    return ( mode === 'day' && ( date.getDay() === 0 || date.getDay() === 6 ) );
- // 	  };
-
-	  $scope.toggleMin = function() {
-	    $scope.minDate = $scope.minDate ? null : new Date();
-	  };
-	  $scope.toggleMin();
-
-	  $scope.open = function($event) {
-	    $event.preventDefault();
-	    $event.stopPropagation();
-
-	    $scope.opened = true;
-	  };
-
-	  $scope.dateOptions = {
-	    formatYear: 'yy',
-	    startingDay: 1
-	  };
-
-	  $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
-	  $scope.format = $scope.formats[3];
+		//Start of Date Picker Code
 		
 		
-	//End of Date Picker Code	
-	//Start Time Picker Code
-	
-   $scope.myStartTime = new Date();
- 	$scope.myEndTime = new Date();
-    $scope.hstep = 1;
-    $scope.mstep = 15;
+		$scope.today = function() {
+		    $scope.dt = new Date();
+		  };
+		  $scope.today();
 
-    // $scope.options = {
-//       hstep: [1, 2, 3],
-//       mstep: [1, 5, 10, 15, 25, 30]
-//     };
+		  $scope.clear = function () {
+		    $scope.dt = null;
+		  };
 
-    $scope.ismeridian = true;
-    // $scope.toggleMode = function() {
-//       $scope.ismeridian = ! $scope.ismeridian;
-//     };
+		  // Disable weekend selection
+		  // $scope.disabled = function(date, mode) {
+	 // 	    return ( mode === 'day' && ( date.getDay() === 0 || date.getDay() === 6 ) );
+	 // 	  };
 
-    $scope.update = function() {
-      var d = new Date();
-      d.setHours( 14 );
-      d.setMinutes( 0 );
-      $scope.mytime = d;
-    };
+		  $scope.toggleMin = function() {
+		    $scope.minDate = $scope.minDate ? null : new Date();
+		  };
+		  $scope.toggleMin();
 
-    $scope.changed = function () {
-      console.log('Time changed to: ' + $scope.mytime);
-		console.log('Date d = ' + $scope.dt.getDay());
-		$scope.dateTime = new Date($scope.dt.getFullYear(),$scope.dt.getMonth(),$scope.dt.getDate(),$scope.mytime.getHours(),$scope.mytime.getMinutes());
-		console.log('Object Date= ' + $scope.dateTime);
-    };
+		  $scope.open = function($event) {
+		    $event.preventDefault();
+		    $event.stopPropagation();
 
-    $scope.clear = function() {
-      $scope.mytime = null;
-    };
-  //End Time Picker Code
+		    $scope.opened = true;
+		  };
+
+		  $scope.dateOptions = {
+		    formatYear: 'yy',
+		    startingDay: 1
+		  };
+
+		  $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+		  $scope.format = $scope.formats[3];
+			
+			
+		//End of Date Picker Code	
+		//Start Time Picker Code
+		
+	   $scope.myStartTime = new Date();
+	 	$scope.myEndTime = new Date();
+	    $scope.hstep = 1;
+	    $scope.mstep = 15;
+
+	    // $scope.options = {
+	//       hstep: [1, 2, 3],
+	//       mstep: [1, 5, 10, 15, 25, 30]
+	//     };
+
+	    $scope.ismeridian = true;
+	    // $scope.toggleMode = function() {
+	//       $scope.ismeridian = ! $scope.ismeridian;
+	//     };
+
+	    $scope.update = function() {
+	      var d = new Date();
+	      d.setHours( 14 );
+	      d.setMinutes( 0 );
+	      $scope.mytime = d;
+	    };
+
+	    $scope.changed = function () {
+	      console.log('Time changed to: ' + $scope.mytime);
+			console.log('Date d = ' + $scope.dt.getDay());
+			$scope.dateTime = new Date($scope.dt.getFullYear(),$scope.dt.getMonth(),$scope.dt.getDate(),$scope.mytime.getHours(),$scope.mytime.getMinutes());
+			console.log('Object Date= ' + $scope.dateTime);
+	    };
+
+	    $scope.clear = function() {
+	      $scope.mytime = null;
+	    };
+	  //End Time Picker Code
 
     /* Attendance Checking */
         $scope.membersPresent = 0;
@@ -210,7 +210,7 @@ $scope.find = function(){
             if(isPresent === false){
                 $scope.membersPresent--;
             }
-        };	
-	}
+        };
 
+	}
 ]);
