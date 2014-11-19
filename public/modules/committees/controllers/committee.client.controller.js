@@ -1,8 +1,8 @@
 'use strict';
 
 // Committees controller
-angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParams', '$location', 'Authentication', 'Users', 'Committees', '$q', '$log', 'Schedules', 'Roles', 'Meetings', '$state',
-	function($scope, $stateParams, $location, Authentication, Users, Committees, $q, $log, Schedules, Roles, Meetings, $state) {
+angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParams', '$location', 'Committees', '$log', 'Schedules', 'Roles', 'Meetings', '$state',
+	function($scope, $stateParams, $location, Committees, $log, Schedules, Roles, Meetings, $state) {
 
 		// $log.debug('Entered CommitteeCtrl');
 		
