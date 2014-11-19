@@ -32,6 +32,13 @@ describe('Schedule Model Unit Tests:', function() {
 				name: 'Schedule Name',
 				user: user
 			});
+			
+			schedule = new Schedule({
+				name: 'TestSchedule',
+				events: [
+					{title:'Event1',start: new Date(2014,10,11),end: new Date(2014,10,12),allDay: false, meeting: '12345'}
+				]
+			});
 
 			done();
 		});
@@ -50,6 +57,35 @@ describe('Schedule Model Unit Tests:', function() {
 
 			return schedule.save(function(err) {
 				should.exist(err);
+				done();
+			});
+		});
+	});
+	
+	describe('Method Put', function() {
+		it('should be able to add new events', function(done) {
+			schedule.events.push({title:'Event2',start: new Date(2014,10,11),end: new Date(2014,10,12),allDay: false, meeting: '12345'})
+			return schedule.save(function(err) {
+				should.not.exist(err);
+				done();
+			});
+		});
+		
+		
+		it('When adding events, must be through pushing object to array', function(done) {
+			schedule.events = "fail";
+			return schedule.save(function(err) {
+				should.exist(err);
+				done();
+			});
+		});
+		
+	});
+	
+	describe('Method Find', function() {
+		it('should be able to find schedule by name', function(done) {
+			return Schedule.find(function(err) {
+				should.not.exist(err);
 				done();
 			});
 		});
