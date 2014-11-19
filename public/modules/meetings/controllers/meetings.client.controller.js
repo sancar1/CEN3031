@@ -1,8 +1,8 @@
 'use strict';
 
 // Meetings controller
-angular.module('meetings').controller('MeetingsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Meetings', '$log', '$timeout',
-	function($scope, $stateParams, $location, Authentication, Meetings, $log, $timeout) {
+angular.module('meetings').controller('MeetingsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Meetings', '$log', '$timeout', '$state',
+	function($scope, $stateParams, $location, Authentication, Meetings, $log, $timeout, $state) {
 		$scope.authentication = Authentication;
 		$scope.StartDateTime = new Date();
 		$scope.EndDateTime = new Date();
@@ -52,7 +52,8 @@ angular.module('meetings').controller('MeetingsController', ['$scope', '$statePa
 			var meeting = $scope.meeting ;
 			console.log(meeting);
 			meeting.$update(function() {
-				$location.path('meetings/' + meeting._id);
+				$location.path('committees/' + $stateParams.committeeId + '/meetings/' + meeting._id);
+				$state.reload();
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
 			});

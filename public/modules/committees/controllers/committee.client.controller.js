@@ -1,8 +1,8 @@
 'use strict';
 
 // Committees controller
-angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParams', '$location', 'Authentication', 'Users', 'Committees', '$q', '$log', 'Schedules', 'Roles', 'Meetings',
-	function($scope, $stateParams, $location, Authentication, Users, Committees, $q, $log, Schedules, Roles, Meetings) {
+angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParams', '$location', 'Authentication', 'Users', 'Committees', '$q', '$log', 'Schedules', 'Roles', 'Meetings', '$state',
+	function($scope, $stateParams, $location, Authentication, Users, Committees, $q, $log, Schedules, Roles, Meetings, $state) {
 
 		// $log.debug('Entered CommitteeCtrl');
 		
@@ -54,6 +54,7 @@ angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParam
 			console.log('here to update');
 			committee.$update(function() {
 				$location.path('committees/' + committee._id+'/edit');
+				$state.reload();
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
 			});
