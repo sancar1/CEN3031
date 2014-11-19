@@ -21,12 +21,13 @@ var MeetingSchema = new Schema({
 		default: '',
 		trim: true
 	},
-	member:[{
+	members:[{
 		displayName: String,
 		userId: String,
-		isPresent: boolean
+		isPresent: Boolean
 	}
 	],
+	membersPresent: Number,
 	noteTaker: {
 		type: String,
 		required: 'Please select a note taker'

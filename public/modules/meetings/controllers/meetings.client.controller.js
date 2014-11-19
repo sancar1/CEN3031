@@ -11,10 +11,15 @@ angular.module('meetings').controller('MeetingsController', ['$scope', '$statePa
 		$scope.create = function() {
 			// Create new Meeting object
 			var temp = [];
-			for(var i = 0; i < $scope.committee.members.length; i++){
-				temp[i].displayName = $scope.committee.members[i].displayName;
-				temp[i].userId = $scope.committee.members[i]._id;
-				temp[i].isPresent = false;
+			console.log($scope.members);
+			for(var i = 0; i < $scope.members.length; i++){
+				var tempObj = {
+					displayName : $scope.members[i].displayName,
+					userId : $scope.members[i]._id,
+					isPresent : false
+				};
+
+				temp.push(tempObj);
 			}
 
 			console.log($scope.committee.members);
@@ -22,6 +27,7 @@ angular.module('meetings').controller('MeetingsController', ['$scope', '$statePa
 				name: this.meeting.name,
 				noteTaker: this.noteTaker.id,
 				members: temp,
+				membersPresent: 0,
 				startTime: $scope.StartDateTime,
 				endTime: $scope.EndDateTime,
 				allDay: false,
@@ -116,8 +122,8 @@ angular.module('meetings').controller('MeetingsController', ['$scope', '$statePa
 
 				$scope.getNotetaker();
 
-				if((typeof $scope.meeting.membersPresent) === 'undefined')
-        			$scope.meeting.membersPresent = 0;
+				// if((typeof $scope.meeting.membersPresent) === 'undefined')
+    //     			$scope.meeting.membersPresent = 0;
 
 			});
 		};
@@ -217,16 +223,6 @@ angular.module('meetings').controller('MeetingsController', ['$scope', '$statePa
         $scope.saveAttendance = function() {
         	var meeting = $scope.meeting ;
         	var now = new Date();
-        	console.log(meeting);
-
-        	for(var i = 0; i < meeting.allMembers.length;i++){
-        		console.log(i);
-        		if($scope.members[i].isPresent){
-        			console.log($scope.members[i]);
-        			meeting.membersAttended[i] = $scope.members[i]._id;
-        			console.log('Members: '+meeting.membersAttended[i]);
-        		}
-        	}
 
         	var currentTime = {
         		'hour' : now.getHours(),
