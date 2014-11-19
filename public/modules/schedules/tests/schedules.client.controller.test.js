@@ -50,7 +50,7 @@
 			});
 		}));
 
-		it('$scope.find() should create an array with at least one Schedule object fetched from XHR', inject(function(Schedules) {
+		/*it('$scope.find() should create an array with at least one Schedule object fetched from XHR', inject(function(Schedules) {
 			// Create sample Schedule using the Schedules service
 			var sampleSchedule = new Schedules.Schedules({
 				name: 'New Schedule'
@@ -88,7 +88,7 @@
 
 			// Test scope value
 			expect(scope.schedule).toEqualData(sampleSchedule);
-		}));
+		}));*/
 
 		// it('$scope.create() with valid form data should send a POST request with the form input values and then locate to new object URL', inject(function(Schedules) {
 		// 	// Create a sample Schedule object
