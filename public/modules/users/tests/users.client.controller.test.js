@@ -90,18 +90,23 @@
 		it('$scope.inCommittee() should return true if member is in the committee', inject(function(Users, Committees){
 			// Define a sample Committee object
 			var sampleUser = new Users({
-				userName: 'userName'
+				userName: 'userName',
+				_id : 123456789
 			});
-			sampleUser._Id = '123456789';
 
 			var sampleCommittee = new Committees.Committees({
 				name : 'testCommitte',
-				members : [sampleUser._Id]
+				members : [sampleUser._id]
 			});
 			userScope.committee = sampleCommittee;
 			userScope.inCommittee(sampleUser);
 			// Test scope value
-			expect(userScope.inCommittee(sampleUser)).toEqualData(true);
+			expect(sampleUser._id).toEqual(123456789);
+			expect(sampleCommittee.members[0]).toEqual(123456789);
+			expect(userScope.committee).not.toBeUndefined();
+			expect(sampleCommittee.members).not.toBeUndefined();
+			expect(userScope.committee.members).not.toBeUndefined();
+			expect(userScope.inCommittee(sampleUser)).toBe(true);
 		}));
 	});
 }());

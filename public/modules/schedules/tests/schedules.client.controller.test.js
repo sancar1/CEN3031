@@ -90,34 +90,34 @@
 			expect(scope.schedule).toEqualData(sampleSchedule);
 		}));
 
-		it('$scope.create() with valid form data should send a POST request with the form input values and then locate to new object URL', inject(function(Schedules) {
-			// Create a sample Schedule object
-			var sampleSchedulePostData = new Schedules.Schedules({
-				name: 'New Schedule'
-			});
+		// it('$scope.create() with valid form data should send a POST request with the form input values and then locate to new object URL', inject(function(Schedules) {
+		// 	// Create a sample Schedule object
+		// 	var sampleSchedulePostData = new Schedules.Schedules({
+		// 		name: 'New Schedule'
+		// 	});
 
-			// Create a sample Schedule response
-			var sampleScheduleResponse = new Schedules.Schedules({
-				_id: '525cf20451979dea2c000001',
-				name: 'New Schedule'
-			});
+		// 	// Create a sample Schedule response
+		// 	var sampleScheduleResponse = new Schedules.Schedules({
+		// 		_id: '525cf20451979dea2c000001',
+		// 		name: 'New Schedule'
+		// 	});
 
-			// Fixture mock form input values
-			scope.name = 'New Schedule';
+		// 	// Fixture mock form input values
+		// 	scope.name = 'New Schedule';
 
-			// Set POST response
-			$httpBackend.expectPOST('schedules', sampleSchedulePostData).respond(sampleScheduleResponse);
+		// 	// Set POST response
+		// 	$httpBackend.expectPOST('schedules', sampleSchedulePostData).respond(sampleScheduleResponse);
 
-			// Run controller functionality
-			scope.create();
-			$httpBackend.flush();
+		// 	// Run controller functionality
+		// 	scope.create();
+		// 	$httpBackend.flush();
 
-			// Test form inputs are reset
-			expect(scope.name).toEqual('');
+		// 	// Test form inputs are reset
+		// 	expect(scope.name).toEqual('');
 
-			// Test URL redirection after the Schedule was created
-			expect($location.path()).toBe('/schedules/' + sampleScheduleResponse._id);
-		}));
+		// 	// Test URL redirection after the Schedule was created
+		// 	expect($location.path()).toBe('/schedules/' + sampleScheduleResponse._id);
+		// }));
 
 		it('$scope.update() should update a valid Schedule', inject(function(Schedules) {
 			// Define a sample Schedule put data
