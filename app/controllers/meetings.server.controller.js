@@ -113,6 +113,7 @@ exports.read = function(req, res) {
  * Update a Meeting
  */
 exports.update = function(req, res) {
+
 	var meeting = req.body ;
 	meeting = _.extend(meeting , req.body);
 async.waterfall([
@@ -141,7 +142,7 @@ async.waterfall([
 			});
 		},
 		function(done){
-			Meeting.update({'_id': meeting._id},{'membersAttended': meeting.membersAttended}).exec(function(err) {
+			Meeting.update({'_id': meeting._id},{'members': meeting.members}).exec(function(err) {
 				if (err) {
 					return res.status(400).send({
 						message: errorHandler.getErrorMessage(err)
