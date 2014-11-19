@@ -10,9 +10,12 @@ angular.module('meetings').controller('MeetingsController', ['$scope', '$statePa
 		// Create new Meeting
 		$scope.create = function() {
 			// Create new Meeting object
+			console.log($scope.committee.members);
 			var meeting = new Meetings.Meetings({
 				name: this.meeting.name,
 				noteTaker: this.noteTaker.id,
+				allMembers: $scope.committee.members,
+				membersPreset: [],
 				startTime: $scope.StartDateTime,
 				endTime: $scope.EndDateTime,
 				allDay: false,
@@ -208,6 +211,15 @@ angular.module('meetings').controller('MeetingsController', ['$scope', '$statePa
         $scope.saveAttendance = function() {
         	var meeting = $scope.meeting ;
         	var now = new Date();
+        	console.log(meeting);
+        	for(var i = 0; i < meeting.allMembers.length;i++){
+        		console.log(i);
+        		if($scope.members[i].isPresent){
+        			console.log($scope.members[i]);
+        			meeting.membersAttended[i] = $scope.members[i]._id;
+        			console.log('Members: '+meeting.membersAttended[i]);
+        		}
+        	}
 
         	var currentTime = {
         		'hour' : now.getHours(),

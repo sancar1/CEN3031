@@ -21,6 +21,8 @@ var MeetingSchema = new Schema({
 		default: '',
 		trim: true
 	},
+	allMembers: [String],
+	membersAttended: [String],
 	noteTaker: {
 		type: String,
 		required: 'Please select a note taker'

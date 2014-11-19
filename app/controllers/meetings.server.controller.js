@@ -114,18 +114,7 @@ exports.read = function(req, res) {
  */
 exports.update = function(req, res) {
 	var meeting = req.body ;
-	console.log(meeting);
 	meeting = _.extend(meeting , req.body);
-/*
-	meeting.save(function(err) {
-		if (err) {
-			return res.status(400).send({
-				message: errorHandler.getErrorMessage(err)
-			});
-		} else {
-			res.jsonp(meeting);
-		}
-	});*/
 async.waterfall([
 		//Find the committee
 		function(done){
@@ -141,6 +130,18 @@ async.waterfall([
 			});
 		},function(done){
 			Meeting.update({'_id': meeting._id},{'name': meeting.name}).exec(function(err) {
+				if (err) {
+					return res.status(400).send({
+						message: errorHandler.getErrorMessage(err)
+					});
+				} 
+				else{
+					done(null);
+				}
+			});
+		},
+		function(done){
+			Meeting.update({'_id': meeting._id},{'membersAttended': meeting.membersAttended}).exec(function(err) {
 				if (err) {
 					return res.status(400).send({
 						message: errorHandler.getErrorMessage(err)
@@ -316,7 +317,7 @@ exports.meetingByID = function(req, res, next, id) {
  * Meeting authorization middleware
  */
 exports.hasAuthorization = function(req, res, next) {
-	if (req.user.role !== 'Admin' && req.user.role !== 'Chair') {
+	if (req.user.role !== 'Admin' && req.user.role !== 'Chair' && JSON.stringify(req.body.noteTaker) !== JSON.stringify(req.user._id)) {
 		return res.status(403).send('User is not authorized');
 	}
 	next();

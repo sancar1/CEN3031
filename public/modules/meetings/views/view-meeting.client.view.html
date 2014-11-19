@@ -56,7 +56,7 @@
 				</div>
 			</div>
 	   	</div>
-	   	<div data-ng-show = "meeting.noteTaker == authentication.user._id">
+	   	<div >
 			<form name="meetingForm" class="form-horizontal" data-ng-submit="updateMeeting(meetingForm.$valid)" novalidate>
 				<fieldset>
 					<div ng-class="{ 'has-error' : submitted && meetingForm.notes.$invalid}">
