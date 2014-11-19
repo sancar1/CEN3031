@@ -101,7 +101,7 @@
 			//$httpBackend.expectGET('committees/'+$stateParams.committeeId).respond(sampleCommittee);
 
 			// Run controller functionality
-			//committeeScope.findOne();
+			committeeScope.findOne();
 			$httpBackend.flush();
 
 			// Test scope value
@@ -157,7 +157,7 @@
 			$httpBackend.expectPUT(/committees\/([0-9a-fA-F]{24})$/).respond();
 
 			// Run controller functionality
-			committeesScope.update();
+			committeeScope.update();
 			$httpBackend.flush();
 
 			// Test URL location to new object
@@ -182,7 +182,7 @@
 			});
 
 			// Mock Committee in scope
-			committeesScope.committee = sampleCommitteePutData;
+			committeeScope.committee = sampleCommitteePutData;
 
 			// Set PUT response
 			$httpBackend.expectGET('users').respond();

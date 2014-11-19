@@ -16,6 +16,21 @@ var user, attendance;
 /**
  * Unit tests
  */
+
+describe('Front End View Test', function(){
+
+	var assert = require('assert'),
+    http = require('http');
+
+	describe('MAIN PAGE', function () {
+	    it('should connect to localhost', function (done) {
+	        http.get('http://localhost:3000', function (res) {
+	            done();
+	        });
+	    });
+	});
+});
+
 describe('Attendance Model Unit Tests:', function() {
 	beforeEach(function(done) {
 		user = new User({
