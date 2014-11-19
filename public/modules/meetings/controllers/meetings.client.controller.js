@@ -10,12 +10,18 @@ angular.module('meetings').controller('MeetingsController', ['$scope', '$statePa
 		// Create new Meeting
 		$scope.create = function() {
 			// Create new Meeting object
+			var temp = [];
+			for(var i = 0; i < $scope.committee.members.length; i++){
+				temp[i].displayName = $scope.committee.members[i].displayName;
+				temp[i].userId = $scope.committee.members[i]._id;
+				temp[i].isPresent = false;
+			}
+
 			console.log($scope.committee.members);
 			var meeting = new Meetings.Meetings({
 				name: this.meeting.name,
 				noteTaker: this.noteTaker.id,
-				allMembers: $scope.committee.members,
-				membersPreset: [],
+				members: temp,
 				startTime: $scope.StartDateTime,
 				endTime: $scope.EndDateTime,
 				allDay: false,
@@ -212,6 +218,7 @@ angular.module('meetings').controller('MeetingsController', ['$scope', '$statePa
         	var meeting = $scope.meeting ;
         	var now = new Date();
         	console.log(meeting);
+
         	for(var i = 0; i < meeting.allMembers.length;i++){
         		console.log(i);
         		if($scope.members[i].isPresent){
