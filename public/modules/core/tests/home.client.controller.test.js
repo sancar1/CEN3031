@@ -1,10 +1,10 @@
 'use strict';
 
 (function() {
-	describe('HomeController', function() {
+	describe('CommitteesCtrl', function() {
 		//Initialize global variables
 		var scope,
-			HomeController;
+			CommitteesCtrl;
 
 		// Load the main application module
 		beforeEach(module(ApplicationConfiguration.applicationModuleName));
@@ -12,7 +12,7 @@
 		beforeEach(inject(function($controller, $rootScope) {
 			scope = $rootScope.$new();
 
-			HomeController = $controller('HomeController', {
+			CommitteesCtrl = $controller('CommitteesCtrl', {
 				$scope: scope
 			});
 		}));
