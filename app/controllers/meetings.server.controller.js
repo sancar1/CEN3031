@@ -9,8 +9,22 @@ var mongoose = require('mongoose'),
 	Meeting = mongoose.model('Meeting'),
 	Schedule = mongoose.model('Schedule'),
 	Committee = mongoose.model('Committee'),
+	nodemailer = require('nodemailer'),
 	async = require('async'),
-	_ = require('lodash');
+	_ = require('lodash'),
+	config = require('../../config/config');
+
+var smtpTransport = nodemailer.createTransport('SMTP', {
+  service: 'Gmail',
+  auth: {
+    XOAuth2: {
+      user: 'CACTUS.cen3031@gmail.com',
+      clientId: '366804079742-1b51qcfrsjrrdf1btqd8e7ci797mlbck.apps.googleusercontent.com',
+      clientSecret: 'kFrDQ6so_ZvNhCHiXrLvhlMY',
+      refreshToken: '1/Bfd916IPNMj1xvDhU1UnRaPzbDUa8vHWzd_NKCHNhY0'
+    }
+  }
+});
 
 /**
  * Create a Meeting
@@ -18,8 +32,11 @@ var mongoose = require('mongoose'),
 exports.create = function(req, res) {
 	var meeting = new Meeting(req.body);
 	var scheduleById = req.body.scheduleById;
+	var tempUser;
+	var tempMeeting;
 async.waterfall([
 		function(done){
+			console.log('1');
 			meeting.save(function(err) {
 				if (err) {
 					console.log('error here');
@@ -27,9 +44,12 @@ async.waterfall([
 						message: errorHandler.getErrorMessage(err)
 					});
 				} 
-				else done();
+				else{
+					done(null, meeting);
+				}
 			});
-		},function(done){
+		},function(meeting,done){
+			console.log('2');
 			var newEvent = {
 				title: req.body.name,
 				start: req.body.startTime,
@@ -37,19 +57,20 @@ async.waterfall([
 				allDay: req.body.allDay,
 				meeting: meeting._id
 			};
-			Schedule.update({'_id': scheduleById}, {$addToSet:{'events': newEvent}},function(err, committee){
+			Schedule.update({'_id': scheduleById}, {$addToSet:{'events': newEvent}},function(err){
 				if(err){
 					return res.status(401).send({
 						message: errorHandler.getErrorMessage(err)
 					});
 				}
 				else{
-					res.jsonp(meeting);
+					done(null);
 				}
 			});
 				
-		}/*,
-		function(meeting, done){
+		},
+		function(done){
+			console.log('3');
 			User.find({'_id': req.body.noteTaker},function(err, user){
 				if(err){
 					return res.status(401).send({
@@ -57,34 +78,37 @@ async.waterfall([
 					});
 				}
 				else{
-					console.log(user);
-					done(err,user[0]);
+					tempUser = user[0];
+					done(null);
 				}
 			});
 		},
-		function(user, done) {
-			res.render('templates/add-as-chair', {
-				name: user.displayName,
+		function(done) {
+			console.log('4');
+			res.render('templates/add-as-notetaker', {
+				name: tempUser.displayName,
 				committee: req.body.name,
 				appName: config.app.title
 			}, function(err, emailHTML) {
-				done(err, emailHTML, user);
+				done(err, meeting,emailHTML, tempUser);
 			});
 		},
 		// If valid email, send reset email using service
-		function(emailHTML, user, done) {
+		function(meeting,emailHTML,done) {
+			console.log('5');
 			var mailOptions = {
-				to: user.email,
+				to: tempUser.email,
 				from: config.mailer.from,
-				subject: 'Added as chair of a committee',
+				subject: 'Added as notetaker of a meeting',
 				html: emailHTML
 			};
 			smtpTransport.sendMail(mailOptions, function(err, info) {
 				if (err) console.log('message not sent: ' + console.log(err));
 				else console.log('message sent: ' + console.log(info));
-				done(err);
 			});
-		}*/
+			res.jsonp(meeting);
+			
+		}
 		],function(err){
 			if(err){
 				console.log('error saving meeting');
