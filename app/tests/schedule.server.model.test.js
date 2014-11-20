@@ -64,7 +64,7 @@ describe('Schedule Model Unit Tests:', function() {
 	
 	describe('Method Put', function() {
 		it('should be able to add new events', function(done) {
-			schedule.events.push({title:'Event2',start: new Date(2014,10,11),end: new Date(2014,10,12),allDay: false, meeting: '12345'})
+			schedule.events.push({title:'Event2',start: new Date(2014,10,11),end: new Date(2014,10,12),allDay: false, meeting: '12345'});
 			return schedule.save(function(err) {
 				should.not.exist(err);
 				done();
@@ -73,7 +73,7 @@ describe('Schedule Model Unit Tests:', function() {
 		
 		
 		it('When adding events, must be through pushing object to array', function(done) {
-			schedule.events = "fail";
+			schedule.events = 'fail';
 			return schedule.save(function(err) {
 				should.exist(err);
 				done();
