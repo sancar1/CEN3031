@@ -33,6 +33,7 @@ var CommitteeSchema = new Schema({
 	chair: {
 		 type: String,
 	},
+	agendaItems: [String],
 	members:   [String],
 	schedule: String,
 	updated: {
