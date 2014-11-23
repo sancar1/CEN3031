@@ -258,6 +258,7 @@ angular.module('meetings').controller('MeetingsController', ['$scope', '$statePa
         };
 
         $scope.agendaItemInMeeting = function(item) {
+        	console.log($scope.meeting);
         	for(var i = 0; i < $scope.meeting.agendaItems.length; i++){
         		if($scope.meeting.agendaItems[i]._id === item._id)
         			item.inMeeting = true;
