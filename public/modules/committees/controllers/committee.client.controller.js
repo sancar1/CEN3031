@@ -184,7 +184,7 @@ angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParam
 
 		$scope.randomString = function(){
 			var chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz';
-			var string_length = 15;
+			var string_length = 24;
 			var randomString = '';
 			for (var i=0; i<string_length; i++) {
 				var rnum = Math.floor(Math.random() * chars.length);
