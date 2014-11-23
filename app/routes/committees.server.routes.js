@@ -13,7 +13,7 @@ module.exports = function(app) {
 
 	app.route('/committees/:committeeId')
 		.get(committees.read)
-		.put(users.requiresLogin, committees.hasAuthorization, committees.update)
+		.put(users.requiresLogin/*, committees.hasAuthorization*/, committees.update)
 		.delete(users.requiresLogin, committees.hasAuthorization, committees.delete);
 
 
