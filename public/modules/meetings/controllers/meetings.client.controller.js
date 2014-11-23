@@ -269,12 +269,13 @@ angular.module('meetings').controller('MeetingsController', ['$scope', '$statePa
 			});
         };
 
-        $scope.agendaItemInMeeting = function(item) {
+        $scope.agendaItemInMeeting = function() {
         	console.log($scope.meeting);
         	for(var i = 0; i < $scope.meeting.agendaItems.length; i++){
         		for(var j = 0; j < $scope.committee.agendaItems.length; j++)
 	        		if($scope.meeting.agendaItems[i]._id === $scope.committee.agendaItems[j]._id)
 	        			$scope.committee.agendaItems[j].inMeeting = true;
+	        		else $scope.committee.agendaItems[j].inMeeting = false;
 
         	}
         };

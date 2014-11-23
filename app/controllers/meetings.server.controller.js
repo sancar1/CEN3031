@@ -177,6 +177,7 @@ async.waterfall([
 				}
 			});
 		},function(done){
+			console.log(meeting.agendaItems);
 			Meeting.update({'_id': meeting._id},{$set:{'agendaItems': meeting.agendaItems}}).exec(function(err) {
 				if (err) {
 					return res.status(400).send({
