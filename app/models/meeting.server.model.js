@@ -25,8 +25,7 @@ var MeetingSchema = new Schema({
 		displayName: String,
 		userId: String,
 		isPresent: Boolean
-	}
-	],
+	}],
 	membersPresent: Number,
 	noteTaker: {
 		type: String,
