@@ -28,7 +28,8 @@ var MeetingSchema = new Schema({
 	}],
 	agendaItems:[{
 		name: String,
-		agendaId: String,
+		owner:String,
+		_id: String,
 		resolved: Boolean
 	}],
 	membersPresent: Number,
