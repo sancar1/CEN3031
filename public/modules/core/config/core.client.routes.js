@@ -40,9 +40,13 @@ angular.module('core').config(['$stateProvider', '$urlRouterProvider', '$logProv
 			url: '/committees/:committeeId/meetings',
 			templateUrl: 'modules/meetings/views/list-meetings.client.view.html'
 		}).
-		state('agendaItems', {
-			url: '/committees/:committeeId/meetings',
-			templateUrl: 'modules/meetings/views/list-meetings.client.view.html'
+		state('listAgendaItems', {
+			url: '/committees/:committeeId/agendaItems',
+			templateUrl: 'modules/committees/views/agendaItems/views/list-agenda-items.client.view.html'
+		}).
+		state('createAgendaItem', {
+			url: '/committees/:committeeId/agendaItems/create',
+			templateUrl: 'modules/committees/views/agendaItems/views/create-agenda-item.client.view.html'
 		});
 	}
 ]);

@@ -53,6 +53,7 @@ angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParam
 		$scope.update = function() {
 			var committee = $scope.committee ;
 			console.log('here to update');
+			console.log($scope.committee);
 			committee.$update(function() {
 				$location.path('committees/' + committee._id+'/edit');
 				$state.reload();
@@ -179,6 +180,14 @@ angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParam
 
 			});
 
+		};
+
+		$scope.createAgendaItem = function() {
+			console.log($scope.committee);
+			console.log('Agenda Item to be added:');
+			console.log($scope.agendaItem.name);
+			$scope.commitee.agendaItems.push($scope.agendaItem.name);
+			$scope.update();
 		};
 		
 		// $scope.updateAlert = function() {
