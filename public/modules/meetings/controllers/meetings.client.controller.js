@@ -285,23 +285,26 @@ angular.module('meetings').controller('MeetingsController', ['$scope', '$statePa
         	var meeting = $scope.meeting ;
 
         	for(var i = 0; i < $scope.committee.agendaItems.length; i++){
-				var index = $scope.meeting.agendaItems.indexOf($scope.committee.agendaItems[i]);
+				var index = meeting.agendaItems.indexOf($scope.committee.agendaItems[i]);
 				// console.log('indexing to check');
 				// console.log(index);
 
 				if($scope.committee.agendaItems[i].inMeeting) {
 					console.log('inside inMeeting');
-					$scope.meeting.agendaItems.push($scope.committee.agendaItems[i]);
+					meeting.agendaItems.push($scope.committee.agendaItems[i]);
 				}
 				else if(index !== -1) {
-					$scope.meeting.agendaItems.splice(index, 1);
+					var length = meeting.agendaItems.length;
+					meeting.agendaItems.splice(index, 1);
+					meeting.agendaItems = meeting.agendaItems.slice(0, -1);
+					console.log(meeting.agendaItems);
 				}
 
 
 			}
 
 			console.log('agenda items to be saved');
-			console.log($scope.meeting.agendaItems);
+			console.log(meeting.agendaItems);
 
         	// $scope.saveMessage = 'Attendance last saved at ' + currentTime.hour + ':' + currentTime.minutes + currentTime.period;
 
