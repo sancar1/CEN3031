@@ -21,11 +21,10 @@ angular.module('core').controller('CommitteesCtrl', ['$scope', '$log', '$q', '$s
 
 		// Default values for Committee
 		$scope.committeeTemplates = {
-			'current' : false,
-			'edit' : false,
-			'attendance' : false,
-			'schedule' : false,
-			'meetings' : false
+			current : false,
+			edit : false,
+			meetings : false,
+			agendaItems : false
 		};
 
 		/* Application Services to be Loaded on Page Load */

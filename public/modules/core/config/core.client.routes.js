@@ -39,6 +39,10 @@ angular.module('core').config(['$stateProvider', '$urlRouterProvider', '$logProv
 		state('meetings', {
 			url: '/committees/:committeeId/meetings',
 			templateUrl: 'modules/meetings/views/list-meetings.client.view.html'
+		}).
+		state('agendaItems', {
+			url: '/committees/:committeeId/meetings',
+			templateUrl: 'modules/meetings/views/list-meetings.client.view.html'
 		});
 	}
 ]);

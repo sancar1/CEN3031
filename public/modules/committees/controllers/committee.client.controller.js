@@ -12,6 +12,7 @@ angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParam
 
 		$scope.committeeTemplates.current = true;
 		$scope.committeeTemplates.meetings = true;
+		$scope.committeeTemplates.agendaItems = true;
 
 		/* Committee vars to be set */
 		$scope.eventSources = [];
@@ -194,6 +195,7 @@ angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParam
 			$scope.committeeTemplates.current = false;
 			$scope.committeeTemplates.edit = false;
 			$scope.committeeTemplates.meetings = false;
+			$scope.committeeTemplates.agendaItems = false;
 		});
 
 	}
