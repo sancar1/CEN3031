@@ -182,11 +182,24 @@ angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParam
 
 		};
 
+		$scope.randomString = function(){
+			var chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz';
+			var string_length = 15;
+			var randomString = '';
+			for (var i=0; i<string_length; i++) {
+				var rnum = Math.floor(Math.random() * chars.length);
+				randomString += chars.substring(rnum,rnum+1);
+			}
+			return randomString;
+		};
+
 		$scope.createAgendaItem = function() {
 			var committee = $scope.committee;
+			var objId = $scope.randomString();
 			var agendaObj = {
 				name: $scope.agendaItem.name,
-				owner: $scope.currentUser._id
+				owner: $scope.currentUser._id,
+				_id: objId
 			};
 			committee.agendaItems.push(agendaObj);
 			committee.$update(function() {
@@ -196,6 +209,8 @@ angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParam
 				$scope.error = errorResponse.data.message;
 			});
 		};
+
+		
 		
 		// $scope.updateAlert = function() {
 	// 	    $('#alert_updateDescription').html('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><span>Your description has been updated.</span></div>');
