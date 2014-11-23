@@ -269,7 +269,7 @@ angular.module('meetings').controller('MeetingsController', ['$scope', '$statePa
 			});
         };
 
-        $scope.agendaItemInMeeting = function(item) {
+        $scope.agendaItemInMeeting = function() {
         	console.log($scope.meeting);
         	for(var i = 0; i < $scope.meeting.agendaItems.length; i++){
         		for(var j = 0; j < $scope.committee.agendaItems.length; j++)
@@ -289,14 +289,13 @@ angular.module('meetings').controller('MeetingsController', ['$scope', '$statePa
 				// console.log('indexing to check');
 				// console.log(index);
 
-				if($scope.committee.agendaItems[i].inMeeting) {
+				if($scope.committee.agendaItems[i].inMeeting && index === -1) {
 					console.log('inside inMeeting');
 					meeting.agendaItems.push($scope.committee.agendaItems[i]);
 				}
-				else if(index !== -1) {
+				else if(index !== -1 && !$scope.committee.agendaItems[i].inMeeting) {
 					var length = meeting.agendaItems.length;
 					meeting.agendaItems.splice(index, 1);
-					meeting.agendaItems = meeting.agendaItems.slice(0, -1);
 					console.log(meeting.agendaItems);
 				}
 
