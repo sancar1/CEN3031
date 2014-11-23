@@ -270,13 +270,12 @@ angular.module('meetings').controller('MeetingsController', ['$scope', '$statePa
         };
 
         $scope.agendaItemInMeeting = function() {
-        	console.log($scope.meeting);
-        	for(var i = 0; i < $scope.meeting.agendaItems.length; i++){
-        		for(var j = 0; j < $scope.committee.agendaItems.length; j++)
-	        		if($scope.meeting.agendaItems[i]._id === $scope.committee.agendaItems[j]._id)
-	        			$scope.committee.agendaItems[j].inMeeting = true;
-	        		else $scope.committee.agendaItems[j].inMeeting = false;
-
+        	console.log('here in agenda');
+        	for(var i = 0; i < $scope.committee.agendaItems.length; i++){
+        		for(var j = 0; j < $scope.meeting.agendaItems.length; j++){
+	        		if($scope.meeting.agendaItems[j]._id === $scope.committee.agendaItems[i]._id)
+	        			$scope.committee.agendaItems[i].inMeeting = true;
+	        	}
         	}
         };
 
@@ -284,11 +283,14 @@ angular.module('meetings').controller('MeetingsController', ['$scope', '$statePa
         	console.log('meeting object NOW!');
         	console.log($scope.meeting);
         	var meeting = $scope.meeting ;
-
+        	console.log($scope.committee.agendaItems.length);
         	for(var i = 0; i < $scope.committee.agendaItems.length; i++){
-				var index = meeting.agendaItems.indexOf($scope.committee.agendaItems[i]);
-				// console.log('indexing to check');
-				// console.log(index);
+        		var index = -1;
+				for(var j = 0; j < meeting.agendaItems.length; j++){
+					if($scope.committee.agendaItems[i]._id === meeting.agendaItems[j]._id){
+						index = j;
+					}
+				}
 
 				if($scope.committee.agendaItems[i].inMeeting && index === -1) {
 					console.log('inside inMeeting');
