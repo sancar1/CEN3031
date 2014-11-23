@@ -191,7 +191,12 @@ angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParam
 				owner: $scope.currentUser._id
 			};
 			$scope.committee.agendaItems.push(agendaObj);
-			$scope.update();
+			$scope.update(function(response) {
+				$location.path('committees/' + $scope.committee._id +'/agendaItems');
+				$state.reload();
+			}, function(errorResponse) {
+				$scope.error = errorResponse.data.message;
+			});
 		};
 		
 		// $scope.updateAlert = function() {
