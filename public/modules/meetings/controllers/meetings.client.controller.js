@@ -257,6 +257,13 @@ angular.module('meetings').controller('MeetingsController', ['$scope', '$statePa
 			});
         };
 
+        $scope.agendaItemInMeeting = function(item) {
+        	for(var i = 0; i < $scope.meeting.agendaItems.length; i++){
+        		if($scope.meeting.agendaItems[i]._id === item._id)
+        			item.inMeeting = true;
+        	}
+        };
+
         $scope.saveAgendaItems = function() {
         	var meeting = $scope.meeting ;
         	var now = new Date();

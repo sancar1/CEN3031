@@ -61,7 +61,7 @@
 		   		<div>Agenda Items to Add</div>
 				<div data-ng-repeat="item in committee.agendaItems">
 					<label class="agendalabel">
-						<input type="checkbox" data-ng-model="item.inMeeting">
+						<input type="checkbox" data-ng-show="agendaItemInMeeting(item)" data-ng-model="item.inMeeting">
 						<span data-ng-bind="item.name"></span>
 					</label>
 				</div>
