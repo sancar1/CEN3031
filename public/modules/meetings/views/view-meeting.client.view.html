@@ -1,5 +1,5 @@
 <section data-ng-controller="CommitteeCtrl">
-	<section data-ng-controller="MeetingsController" data-ng-init="findOne()">
+	<section data-ng-controller="MeetingsController">
 		<div class="page-header">
 			<h1 data-ng-bind="meeting.name"></h1>
 		</div>
@@ -61,7 +61,7 @@
 		   		<div>Agenda Items to Add</div>
 				<div data-ng-repeat="item in committee.agendaItems">
 					<label class="agendalabel">
-						<input type="checkbox" data-ng-show="agendaItemInMeeting(item)" data-ng-model="item.inMeeting">
+						<input type="checkbox" data-ng-model="item.inMeeting">
 						<span data-ng-bind="item.name"></span>
 					</label>
 				</div>

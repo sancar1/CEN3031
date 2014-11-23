@@ -7,6 +7,18 @@ angular.module('meetings').controller('MeetingsController', ['$scope', '$statePa
 		$scope.StartDateTime = new Date();
 		$scope.EndDateTime = new Date();
 
+		// Find existing Meeting
+		console.log('Finding meeting');
+		Meetings.Meeting.get({ 
+			meetingId: $stateParams.meetingId,
+			committeeId: $stateParams.committeeId
+		}).$promise.then(function(data) {
+			$scope.meeting = data;
+			console.log('data: '+data);
+			$scope.getNotetaker();
+			$scope.agendaItemInMeeting();
+		});
+
 		// Create new Meeting
 		$scope.create = function() {
 			// Create new Meeting object
@@ -108,25 +120,25 @@ angular.module('meetings').controller('MeetingsController', ['$scope', '$statePa
 				
 		};
 
-		// Find existing Meeting
-		$scope.findOne = function() {
-			console.log('in findOne for meeting');
-			Meetings.Meeting.get({ 
-				meetingId: $stateParams.meetingId,
-				committeeId: $stateParams.committeeId
-			}).$promise.then(function(data) {
-				$scope.meeting = data;
-				console.log('data: '+data);
-				// $log.debug('$scope.committee: ');
-				// $log.debug($scope.committee);
+		// // Find existing Meeting
+		// $scope.findOne = function() {
+		// 	console.log('in findOne for meeting');
+		// 	Meetings.Meeting.get({ 
+		// 		meetingId: $stateParams.meetingId,
+		// 		committeeId: $stateParams.committeeId
+		// 	}).$promise.then(function(data) {
+		// 		$scope.meeting = data;
+		// 		console.log('data: '+data);
+		// 		// $log.debug('$scope.committee: ');
+		// 		// $log.debug($scope.committee);
 
-				$scope.getNotetaker();
+		// 		$scope.getNotetaker();
 
-				// if((typeof $scope.meeting.membersPresent) === 'undefined')
-    //     			$scope.meeting.membersPresent = 0;
+		// 		// if((typeof $scope.meeting.membersPresent) === 'undefined')
+  //   //     			$scope.meeting.membersPresent = 0;
 
-			});
-		};
+		// 	});
+		// };
 		//Start of Date Picker Code
 		
 		
@@ -260,38 +272,32 @@ angular.module('meetings').controller('MeetingsController', ['$scope', '$statePa
         $scope.agendaItemInMeeting = function(item) {
         	console.log($scope.meeting);
         	for(var i = 0; i < $scope.meeting.agendaItems.length; i++){
-        		if($scope.meeting.agendaItems[i]._id === item._id)
-        			item.inMeeting = true;
+        		for(var j = 0; j < $scope.committee.agendaItems.length; j++)
+	        		if($scope.meeting.agendaItems[i]._id === $scope.committee.agendaItems[j]._id)
+	        			$scope.committee.agendaItems[j].inMeeting = true;
+
         	}
         };
 
         $scope.saveAgendaItems = function() {
+        	console.log('meeting object NOW!');
+        	console.log($scope.meeting);
         	var meeting = $scope.meeting ;
-        	var now = new Date();
-
-        	var currentTime = {
-        		'hour' : now.getHours(),
-        		'minutes' : now.getMinutes(),
-        		'seconds' : now.getSeconds()
-        	};
-
-        	if(now.getHours() > 11) {
-        		currentTime.period = 'pm';
-            }
-        	else
-        		currentTime.period = 'am';
-
-        	if(now.getHours() > 12)
-        		currentTime.hour = currentTime.hour - 12;
-
-        	if(now.getMinutes() < 10)
-        		currentTime.minutes = '0' + currentTime.minutes;
 
         	for(var i = 0; i < $scope.committee.agendaItems.length; i++){
+				var index = $scope.meeting.agendaItems.indexOf($scope.committee.agendaItems[i]);
+				// console.log('indexing to check');
+				// console.log(index);
+
 				if($scope.committee.agendaItems[i].inMeeting) {
-					console.log($scope.committee.agendaItems[i]);
+					console.log('inside inMeeting');
 					$scope.meeting.agendaItems.push($scope.committee.agendaItems[i]);
 				}
+				else if(index !== -1) {
+					$scope.meeting.agendaItems.splice(index, 1);
+				}
+
+
 			}
 
 			console.log('agenda items to be saved');
