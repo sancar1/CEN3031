@@ -47,7 +47,7 @@ angular.module('core').controller('CommitteesCtrl', ['$scope', '$log', '$q', '$s
 			// $log.debug(debugObj);
 			// $log.debug('Entered viewCommittee');
 			
-			if(Roles.get().admin === true || Committees.checkOwner(committee) === true || Committees.userInCommittee(committee) === true){
+			if(Roles.get().admin === true || Committees.userInCommittee(committee) === true){
 				return true;
 			}
 			return false;

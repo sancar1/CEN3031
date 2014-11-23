@@ -16,23 +16,13 @@ angular.module('committees').factory('Committees', ['$resource', 'Authentication
 				if(typeof committee !== 'undefined'){
 					for(var i = 0; i < committee.members.length; i++){
 						if(Authentication.user._id === committee.members[i]){
+							console.log('here in userIn');
 							return true;
 						}
 					}
 					return false;
 				}
 				return false;
-
-			},
-
-			checkOwner: function(committee) {
-
-				if(Authentication.user.displayName===committee.user.displayName){
-					return true;
-				}
-				else{
-					return false;
-				}
 
 			}
 		};
