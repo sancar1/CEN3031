@@ -11,6 +11,14 @@
 				<i class="glyphicon glyphicon-trash"></i>
 			</a>
 		</div>
+		<div>
+	   		<div>Agenda Items</div>
+			<div data-ng-repeat="item in meeting.agendaItems">
+				<label class="agendalabel">
+					<span data-ng-bind="item.name"></span>
+				</label>
+			</div>
+	   	</div>
 		<div data-ng-if="authentication.user._id == committee.chair">
 			<section>
 		        <form name="meetingForm" class="form-horizontal" novalidate>
