@@ -230,12 +230,16 @@ angular.module('meetings').controller('MeetingsController', ['$scope', '$statePa
         		'seconds' : now.getSeconds()
         	};
 
+        	console.log(now.getHours());
+
         	if(now.getHours() > 11) {
-                currentTime.hour = currentTime.hour - 12;
         		currentTime.period = 'pm';
             }
         	else
         		currentTime.period = 'am';
+
+        	if(now.getHours() > 12)
+        		currentTime.hour = currentTime.hour - 12;
 
         	if(now.getMinutes() < 10)
         		currentTime.minutes = '0' + currentTime.minutes;
@@ -244,6 +248,52 @@ angular.module('meetings').controller('MeetingsController', ['$scope', '$statePa
 
 			meeting.$update(function() {
                 $scope.saveMessage = 'Attendance last saved at ' + currentTime.hour + ':' + currentTime.minutes + currentTime.period;
+				// $scope.saveMessage = 'Attendance Saved Successfully';
+				// $timeout(function() {
+				// 	$scope.saveMessage = '';
+				// }, 3000);
+			}, function(errorResponse) {
+				$scope.error = errorResponse.data.message;
+			});
+        };
+
+        $scope.saveAgendaItems = function() {
+        	var meeting = $scope.meeting ;
+        	var now = new Date();
+
+        	var currentTime = {
+        		'hour' : now.getHours(),
+        		'minutes' : now.getMinutes(),
+        		'seconds' : now.getSeconds()
+        	};
+
+        	if(now.getHours() > 11) {
+        		currentTime.period = 'pm';
+            }
+        	else
+        		currentTime.period = 'am';
+
+        	if(now.getHours() > 12)
+        		currentTime.hour = currentTime.hour - 12;
+
+        	if(now.getMinutes() < 10)
+        		currentTime.minutes = '0' + currentTime.minutes;
+
+        	for(var i = 0; i < $scope.committee.agendaItems.length; i++){
+				if($scope.committee.agendaItems[i].inMeeting) {
+					console.log($scope.committee.agendaItems[i]);
+					$scope.meeting.agendaItems.push($scope.committee.agendaItems[i]);
+				}
+			}
+
+			console.log('agenda items to be saved');
+			console.log($scope.meeting.agendaItems);
+
+        	// $scope.saveMessage = 'Attendance last saved at ' + currentTime.hour + ':' + currentTime.minutes + currentTime.period;
+
+			meeting.$update(function() {
+				console.log('in update meeting');
+                // $scope.saveMessage = 'Attendance last saved at ' + currentTime.hour + ':' + currentTime.minutes + currentTime.period;
 				// $scope.saveMessage = 'Attendance Saved Successfully';
 				// $timeout(function() {
 				// 	$scope.saveMessage = '';

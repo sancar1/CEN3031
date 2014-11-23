@@ -199,7 +199,8 @@ angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParam
 			var agendaObj = {
 				name: $scope.agendaItem.name,
 				owner: $scope.currentUser._id,
-				_id: objId
+				_id: objId,
+				resolved: false
 			};
 			committee.agendaItems.push(agendaObj);
 			committee.$update(function() {
