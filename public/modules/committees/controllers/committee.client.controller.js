@@ -186,7 +186,7 @@ angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParam
 			console.log($scope.committee);
 			console.log('Agenda Item to be added:');
 			console.log($scope.agendaItem.name);
-			$scope.commitee.agendaItems.push($scope.agendaItem.name);
+			$scope.committee.agendaItems.push($scope.agendaItem.name);
 			$scope.update();
 		};
 		
