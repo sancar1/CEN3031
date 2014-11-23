@@ -183,17 +183,16 @@ angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParam
 		};
 
 		$scope.createAgendaItem = function() {
-			console.log($scope.committee);
-			console.log('Agenda Item to be added:');
-			console.log($scope.agendaItem.name);
+			var committee = $scope.committee;
 			var agendaObj = {
 				name: $scope.agendaItem.name,
 				owner: $scope.currentUser._id
 			};
-			$scope.committee.agendaItems.push(agendaObj);
-			$scope.update(function(response) {
-				$location.path('committees/' + $scope.committee._id +'/agendaItems');
-				$state.reload();
+			committee.agendaItems.push(agendaObj);
+			committee.$update(function() {
+				console.log('committees/' + $scope.committee._id+'/edit');
+				$location.path('committees/' + $scope.committee._id+'/agendaItems');
+				//$state.reload();
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
 			});
