@@ -190,7 +190,6 @@ angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParam
 			};
 			committee.agendaItems.push(agendaObj);
 			committee.$update(function() {
-				console.log('committees/' + $scope.committee._id+'/edit');
 				$location.path('committees/' + $scope.committee._id+'/agendaItems');
 				//$state.reload();
 			}, function(errorResponse) {

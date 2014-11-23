@@ -35,7 +35,8 @@ var CommitteeSchema = new Schema({
 	},
 	agendaItems: [{
 		name: String,
-		owner: String
+		owner: String,
+		_id: String
 	}],
 	members:   [String],
 	schedule: String,
