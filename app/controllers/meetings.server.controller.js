@@ -176,6 +176,17 @@ async.waterfall([
 					done(null);
 				}
 			});
+		},function(done){
+			Meeting.update({'_id': meeting._id},{'agendaItems': meeting.agendaItems}).exec(function(err) {
+				if (err) {
+					return res.status(400).send({
+						message: errorHandler.getErrorMessage(err)
+					});
+				} 
+				else{
+					done(null);
+				}
+			});
 		},
 		function(done){
 			Meeting.update({'_id': meeting._id},{'membersPresent': meeting.membersPresent}).exec(function(err) {
