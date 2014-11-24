@@ -139,6 +139,25 @@
 			// Test URL location to new object
 			expect($location.path()).toBe('/schedules/' + sampleSchedulePutData._id);
 		}));
+		
+		
+		it('$scope.getEvents() should get the events from a current schedule ', inject(function(Schedules) {
+			// Define a sample Schedule put data
+			var sampleSchedulePutData = new Schedules.Schedules({
+				_id: '525cf20451979dea2c000001',
+				name: 'New Schedule',
+				events: {title:'Event1',start: new Date(2014,10,11),end: new Date(2014,10,12),allDay: false, meeting: '12345'}
+			});
+
+			// Mock Schedule in scope
+			scope.schedule = sampleSchedulePutData;
+			expect(scope.schedule).not.toBeUndefined();
+
+			// Test URL location to new object
+			// expect(scope.getEvents()).toBe({title:'Event1',start: new Date(2014,10,11),end: new Date(2014,10,12),allDay: false, meeting: '12345'});
+		}));
+		
+		
 /*
 		it('$scope.remove() should send a DELETE request with a valid scheduleId and remove the Schedule from the scope', inject(function(Schedules) {
 			// Create new Schedule object

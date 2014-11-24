@@ -12,6 +12,10 @@
 		$httpBackend,
 		$stateParams,
 		$location,
+			committees, 
+			schedules, 
+			roles, 
+			meetings,
 		$q;
 
 		// The $resource service augments the response object with methods for updating and deleting the resource.
@@ -48,6 +52,10 @@
 			$stateParams = _$stateParams_;
 			$httpBackend = _$httpBackend_;
 			$location = _$location_;
+			committees =  Committees;
+			schedules = Schedules;
+			roles = Roles;
+			meetings = Meetings;
 
 			// Initialize the Committees controller.
 			UsersController = $controller('UsersController', {
@@ -145,7 +153,7 @@
 
 		it('$scope.update() should update a valid Committee', inject(function(Committees) {
 			// Define a sample Committee put data
-			var sampleCommitteePutData = new Committees.Committees({
+			var sampleCommitteePutData = new Committees.committees({
 				_id: '525cf20451979dea2c000001',
 				name: 'New Committee'
 			});
