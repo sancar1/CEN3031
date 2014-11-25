@@ -344,3 +344,12 @@ margin-top: -35px;
 .submitButton{
   padding-top: 15px;
 }
+
+.btn-blue{
+  background-color: #0021A5;
+  color: white;
+}
+
+.btn-blue:hover{
+  color: gray;
+}
