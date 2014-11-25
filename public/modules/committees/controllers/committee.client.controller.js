@@ -20,7 +20,7 @@ angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParam
 			$scope.findSchedule();
 
 			// Gets a list of meetings on controller initialization
-	        Meetings.List.query({
+	        Meetings.Meetings.query({
 	            committeeId: $stateParams.committeeId
 	        }).$promise.then(function(data) {
                 $scope.meetings = data;

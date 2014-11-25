@@ -280,7 +280,6 @@ exports.removeNotetaker = function(req, res) {
  * List of Meetings
  */
 exports.list = function(req, res) { 
-	//var committeeById = req.body.committee._id;
 	var committeeById = req.params.committeeId;
 	async.waterfall([
 		//Find the committee
@@ -343,6 +342,18 @@ exports.meetingByID = function(req, res, next, id) {
 exports.isChair = function(req, res, next) {
 	var chairById = req.committee.chair;
 	if (req.user.role !== chairById) {
+		return res.status(666).send('User is not authorized, only Chairs can do this');
+	}
+	next();
+};
+
+/**
+ * Committee authorization middleware, are you both?
+ */
+exports.isChairAdmin = function(req, res, next) {
+	var chairById = req.params.chair;
+	var userById = req.user._id.toString();
+	if (chairById !== userById && req.user.role !== 'Admin') {
 		return res.status(666).send('User is not authorized, only Chairs can do this');
 	}
 	next();

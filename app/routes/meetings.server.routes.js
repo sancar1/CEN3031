@@ -6,12 +6,10 @@ module.exports = function(app) {
 	var committees = require('../../app/controllers/committees');
 
 	// Meetings Routes
-	app.route('/meetings')
-		.post(users.requiresLogin, meetings.isChair, meetings.create)
-		.put(users.requiresLogin, meetings.isChair, meetings.update);
-		
 	app.route('/meetings/:committeeId')
-		.get(users.requiresLogin, meetings.list);
+		.get(users.requiresLogin, meetings.list)
+		.post(users.requiresLogin, meetings.isChairAdmin, meetings.create)
+		.put(users.requiresLogin, meetings.isChairAdmin, meetings.update);
 		
 	app.route('/meetings/:meetingId/:committeeId')
 		.get(users.requiresLogin, meetings.read)
