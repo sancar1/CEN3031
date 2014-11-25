@@ -18,7 +18,8 @@ var ScheduleSchema = new Schema({
 	},
 	events:[
       {title:String,start: Date,end: Date,allDay: Boolean, meeting: String}
-	]
+	], 
+	committee: String
 });
 
 //instance method

@@ -93,13 +93,3 @@ exports.agendaitemByID = function(req, res, next, id) { Agendaitem.findById(id).
 		next();
 	});
 };
-
-/**
- * Agendaitem authorization middleware
- */
-exports.hasAuthorization = function(req, res, next) {
-	if (req.agendaitem.user.id !== req.user.id) {
-		return res.status(403).send('User is not authorized');
-	}
-	next();
-};

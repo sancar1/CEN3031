@@ -7,20 +7,20 @@ module.exports = function(app) {
 
 	// Meetings Routes
 	app.route('/meetings')
-		.post(users.requiresLogin, meetings.create)
-		.put(users.requiresLogin, meetings.hasAuthorization, meetings.update);
+		.post(users.requiresLogin, meetings.isChair, meetings.create)
+		.put(users.requiresLogin, meetings.isChair, meetings.update);
 		
 	app.route('/meetings/:committeeId')
-		.get(meetings.list);
+		.get(users.requiresLogin, meetings.list);
 		
 	app.route('/meetings/:meetingId/:committeeId')
-		.get(meetings.read)
-		.delete(users.requiresLogin, meetings.hasAuthorization, meetings.delete);
+		.get(users.requiresLogin, meetings.read)
+		.delete(users.requiresLogin, meetings.isChair, meetings.delete);
 
 	app.route('/meetings/:meetingId/:committeeId/:userId')
 		.get(meetings.getNotetaker)
-		.put(meetings.setNotetaker)
-		.delete(meetings.removeNotetaker);
+		.put(users.requiresLogin, meetings.isChair, meetings.setNotetaker)
+		.delete(users.requiresLogin, meetings.isChair, meetings.removeNotetaker);
 
 	// Finish by binding the Meeting middleware
 	app.param('meetingId', meetings.meetingByID);

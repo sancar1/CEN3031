@@ -7,7 +7,6 @@ var _ = require('lodash'),
 	errorHandler = require('../errors'),
 	mongoose = require('mongoose'),
 	passport = require('passport'),
-	Article = mongoose.model('Article'),
 	User = mongoose.model('User');
 
 /**

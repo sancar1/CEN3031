@@ -11,8 +11,8 @@ module.exports = function(app) {
 
 	app.route('/agendaitems/:agendaitemId')
 		.get(agendaitems.read)
-		.put(users.requiresLogin, agendaitems.hasAuthorization, agendaitems.update)
-		.delete(users.requiresLogin, agendaitems.hasAuthorization, agendaitems.delete);
+		.put(users.requiresLogin, agendaitems.update)
+		.delete(users.requiresLogin, agendaitems.delete);
 
 	// Finish by binding the Agendaitem middleware
 	app.param('agendaitemId', agendaitems.agendaitemByID);

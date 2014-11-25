@@ -49,9 +49,8 @@ exports.update = function(req, res) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
-		} else {
-			res.jsonp(schedule);
-		}
+		} 
+		else res.jsonp(schedule);
 	});
 };
 
@@ -66,9 +65,8 @@ exports.delete = function(req, res) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
-		} else {
-			res.jsonp(schedule);
 		}
+		else res.jsonp(schedule);
 	});
 };
 

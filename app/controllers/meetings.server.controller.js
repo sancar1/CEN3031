@@ -14,6 +14,7 @@ var mongoose = require('mongoose'),
 	_ = require('lodash'),
 	config = require('../../config/config');
 
+//SMTP transport for sending email to people
 var smtpTransport = nodemailer.createTransport('SMTP', {
   service: 'Gmail',
   auth: {
@@ -44,11 +45,10 @@ async.waterfall([
 						message: errorHandler.getErrorMessage(err)
 					});
 				} 
-				else{
-					done(null, meeting);
-				}
+				else done(null, meeting);
 			});
-		},function(meeting,done){
+		},
+		function(meeting,done){
 			console.log('2');
 			var newEvent = {
 				title: req.body.name,
@@ -63,9 +63,7 @@ async.waterfall([
 						message: errorHandler.getErrorMessage(err)
 					});
 				}
-				else{
-					done(null);
-				}
+				else done(null);
 			});
 				
 		},
@@ -128,9 +126,7 @@ exports.read = function(req, res) {
 					return res.status(400).send({
 						message: errorHandler.getErrorMessage(err)
 					});
-				} else {
-					res.jsonp(meeting[0]);
-				}
+				} else res.jsonp(meeting[0]);
 			});
 };
 /**
@@ -140,7 +136,7 @@ exports.update = function(req, res) {
 
 	var meeting = req.body ;
 	meeting = _.extend(meeting , req.body);
-async.waterfall([
+	async.waterfall([
 		//Find the committee
 		function(done){
 			Meeting.update({'_id': meeting._id},{'notes': meeting.notes}).exec(function(err) {
@@ -149,20 +145,17 @@ async.waterfall([
 						message: errorHandler.getErrorMessage(err)
 					});
 				} 
-				else{
-					done(null);
-				}
+				else done(null);
 			});
-		},function(done){
+		},
+		function(done){
 			Meeting.update({'_id': meeting._id},{'name': meeting.name}).exec(function(err) {
 				if (err) {
 					return res.status(400).send({
 						message: errorHandler.getErrorMessage(err)
 					});
 				} 
-				else{
-					done(null);
-				}
+				else done(null);
 			});
 		},
 		function(done){
@@ -172,11 +165,10 @@ async.waterfall([
 						message: errorHandler.getErrorMessage(err)
 					});
 				} 
-				else{
-					done(null);
-				}
+				else done(null);
 			});
-		},function(done){
+		},
+		function(done){
 			console.log(meeting.agendaItems);
 			Meeting.update({'_id': meeting._id},{$set:{'agendaItems': meeting.agendaItems}}).exec(function(err) {
 				if (err) {
@@ -184,9 +176,7 @@ async.waterfall([
 						message: errorHandler.getErrorMessage(err)
 					});
 				} 
-				else{
-					done(null);
-				}
+				else done(null);
 			});
 		},
 		function(done){
@@ -196,9 +186,7 @@ async.waterfall([
 						message: errorHandler.getErrorMessage(err)
 					});
 				} 
-				else{
-					done(null);
-				}
+				else done(null);
 			});
 		},
 		function(done){
@@ -214,10 +202,9 @@ async.waterfall([
 				}
 			});
 		}
-		],function(err){
-			if(err){
-				console.log(err);
-			}
+		],
+		function(err){
+			if(err) console.log(err);
 		}
 	);
 };
@@ -233,9 +220,8 @@ exports.delete = function(req, res) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
-		} else {
-			res.jsonp(meeting);
-		}
+		} 
+		else res.jsonp(meeting);
 	});
 };
 
@@ -252,9 +238,8 @@ exports.getNotetaker = function(req, res) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
-		} else {
-			res.jsonp(noteTaker[0]);
-		}
+		} 
+		else res.jsonp(noteTaker[0]);
 	});
 };
 
@@ -270,9 +255,8 @@ exports.setNotetaker = function(req, res) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
-		} else {
-			res.jsonp(meeting[0]);
-		}
+		} 
+		else res.jsonp(meeting[0]);
 	});
 };
 
@@ -287,9 +271,8 @@ exports.removeNotetaker = function(req, res) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
-		} else {
-			res.jsonp(meeting[0]);
-		}
+		} 
+		else res.jsonp(meeting[0]);
 	});
 };
 
@@ -308,9 +291,7 @@ exports.list = function(req, res) {
 						message: errorHandler.getErrorMessage(err)
 					});
 				} 
-				else{
-					done(null,committee[0]);
-				}
+				else done(null,committee[0]);
 			});
 		},function(committee, done){
 			var scheduleById = committee.schedule;
@@ -320,9 +301,7 @@ exports.list = function(req, res) {
 						message: errorHandler.getErrorMessage(err)
 					});
 				}
-				else{
-					done(null, schedule[0]);
-				}
+				else done(null, schedule[0]);
 			});
 		},function(schedule, done){
 			var meetings = [];
@@ -337,15 +316,11 @@ exports.list = function(req, res) {
 					return res.status(400).send({
 						message: errorHandler.getErrorMessage(err)
 					});
-				} else {
-					res.jsonp(meetings);
-				}
+				} else res.jsonp(meetings);
 			});
 		}
 		],function(err){
-			if(err){
-				console.log(err);
-			}
+			if(err) console.log(err);
 		}
 	);
 };
@@ -363,11 +338,12 @@ exports.meetingByID = function(req, res, next, id) {
 };
 
 /**
- * Meeting authorization middleware
+ * Committee authorization middleware, are you an admin?
  */
-exports.hasAuthorization = function(req, res, next) {
-	if (req.user.role !== 'Admin' && req.user.role !== 'Chair' && JSON.stringify(req.body.noteTaker) !== JSON.stringify(req.user._id)) {
-		return res.status(403).send('User is not authorized');
+exports.isChair = function(req, res, next) {
+	var chairById = req.committee.chair;
+	if (req.user.role !== chairById) {
+		return res.status(403).send('User is not authorized, only Chairs can do this');
 	}
 	next();
 };
