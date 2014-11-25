@@ -26,8 +26,8 @@ module.exports = function(app) {
 
 	app.route('/committees/:committeeId/committeeChair/:userId')
 		.get(committees.getChair)
-		.put(users.requiresLogin, committees.isChairAdmin, committees.setChair)
-		.delete(users.requiresLogin, committees.isChairAdmin, committees.removeChair);
+		.put(users.requiresLogin, committees.isAdmin, committees.setChair)
+		.delete(users.requiresLogin, committees.isAdmin, committees.removeChair);
 
 	app.route('/committees/:committeeId/:scheduleId')
 		.put(committees.addSchedule);

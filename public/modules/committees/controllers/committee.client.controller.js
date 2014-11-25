@@ -4,16 +4,6 @@
 angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParams', '$location', 'Authentication','Committees', '$log', 'Schedules', 'Roles', 'Meetings', '$state',
 	function($scope, $stateParams, $location,Authentication, Committees, $log, Schedules, Roles, Meetings, $state) {
 
-		// $log.debug('Entered CommitteeCtrl');
-		
-		/* Committee Link Permissions */
-		if(Roles.get().admin)
-
-			$scope.committeeTemplates.edit = true;
-
-		$scope.committeeTemplates.current = true;
-		$scope.committeeTemplates.meetings = true;
-		$scope.committeeTemplates.agendaItems = true;
 
 		/* Committee vars to be set */
 		$scope.eventSources = [];
@@ -21,7 +11,11 @@ angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParam
 		/* Committee Data to be Loaded on Page Load */
 		$scope.findCommittee().then(function(){
 			$scope.getChair();
-			if(Authentication.user._id === $scope.committee.chair) $scope.committeeTemplates.edit = true;
+			// $log.debug('Entered CommitteeCtrl');
+			if(Authentication.user._id === $scope.committee.chair || Roles.get().admin) $scope.committeeTemplates.edit = true;
+			$scope.committeeTemplates.current = true;
+			$scope.committeeTemplates.meetings = true;
+			$scope.committeeTemplates.agendaItems = true;
 			$scope.getMembers();
 			$scope.findSchedule();
 

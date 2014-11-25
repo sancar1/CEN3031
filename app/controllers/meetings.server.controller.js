@@ -343,7 +343,7 @@ exports.meetingByID = function(req, res, next, id) {
 exports.isChair = function(req, res, next) {
 	var chairById = req.committee.chair;
 	if (req.user.role !== chairById) {
-		return res.status(403).send('User is not authorized, only Chairs can do this');
+		return res.status(666).send('User is not authorized, only Chairs can do this');
 	}
 	next();
 };

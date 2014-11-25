@@ -478,7 +478,7 @@ exports.committeeByID = function(req, res, next, id) { Committee.findById(id).ex
  */
 exports.isAdmin = function(req, res, next) {
 	if (req.user.role !== 'Admin') {
-		return res.status(403).send('User is not authorized, only Admins can do this');
+		return res.status(666).send('User is not authorized, only Admins can do this');
 	}
 	next();
 };
@@ -488,7 +488,7 @@ exports.isAdmin = function(req, res, next) {
 exports.isChair = function(req, res, next) {
 	var chairById = req.committee.chair;
 	if (req.user.role !== chairById) {
-		return res.status(403).send('User is not authorized, only Chairs can do this');
+		return res.status(666).send('User is not authorized, only Chairs can do this');
 	}
 	next();
 };
@@ -498,8 +498,9 @@ exports.isChair = function(req, res, next) {
  */
 exports.isChairAdmin = function(req, res, next) {
 	var chairById = req.committee.chair;
-	if (!(req.user.role === chairById || req.user.role === 'Admin')) {
-		return res.status(403).send('User is not authorized, only Chairs can do this');
+	var userById = req.user._id.toString();
+	if (chairById !== userById && req.user.role !== 'Admin') {
+		return res.status(666).send('User is not authorized, only Chairs can do this');
 	}
 	next();
 };
