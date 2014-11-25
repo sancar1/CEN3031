@@ -133,7 +133,7 @@ exports.read = function(req, res) {
  * Update a Meeting
  */
 exports.update = function(req, res) {
-
+/*
 	var meeting = req.body ;
 	meeting = _.extend(meeting , req.body);
 	async.waterfall([
@@ -207,6 +207,18 @@ exports.update = function(req, res) {
 			if(err) console.log(err);
 		}
 	);
+*/
+var meeting = req.meeting;
+console.log(meeting);
+	meeting = _.extend(meeting , req.body);
+	meeting.save(function(err) {
+		if (err) {
+			return res.status(400).send({
+				message: errorHandler.getErrorMessage(err)
+			});
+		}
+		else res.jsonp(meeting);
+	});
 };
 
 /**

@@ -36,6 +36,7 @@ angular.module('meetings').controller('MeetingsController', ['$scope', '$statePa
 
 			console.log($scope.committee.members);
 			var meeting = new Meetings.Meetings({
+				committeeId: $stateParams.committeeId,
 				name: this.meeting.name,
 				noteTaker: this.noteTaker.id,
 				members: temp,
