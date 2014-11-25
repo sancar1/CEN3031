@@ -11,11 +11,11 @@ module.exports = function(app) {
 		.post(users.requiresLogin, meetings.isChairAdmin, meetings.create)
 		.put(users.requiresLogin, meetings.isChairAdmin, meetings.update);
 		
-	app.route('/meetings/:meetingId/:committeeId')
+	app.route('/meetings/:committeeId/:meetingId')
 		.get(users.requiresLogin, meetings.read)
 		.delete(users.requiresLogin, meetings.isChair, meetings.delete);
 
-	app.route('/meetings/:meetingId/:committeeId/:userId')
+	app.route('/meetings/:committeeId/:meetingId/:userId')
 		.get(meetings.getNotetaker)
 		.put(users.requiresLogin, meetings.isChair, meetings.setNotetaker)
 		.delete(users.requiresLogin, meetings.isChair, meetings.removeNotetaker);
