@@ -7,7 +7,7 @@ describe('Testing Sign-in functionality', function() {
   it('sign in fail', function() {
     browser.get('http://localhost:3000/');
 
-    element(by.model('credentials.username')).sendKeys('Admin');
+    element(by.model('credentials.username')).sendKeys('Protractor');
     element(by.model('credentials.password')).sendKeys('0');
     element(by.css('[id="loginSubmitButton"]')).click();
 	 browser.waitForAngular();
@@ -20,7 +20,7 @@ describe('Testing Sign-in functionality', function() {
   it('sign in pass',function(){ 
 	  element(by.model('credentials.username')).clear();
 	  element(by.model('credentials.password')).clear();
-     element(by.model('credentials.username')).sendKeys('Admin');
+     element(by.model('credentials.username')).sendKeys('Protractor');
      element(by.model('credentials.password')).sendKeys('123456789');
      element(by.css('[id="loginSubmitButton"]')).click();
 	  browser.waitForAngular();
@@ -43,12 +43,27 @@ describe('It should test the committee creation functionality', function() {
 		expect(ptor.getCurrentUrl()).toEqual('http://localhost:3000/#!/committees/create');  
   });
   it('Should title committee and select admin as chair', function() {
-	  element(by.model('committee.name')).sendKeys('Admin Protractor Test');
-	  element(by.cssContainingText('option','Admin')).click();
+	  element(by.model('committee.name')).sendKeys('Protractor Test');
+	  element(by.cssContainingText('option','Protractor')).click();
  	  	 browser.waitForAngular();
 		 element(by.css('[type="submit"]')).click();
 		 browser.waitForAngular();
 		 expect(ptor.getCurrentUrl()).toContain('#!/committees/');
   });
-  
+  it('Should show page for newly created committee', function(){
+  	var member = element(by.css('[data-ng-bind="member.displayName"]')).getText(0);
+	var chair  = element(by.css('[data-ng-bind="chair.displayName"]')).getText(0);
+	expect(member).toEqual('Protractor Test');
+	expect(chair).toEqual('Protractor Test');	
+  });
 });
+
+// describe('It should test the committee edit functionality', function() {
+// it('Should load up the edit page', function(){
+// 	browser.get('/#/edit');
+// 	browser.waitForAngular();
+// 	var ptor = protractor.getInstance();
+// 	ptor.sleep(1000);
+// 	element(by.model('[committee.description]')).sendKeys('Test Protractor Description');
+// });
+// });
