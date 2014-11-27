@@ -23,6 +23,10 @@ angular.module('core').config(['$stateProvider', '$urlRouterProvider', '$logProv
 			url: '/committees/:committeeId',
 			templateUrl: 'modules/committees/views/view-committee.client.view.html'
 		}).
+		state('createCommittee', {
+			url: '/committees/create',
+			templateUrl: 'modules/committees/views/create-committee.client.view.html'
+		}).
 		state('editCommittee', {
 			url: '/committees/:committeeId/edit',
 			templateUrl: 'modules/committees/views/edit-committee.client.view.html'
