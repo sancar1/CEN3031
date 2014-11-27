@@ -34,6 +34,7 @@ exports.create = function(req, res) {
 	var committee = new Committee(req.body);
 	var chair;
 	committee.user = req.user;
+	console.log('here to create');
 //Waterfall to gaurantee execution order.  
 	async.waterfall([
 		//Save the committee, package into JSON and attempt to return it after waterfall has completed.
@@ -467,7 +468,9 @@ exports.removeChair = function(req, res) {
  * Committee middleware
  */
 exports.committeeByID = function(req, res, next, id) { Committee.findById(id).exec(function(err, committee) {
-		if (err) return next(err);
+		if (err){
+			return next(err);
+		}
 		if (! committee) return next(new Error('Failed to load Committee ' + id));
 		req.committee = committee ;
 		next();
