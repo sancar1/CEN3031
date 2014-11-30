@@ -79,6 +79,7 @@
 				</div>
 		   	</div>
 		</div>
+		<br>
 	   	<div data-ng-show = "authentication.user._id == meeting.noteTaker">
 			<form name="meetingForm" class="form-horizontal" data-ng-submit="updateMeeting(meetingForm.$valid)" novalidate>
 				<fieldset>
@@ -91,9 +92,11 @@
 							<p ng-show="meetingForm.notes.$error.required" class="text-danger">Content is required</p>
 						</div>
 					</div>
-					<div class="form-group">
+					<br>
+					<div>
 						<input type="submit" value="Update" class="btn btn-blue">
 					</div>
+
 					<div data-ng-show="error" class="text-danger">
 						<strong data-ng-bind="error"></strong>
 					</div>
