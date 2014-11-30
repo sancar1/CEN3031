@@ -72,9 +72,10 @@
 						<input type="checkbox" data-ng-model="item.inMeeting">
 						<span data-ng-bind="item.name"></span>
 					</label>
+
 				</div>
 				<div>
-					<button class="btn btn-primary" data-ng-click="saveAgendaItems()">Save Agenda Items</button>
+					<button class="btn btn-blue" data-ng-click="saveAgendaItems()">Save Agenda Items</button>
 				</div>
 		   	</div>
 		</div>
@@ -91,7 +92,7 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<input type="submit" value="Update" class="btn btn-default">
+						<input type="submit" value="Update" class="btn btn-blue">
 					</div>
 					<div data-ng-show="error" class="text-danger">
 						<strong data-ng-bind="error"></strong>
