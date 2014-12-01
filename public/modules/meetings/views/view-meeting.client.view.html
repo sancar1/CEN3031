@@ -84,7 +84,7 @@
 					<div ng-class="{ 'has-error' : submitted && meetingForm.notes.$invalid}">
 						<label class="control-label" for="notes">Notes</label>
 						<div class="controls">
-							<textarea name="notes" data-ng-model="meeting.notes" id="notes" class="form-control" cols="30" rows="10" placeholder="Notes" required></textarea>
+							<textarea name="notes"></textarea>
 						</div>
 						<div ng-show="submitted && meetingForm.notes.$invalid" class="help-block">
 							<p ng-show="meetingForm.notes.$error.required" class="text-danger">Content is required</p>
@@ -100,4 +100,5 @@
 			</form>
 		</div>
 	</section>
+
 </section>
