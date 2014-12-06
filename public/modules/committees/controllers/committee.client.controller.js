@@ -51,7 +51,7 @@ angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParam
 			console.log('here to update');
 			console.log($scope.committee);
 			committee.$update(function() {
-				$location.path('committees/' + committee._id+'/edit');
+				//$location.path('committees/' + committee._id+'/edit');
 				$state.reload();
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
@@ -67,7 +67,7 @@ angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParam
 			});
 			if(passed){
 				Committees.Member.update({userId: user._id,committeeId: committee._id},function(){
-					$location.path('committees/' + committee._id+'/edit');
+					$state.reload();
 				});
 			}
 		};
@@ -79,7 +79,7 @@ angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParam
 				if(members === member._id) passed = 1;
 			});
 			if(passed) Committees.Member.remove({userId: member._id,committeeId: committee._id},function(){
-					$location.path('committees/' + committee._id+'/edit');
+						$state.reload();
 			});
 		};
 
@@ -211,6 +211,7 @@ angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParam
 			var committee = $scope.committee;
 			committee.$remove(function(response) {
 				$location.path('');
+				
 
 			}, function(errorResponse) { 
 				$scope.error = errorResponse.data.message;

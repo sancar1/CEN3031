@@ -65,13 +65,23 @@ it('Should load up the edit page', function(){
 	browser.waitForAngular();
 	element(by.id('description')).sendKeys('Test Protractor Description');
 	browser.waitForAngular();
-	element(by.css('[data-ng-submit="update()"]')).click();
+	element(by.css('[type="submit"]')).click();
 	browser.waitForAngular();
-	expect(element(by.id('description')).getText(0)).toEqual('Test Protractor Description');
+	browser.refresh();
+	ptor.sleep(2000);
+	browser.waitForAngular();
+	expect(element(by.model('comittee.description')).getText()).toEqual('Test Protractor Description');
 });
 
 it('Should have pre-populated the member list with the chair',function(){
 	browser.waitForAngular();
-	expect(element(by.css('[data-ng-bind="member.displayName"]')).getText()).toBe('Protractor Test');
+	expect(element(by.css('[data-ng-bind="member.displayName"]')).getText(0)).toBe('Protractor Test');
+});
+
+
+it('Should delete the committee',function(){
+	
+	element(by.css('[ng-click="deleteCommittee()"]')).click();
+	browser.waitForAngular();
 });
 });
