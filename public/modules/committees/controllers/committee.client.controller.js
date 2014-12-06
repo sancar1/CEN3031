@@ -207,6 +207,15 @@ angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParam
 			});
 		};
 
+		$scope.deleteCommittee = function(){
+			var committee = $scope.committee;
+			committee.$remove(function(response) {
+				$location.path('');
+
+			}, function(errorResponse) { 
+				$scope.error = errorResponse.data.message;
+			});
+		};
 		
 		
 		// $scope.updateAlert = function() {
