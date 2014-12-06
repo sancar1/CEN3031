@@ -58,12 +58,20 @@ describe('It should test the committee creation functionality', function() {
   });
 });
 
-// describe('It should test the committee edit functionality', function() {
-// it('Should load up the edit page', function(){
-// 	browser.get('/#/edit');
-// 	browser.waitForAngular();
-// 	var ptor = protractor.getInstance();
-// 	ptor.sleep(1000);
-// 	element(by.model('[committee.description]')).sendKeys('Test Protractor Description');
-// });
-// });
+describe('It should test the committee edit functionality', function() {
+it('Should load up the edit page', function(){
+	browser.waitForAngular();
+	element(by.css('[ng-if="committeeTemplates.edit"]')).click();
+	browser.waitForAngular();
+	element(by.id('description')).sendKeys('Test Protractor Description');
+	browser.waitForAngular();
+	element(by.css('[data-ng-submit="update()"]')).click();
+	browser.waitForAngular();
+	expect(element(by.id('description')).getText(0)).toEqual('Test Protractor Description');
+});
+
+it('Should have pre-populated the member list with the chair',function(){
+	browser.waitForAngular();
+	expect(element(by.css('[data-ng-bind="member.displayName"]')).getText()).toBe('Protractor Test');
+});
+});
