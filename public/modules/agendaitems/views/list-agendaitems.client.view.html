@@ -3,11 +3,11 @@
         <div class="page-header">
             <h1>Agenda Items</h1>
             <div>
-            <a ui-sref="createAgendaItem({committeeId: committee._id})">Create Agenda Item</a>
+            <a ui-sref="createAgendaItem()">Create Agenda Item</a>
             </div>
         </div>
         <div class="list-group">
-            <a data-ng-repeat="item in committee.agendaItems" data-ng-href="#!/committees/{{committee._id}}/agendaItems/{{item._id}}" class="list-group-item">
+            <a data-ng-repeat="item in agendaitems" data-ng-href="#!/agendaitems/{{item._id}}/agendaItems/{{item._id}}" class="list-group-item">
                 <h3 class="list-group-item-heading" data-ng-bind="item.name"></h3>
                 <small class="list-group-item-text">
                 <small>
