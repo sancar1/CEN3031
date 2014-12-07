@@ -236,6 +236,8 @@ angular.module('meetings').controller('MeetingsController', ['$scope', '$statePa
 
         $scope.saveAttendance = function() {
         	var meeting = $scope.meeting ;
+        	console.log('Current Meeting Object:');
+        	console.log($scope.meeting);
         	var now = new Date();
 
         	var currentTime = {
