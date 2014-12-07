@@ -90,13 +90,13 @@ angular.module('agendaitems').controller('AgendaItemsCtrl', ['$scope', '$statePa
 
 		$scope.uncheck = function(item){
 			if(item.reject === false){
-				item.Public = $scope.oldPublic;
-				item.voteable = $scope.oldVoteable;
+				item.Public = item.oldPublic;
+				item.voteable = item.oldVoteable;
 			}
 			else{
-				$scope.oldPublic = item.Public;
-				$scope.oldVoteable = item.voteable;
-				item.Public = false;
+				item.oldPublic = item.Public;
+				item.oldVoteable = item.voteable;
+				item.Public = false; 
 				item.voteable = false;
 			}
 		};
