@@ -67,9 +67,9 @@ angular.module('agendaitems').controller('AgendaItemsCtrl', ['$scope', '$statePa
 		};
 
 		// Find a list of Agendaitems
-		$scope.find = function() {
-			$scope.agendaitems = Agendaitems.query();
-		};
+		// $scope.find = function() {
+		// 	$scope.agendaitems = Agendaitems.query();
+		// };
 
 		// Find existing Agendaitem
 		$scope.findOne = function() {

@@ -287,27 +287,27 @@ angular.module('meetings').controller('MeetingsController', ['$scope', '$statePa
         	console.log('meeting object NOW!');
         	console.log($scope.meeting);
         	var meeting = $scope.meeting ;
-        	console.log($scope.committee.agendaItems.length);
-        	for(var i = 0; i < $scope.committee.agendaItems.length; i++){
-        		var index = -1;
-				for(var j = 0; j < meeting.agendaItems.length; j++){
-					if($scope.committee.agendaItems[i]._id === meeting.agendaItems[j]._id){
-						index = j;
-					}
-				}
+        	console.log($scope.agendaitems.length);
+   //      	for(var i = 0; i < $scope.agendaitems.length; i++){
+   //      		var index = -1;
+			// 	for(var j = 0; j < meeting.agendaItems.length; j++){
+			// 		if($scope.agendaitems[i]._id === meeting.agendaItems[j]._id){
+			// 			index = j;
+			// 		}
+			// 	}
 
-				if($scope.committee.agendaItems[i].inMeeting && index === -1) {
-					console.log('inside inMeeting');
-					meeting.agendaItems.push($scope.committee.agendaItems[i]);
-				}
-				else if(index !== -1 && !$scope.committee.agendaItems[i].inMeeting) {
-					var length = meeting.agendaItems.length;
-					meeting.agendaItems.splice(index, 1);
-					console.log(meeting.agendaItems);
-				}
+			// 	if($scope.committee.agendaItems[i].inMeeting && index === -1) {
+			// 		console.log('inside inMeeting');
+			// 		meeting.agendaItems.push($scope.committee.agendaItems[i]);
+			// 	}
+			// 	else if(index !== -1 && !$scope.committee.agendaItems[i].inMeeting) {
+			// 		var length = meeting.agendaItems.length;
+			// 		meeting.agendaItems.splice(index, 1);
+			// 		console.log(meeting.agendaItems);
+			// 	}
 
 
-			}
+			// }
 
 			console.log('agenda items to be saved');
 			console.log(meeting.agendaItems);

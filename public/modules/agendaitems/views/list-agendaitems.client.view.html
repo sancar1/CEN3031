@@ -1,15 +1,34 @@
-<section data-ng-controller="AgendaItemsCtrl" data-ng-init="find()">
-    <div>
-        <div class="page-header">
-            <h1>Agenda Items</h1>
-            <div>
-            <a ui-sref="createAgendaItem()">Create Agenda Item</a>
+<section data-ng-controller="CommitteeCtrl">
+    <section data-ng-controller="AgendaItemsCtrl">
+        <div>
+            <div class="page-header">
+                <h1>Agenda Items</h1>
+                <div>
+                <a ui-sref="createAgendaItem()">Create Agenda Item</a>
+                </div>
+            </div>
+            <div class="list-group">
+                <a data-ng-repeat="item in agendaitems" data-ng-href="#!/agendaitems/{{item._id}}/agendaItems/{{item._id}}" class="list-group-item">
+                    <h3 class="list-group-item-heading" data-ng-bind="item.name"></h3>
+                    <small class="list-group-item-text">
+                    <small>
+                        Created on
+                        <span data-ng-bind="committee.created | date:'medium'"></span>
+                        by
+                        <span data-ng-bind="committee.user.displayName"></span>
+                    </small>
+                    </small>
+                </a>
             </div>
         </div>
+<<<<<<< Updated upstream
         <div class="list-group">
             <a data-ng-repeat="item in agendaitems" data-ng-href="#!/agendaitems/{{item._id}}/agendaItems/{{item._id}}" class="list-group-item">
                 <h3 class="list-group-item-heading" data-ng-bind="item.name"></h3>
             </a>
         </div>
     </div>
+=======
+    </section>
+>>>>>>> Stashed changes
 </section>
