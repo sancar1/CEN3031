@@ -244,7 +244,7 @@ exports.scheduleByID = function(req, res, next, id) { Schedule.findById(id).popu
  * Schedule authorization middleware
  */
 exports.hasAuthorization = function(req, res, next) {
-	if (req.schedule.user.id !== req.user.id) {
+	if (req.user.role !== 'Admin') {
 		return res.status(403).send('User is not authorized');
 	}
 	next();
