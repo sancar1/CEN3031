@@ -23,7 +23,8 @@ var AgendaitemSchema = new Schema({
 	votesNo: Number,
 	votesAbstain: Number,
 	meetings: [String],
-	accept: Boolean
+	committee: String,
+	status: Number
 		
 });
 
