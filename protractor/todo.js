@@ -1,3 +1,27 @@
+function selectOption(element, item, milliseconds) {
+    var desiredOption;
+    element.findElements(by.tagName('option'))
+    .then(function findMatchingOption(options) {
+        options.some(function (option) {
+            option.getText().then(function doesOptionMatch(text) {
+                if (text.indexOf(item) != -1) {
+                    desiredOption = option;
+                    return true;
+                }
+            });
+        });
+    })
+    .then(function clickOption() {
+        if (desiredOption) {
+            desiredOption.click();
+        }
+    });
+    if (typeof milliseconds != 'undefined') {
+        browser.sleep(milliseconds);
+    }
+};
+
+
 describe('Testing Sign-in functionality', function() {
   
   beforeEach(function(){
@@ -43,7 +67,7 @@ describe('It should test the committee creation functionality', function() {
 		expect(ptor.getCurrentUrl()).toEqual('http://localhost:3000/#!/committees/create');  
   });
   it('Should title committee and select admin as chair', function() {
-	  element(by.model('committee.name')).sendKeys('Protractor Test');
+	  element(by.model('committee.name')).sendKeys('Protractor Test New');
 	  element(by.cssContainingText('option','Protractor')).click();
  	  	 browser.waitForAngular();
 		 element(by.css('[type="submit"]')).click();
@@ -70,17 +94,28 @@ it('Should load up the edit page', function(){
 	browser.refresh();
 	ptor.sleep(2000);
 	browser.waitForAngular();
-	expect(element(by.model('comittee.description')).getText()).toEqual('Test Protractor Description');
+	expect(element(by.model('committee.description')).getText()).toEqual('Test Protractor Description');
 });
 
 it('Should have pre-populated the member list with the chair',function(){
 	browser.waitForAngular();
 	expect(element(by.css('[data-ng-bind="member.displayName"]')).getText(0)).toBe('Protractor Test');
 });
+it('Should select protractor 2 to add as a member',function(){
+	element(by.id('addMember')).click();
+	ptor.sleep(2000);
+	element(by.xpath("//*[contains(text(),'Protractor Test 2')]")).click();
+	browser.waitForAngular();
+	browser.refresh();
+	element.all(by.css('[data-ng-bind="member.displayName"]')).then(function(arr){
+		expect(arr[1].getText()).toBe('Protractor Test 2');
+	});
+	//expect(element.all(by.css('[data-ng-bind="member.displayName"]')).getText()).toBe('Protractor Test 2');
+});
 
 
 it('Should delete the committee',function(){
-	
+
 	element(by.css('[ng-click="deleteCommittee()"]')).click();
 	browser.waitForAngular();
 });
