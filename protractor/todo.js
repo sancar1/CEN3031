@@ -116,7 +116,7 @@ it('Should select protractor 2 to remove as a member',function(){
 	element(by.xpath("/html/body/div/div/div[2]/div/section/section[1]/div[2]/form/section/div[2]/ul/li/a[2]/span")).click();
 	browser.waitForAngular();
 	browser.refresh();
-	
+
 	element.all(by.css('[data-ng-bind="member.displayName"]')).then(function(arr){
 		expect(arr[1].getText()).toBe('');
 	});
@@ -130,23 +130,73 @@ it('Should re-add protractor 2 and move to meetings page',function(){
 		expect(arr[1].getText()).toBe('Protractor Test 2');
 	element(by.css('[ng-if="committeeTemplates.meetings"]')).click();
 			browser.waitForAngular();
+			expect(ptor.getCurrentUrl()).toContain('/meetings');
 	});
 	});
-
-
-// it('Should delete the committee',function(){
-//
-// 	element(by.css('[ng-click="deleteCommittee()"]')).click();
-// 	browser.waitForAngular();
-// });
 });
-
-
-
 
 //Tests for Meetings Page
 describe('It should test the Meetings functionality', function() {
-it('Should load up the create meetings page', function(){
-	
+it('Should show create button for admin', function(){
+	expect(element(by.id('createMeeting')).isPresent()).toBe(true);
+});
+it('Should click on Create Meeting and redirect',function(){
+	element(by.id('createMeeting')).click();
+	expect(ptor.getCurrentUrl()).toContain('/meetings/create');	
+});
+it('Should not allow to create if name not typed',function(){
+	element(by.cssContainingText('option','Protractor Test 1')).click();
+	element(by.css('[type="submit"]')).click();
+	browser.waitForAngular();
+	element.all(by.css('[data-ng-bind="error"]')).then(function(arr){
+		expect(arr[0].getText()).toBe('Please fill meeting name');
+	});
+});
+it('Should open the date picker popup',function(){
+	//expect(element(by.css('[class="btn btn-sm btn-info ng-binding"]')).isPresent()).toBe(false);
+	ptor.sleep(1000);
+	element(by.css('[class="glyphicon glyphicon-calendar"]')).click();
+	browser.waitForAngular();
+	expect(element(by.css('[class="btn btn-sm btn-info ng-binding"]')).isPresent()).toBe(true);
+	ptor.actions().sendKeys(protractor.Key.ESCAPE).perform();
+	browser.waitForAngular();
+});
+it('Should create a proper meeting and redirect',function(){
+	element(by.model('myStartTime')).element(by.model('hours')).clear();
+	element(by.model('myStartTime')).element(by.model('hours')).sendKeys('10');
+	element(by.model('myStartTime')).element(by.model('minutes')).clear();
+	element(by.model('myStartTime')).element(by.model('minutes')).sendKeys('30');
+	element(by.model('myEndTime')).element(by.model('hours')).clear();
+	element(by.model('myEndTime')).element(by.model('hours')).sendKeys('');
+	element(by.model('myEndTime')).element(by.model('minutes')).clear();
+	element(by.model('myEndTime')).element(by.model('minutes')).sendKeys('30');
+});
+it('Should let the user use the arrows to change the time',function(){
+	//Start Hours
+	element(by.model('myStartTime')).element(by.css('[ng-click="incrementHours()"]')).click();
+	expect(element(by.model('myStartTime')).element(by.model('hours')).getAttribute('value')).toBe('11');
+	element(by.model('myStartTime')).element(by.css('[ng-click="decrementHours()"]')).click();
+	expect(element(by.model('myStartTime')).element(by.model('hours')).getAttribute('value')).toBe('10');
+	//Start Minutes
+	element(by.model('myStartTime')).element(by.css('[ng-click="incrementMinutes()"]')).click();
+	expect(element(by.model('myStartTime')).element(by.model('minutes')).getAttribute('value')).toBe('45');
+	element(by.model('myStartTime')).element(by.css('[ng-click="decrementMinutes()"]')).click();
+	expect(element(by.model('myStartTime')).element(by.model('minutes')).getAttribute('value')).toBe('30');
+	//End Hours
+	element(by.model('myEndTime')).element(by.css('[ng-click="incrementHours()"]')).click();
+	expect(element(by.model('myEndTime')).element(by.model('hours')).getAttribute('value')).toBe('12');
+	element(by.model('myEndTime')).element(by.css('[ng-click="decrementHours()"]')).click();
+	expect(element(by.model('myEndTime')).element(by.model('hours')).getAttribute('value')).toBe('11');
+	//End Minutes
+	element(by.model('myEndTime')).element(by.css('[ng-click="incrementMinutes()"]')).click();
+	expect(element(by.model('myEndTime')).element(by.model('minutes')).getAttribute('value')).toBe('45');
+	element(by.model('myEndTime')).element(by.css('[ng-click="decrementMinutes()"]')).click();
+	expect(element(by.model('myEndTime')).element(by.model('minutes')).getAttribute('value')).toBe('30');
+});
+it('Should delete the committee',function(){
+	element(by.css('[ng-if="committeeTemplates.edit"]')).click();
+			browser.waitForAngular();
+	element(by.css('[ng-click="deleteCommittee()"]')).click();
+	browser.waitForAngular();
 });
 });

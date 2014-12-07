@@ -3,7 +3,7 @@
         <div class="page-header">
             <h1>Meetings</h1>
               <div>
-            <a ui-sref="createMeeting({committeeId: committee._id}) "data-ng-show="authentication.user._id === committee.chair || authentication.user.role === 'Admin'">Create Meeting</a>
+            <a id="createMeeting" ui-sref="createMeeting({committeeId: committee._id}) "data-ng-show="authentication.user._id === committee.chair || authentication.user.role === 'Admin'">Create Meeting</a>
             </div>
         </div>
         <div class="list-group">
