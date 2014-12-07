@@ -41,8 +41,12 @@ angular.module('core').config(['$stateProvider', '$urlRouterProvider', '$logProv
 			templateUrl: 'modules/meetings/views/list-meetings.client.view.html'
 		}).
 		state('listAgendaItems', {
-			url: '/committees/:committeeId/agendaItems',
+			url: '/agendaItems',
 			templateUrl: 'modules/committees/views/agendaItems/views/list-agenda-items.client.view.html'
+		}).
+		state('reviewAgendaItems', {
+			url: '/committees/:committeeId/agendaItems',
+			templateUrl: 'modules/agendaitems/views/review-agenda-items.client.view.html'
 		}).
 		state('createAgendaItem', {
 			url: '/committees/:committeeId/agendaItems/create',
