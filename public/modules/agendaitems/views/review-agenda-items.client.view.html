@@ -1,13 +1,19 @@
-<section data-ng-if="authentication.user">
-	<div>
-		<div class="page-header">
-	        <h1>Agenda Item Approval</h1>
-	    </div>
-	    <div class="list-group">
-	        <a data-ng-repeat="committee in committees" data-ng-show="viewCommittee(committee)" data-ng-href="#!/committees/{{committee._id}}" class="list-group-item">
-				<h3 class="list-group-item-heading" data-ng-bind="committee.name"></h3>
-				<h5 class="list-group-item-heading" data-ng-bind="committee.description"></h5>
-	        </a>
-	    </div>
-	</div>
+<section data-ng-controller="CommitteeCtrl">
+	<section data-ng-if="authentication.user" data-ng-controller="AgendaItemsCtrl">
+		<div>
+			<div class="page-header">
+		        <h1>Agenda Item Approval</h1>
+		    </div>
+		    <div>
+		        <table style="width:100%">
+		        	<tr>
+			        	<th>Agenda Item</th>
+			        	<th>Accept-D</th>
+			        	<th>Accept-I</th>
+			        	<th>Reject</th>
+			        </tr>
+		        </table>
+		    </div>
+		</div>
+	</section>
 </section>
