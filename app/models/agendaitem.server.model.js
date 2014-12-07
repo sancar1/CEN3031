@@ -17,14 +17,29 @@ var AgendaitemSchema = new Schema({
 		trim: true
 	},
 	owner: String,
-	Private: Boolean,
+	Private: {
+		type: Boolean,
+		default: true
+	},
 	voteable: Boolean,
-	votesYes: Number,
-	votesNo: Number,
-	votesAbstain: Number,
+	votesYes: {
+		type: Number,
+		default: 0
+	},
+	votesNo: {
+		type: Number,
+		default: 0
+	},
+	votesAbstain: {
+		type: Number,
+		default: 0
+	},
 	meetings: [String],
 	committee: String,
-	status: Number,
+	status: {
+		type: Number,
+		default: 0
+	},
 	description: String
 		
 });
