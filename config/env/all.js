@@ -31,6 +31,7 @@ module.exports = {
 				'public/lib/moment/moment.js',
 				'public/lib/fullcalendar/dist/fullcalendar.js',
 				'public/lib/angular-ui-calendar/src/calendar.js',
+				'public/lib/tinymce/tinymce.min.js'
 			]
 		},
 		css: [
