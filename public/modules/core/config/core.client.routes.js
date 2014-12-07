@@ -42,15 +42,15 @@ angular.module('core').config(['$stateProvider', '$urlRouterProvider', '$logProv
 		}).
 		state('listAgendaItems', {
 			url: '/agendaItems',
-			templateUrl: 'modules/committees/views/agendaItems/views/list-agenda-items.client.view.html'
+			templateUrl: 'modules/agendaitems/views/list-agendaitems.client.view.html'
 		}).
 		state('reviewAgendaItems', {
 			url: '/committees/:committeeId/agendaItems',
 			templateUrl: 'modules/agendaitems/views/review-agenda-items.client.view.html'
 		}).
 		state('createAgendaItem', {
-			url: '/committees/:committeeId/agendaItems/create',
-			templateUrl: 'modules/committees/views/agendaItems/views/create-agenda-item.client.view.html'
+			url: '/agendaItems/create',
+			templateUrl: 'modules/agendaitems/views/create-agendaitem.client.view.html'
 		});
 	}
 ]);
