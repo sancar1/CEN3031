@@ -121,10 +121,32 @@ it('Should select protractor 2 to remove as a member',function(){
 		expect(arr[1].getText()).toBe('');
 	});
 });
-
-it('Should delete the committee',function(){
-
-	element(by.css('[ng-click="deleteCommittee()"]')).click();
+it('Should re-add protractor 2 and move to meetings page',function(){
+	element(by.id('addMember')).click();
+	element(by.xpath("//*[contains(text(),'Protractor Test 2')]")).click();
 	browser.waitForAngular();
+	browser.refresh();
+	element.all(by.css('[data-ng-bind="member.displayName"]')).then(function(arr){
+		expect(arr[1].getText()).toBe('Protractor Test 2');
+	element(by.css('[ng-if="committeeTemplates.meetings"]')).click();
+			browser.waitForAngular();
+	});
+	});
+
+
+// it('Should delete the committee',function(){
+//
+// 	element(by.css('[ng-click="deleteCommittee()"]')).click();
+// 	browser.waitForAngular();
+// });
+});
+
+
+
+
+//Tests for Meetings Page
+describe('It should test the Meetings functionality', function() {
+it('Should load up the create meetings page', function(){
+	
 });
 });

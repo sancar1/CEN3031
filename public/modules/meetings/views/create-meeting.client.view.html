@@ -12,7 +12,7 @@
                             <input type="text" data-ng-model="meeting.name" data-ng-init="meeting.name=''" id="name" class="form-control" placeholder="Name">
                                 <p>
                                     <label class="control-label" for="noteTaker">Note Taker</label>
-                                    <select data-ng-model="noteTaker.id" id="noteTaker" class="form-control userSelect" ng-options="member._id as member.firstName for member in members"></select><br>
+                                    <select data-ng-model="noteTaker.id" id="noteTaker" class="form-control userSelect" ng-options="member._id as member.firstName + ' ' + member.lastName for member in members"></select><br>
                                 </p>
                         </div>
                     </div>
