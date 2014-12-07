@@ -31,7 +31,7 @@ describe('Testing Sign-in functionality', function() {
   it('sign in fail', function() {
     browser.get('http://localhost:3000/');
 
-    element(by.model('credentials.username')).sendKeys('Protractor');
+    element(by.model('credentials.username')).sendKeys('Protractor1');
     element(by.model('credentials.password')).sendKeys('0');
     element(by.css('[id="loginSubmitButton"]')).click();
 	 browser.waitForAngular();
@@ -44,7 +44,7 @@ describe('Testing Sign-in functionality', function() {
   it('sign in pass',function(){ 
 	  element(by.model('credentials.username')).clear();
 	  element(by.model('credentials.password')).clear();
-     element(by.model('credentials.username')).sendKeys('Protractor');
+     element(by.model('credentials.username')).sendKeys('Protractor1');
      element(by.model('credentials.password')).sendKeys('123456789');
      element(by.css('[id="loginSubmitButton"]')).click();
 	  browser.waitForAngular();
@@ -67,18 +67,19 @@ describe('It should test the committee creation functionality', function() {
 		expect(ptor.getCurrentUrl()).toEqual('http://localhost:3000/#!/committees/create');  
   });
   it('Should title committee and select admin as chair', function() {
-	  element(by.model('committee.name')).sendKeys('Protractor Test New');
-	  element(by.cssContainingText('option','Protractor')).click();
+	  element(by.model('committee.name')).sendKeys('Protractor Test');
+	  element(by.cssContainingText('option','Protractor Test 1')).click();
  	  	 browser.waitForAngular();
 		 element(by.css('[type="submit"]')).click();
 		 browser.waitForAngular();
 		 expect(ptor.getCurrentUrl()).toContain('#!/committees/');
   });
   it('Should show page for newly created committee', function(){
-  	var member = element(by.css('[data-ng-bind="member.displayName"]')).getText(0);
+  	element.all(by.css('[data-ng-bind="member.displayName"]')).then(function(arr){
+		expect(arr[0].getText()).toBe('Protractor Test 1');});
 	var chair  = element(by.css('[data-ng-bind="chair.displayName"]')).getText(0);
-	expect(member).toEqual('Protractor Test');
-	expect(chair).toEqual('Protractor Test');	
+	
+	expect(chair).toEqual('Protractor Test 1');	
   });
 });
 
@@ -92,27 +93,34 @@ it('Should load up the edit page', function(){
 	element(by.css('[type="submit"]')).click();
 	browser.waitForAngular();
 	browser.refresh();
-	ptor.sleep(2000);
-	browser.waitForAngular();
-	expect(element(by.model('committee.description')).getText()).toEqual('Test Protractor Description');
+	expect(element(by.model('committee.description')).getAttribute('value')).toEqual('Test Protractor Description');
 });
 
 it('Should have pre-populated the member list with the chair',function(){
 	browser.waitForAngular();
-	expect(element(by.css('[data-ng-bind="member.displayName"]')).getText(0)).toBe('Protractor Test');
+	element.all(by.css('[data-ng-bind="member.displayName"]')).then(function(arr){
+		expect(arr[0].getText()).toBe('Protractor Test 1');});
 });
 it('Should select protractor 2 to add as a member',function(){
 	element(by.id('addMember')).click();
-	ptor.sleep(2000);
 	element(by.xpath("//*[contains(text(),'Protractor Test 2')]")).click();
 	browser.waitForAngular();
 	browser.refresh();
 	element.all(by.css('[data-ng-bind="member.displayName"]')).then(function(arr){
 		expect(arr[1].getText()).toBe('Protractor Test 2');
 	});
-	//expect(element.all(by.css('[data-ng-bind="member.displayName"]')).getText()).toBe('Protractor Test 2');
 });
+it('Should select protractor 2 to remove as a member',function(){
+	element(by.id('deleteMember')).click();
 
+	element(by.xpath("/html/body/div/div/div[2]/div/section/section[1]/div[2]/form/section/div[2]/ul/li/a[2]/span")).click();
+	browser.waitForAngular();
+	browser.refresh();
+	
+	element.all(by.css('[data-ng-bind="member.displayName"]')).then(function(arr){
+		expect(arr[1].getText()).toBe('');
+	});
+});
 
 it('Should delete the committee',function(){
 
