@@ -1,8 +1,8 @@
 'use strict';
 
 // Agendaitems controller
-angular.module('agendaitems').controller('AgendaItemsCtrl', ['$scope', '$stateParams', '$location', 'Authentication', 'Agendaitems',
-	function($scope, $stateParams, $location, Authentication, Agendaitems ) {
+angular.module('agendaitems').controller('AgendaItemsCtrl', ['$scope', '$stateParams', '$location', 'Authentication', 'Agendaitems', 'Roles',
+	function($scope, $stateParams, $location, Authentication, Agendaitems, Roles ) {
 		$scope.authentication = Authentication;
 
 		// Create new Agendaitem
@@ -76,6 +76,20 @@ angular.module('agendaitems').controller('AgendaItemsCtrl', ['$scope', '$statePa
 			$scope.agendaitem = Agendaitems.get({ 
 				agendaitemId: $stateParams.agendaitemId
 			});
+		};
+
+		$scope.viewItemsToApprove = function(item){
+			if($scope.committee._id === item.committee){
+				if(Roles.get().admin === true || item.status === 0){
+					return true;
+				}
+				return false;
+			}
+			return false;
+		};
+
+		$scope.updateApprovals = function(){
+			console.log($scope.agendaitems);
 		};
 	}
 ]);
