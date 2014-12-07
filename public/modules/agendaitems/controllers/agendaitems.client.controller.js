@@ -88,6 +88,14 @@ angular.module('agendaitems').controller('AgendaItemsCtrl', ['$scope', '$statePa
 			return false;
 		};
 
+		$scope.uncheck = function(item){
+			var index = $scope.agendaitems.indexOf(item);
+			var tempObj = $scope.agendaitems[index];
+
+			tempObj.Public = false;
+			tempObj.voteable = false;
+		};
+
 		$scope.updateApprovals = function(){
 			console.log($scope.agendaitems);
 		};

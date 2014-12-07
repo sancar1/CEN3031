@@ -14,9 +14,9 @@
 			        </tr>
 			        <tr data-ng-repeat="item in agendaitems" data-ng-if="viewItemsToApprove(item)">
 			        	<td data-ng-bind="item.name"></td>
-<td><label><input type="checkbox"><span></span></label></td>
-			        	<td><input type="checkbox" data-ng-model="item.voteable"></td>
-			        	<td><input type="checkbox" data-ng-model="item.reject"></td>
+						<td><label><input type="checkbox" data-ng-disabled="item.reject" data-ng-model="item.Public"><span></span></label></td>
+			        	<td><label><input type="checkbox" data-ng-disabled="item.reject" data-ng-model="item.voteable"><span></span></label></td>
+			        	<td><label><input type="checkbox" data-ng-change="uncheck()"data-ng-model="item.reject"><span></span></label></td>
 			        </tr>
 		        </table>
 		    </div>
