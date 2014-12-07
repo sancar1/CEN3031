@@ -6,9 +6,15 @@
         <form class="form-horizontal" data-ng-submit="createAgendaItem()" novalidate>
             <fieldset>
                 <div class="form-group" ng-class="{ 'has-error': agendaForm.name.$dirty && agendaForm.name.$invalid }">
-                    <label class="control-label" for="name">Name</label>
-                    <div class="controls">
-                        <input type="text" data-ng-model="agendaItem.name" data-ng-init="agendaItem.name=''" id="name" class="form-control" placeholder="Name">
+                    <div>
+                        <label class="control-label" for="name">Name</label>
+                        <div class="controls">
+                            <input type="text" data-ng-model="agendaItem.name" data-ng-init="agendaItem.name=''" id="name" class="form-control" placeholder="Name">
+                        <div>
+                    </div>
+                    <div>
+                        <label class="control-label" for="committee">Committee to Send to</label>
+                        <select data-ng-model="agendaItem.committee" id="committee" class="form-control" ng-options="committee._id as committee.name for committee in committees"></select><br>
                     </div>
                 </div>
                 <div class="form-group">

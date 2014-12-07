@@ -28,7 +28,7 @@ angular.module('agendaitems').controller('AgendaItemsCtrl', ['$scope', '$statePa
 			var agendaObj = new Agendaitems({
 				name: $scope.agendaItem.name,
 				owner: $scope.currentUser._id,
-				committee: null,
+				committee: $scope.agendaItem.committee,
 				description: null
 			});
 			agendaObj.$save(function() {
