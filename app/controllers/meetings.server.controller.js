@@ -133,9 +133,8 @@ exports.read = function(req, res) {
  * Update a Meeting
  */
 exports.update = function(req, res) {
-/*
-	var meeting = req.body ;
-	meeting = _.extend(meeting , req.body);
+	var meeting = req.body;
+	console.log(meeting);
 	async.waterfall([
 		//Find the committee
 		function(done){
@@ -207,19 +206,9 @@ exports.update = function(req, res) {
 			if(err) console.log(err);
 		}
 	);
-*/
-var meeting = req.meeting;
-console.log(meeting);
-	meeting = _.extend(meeting , req.body);
-	meeting.save(function(err) {
-		if (err) {
-			return res.status(400).send({
-				message: errorHandler.getErrorMessage(err)
-			});
-		}
-		else res.jsonp(meeting);
-	});
+
 };
+
 
 /**
  * Delete an Meeting
@@ -363,10 +352,12 @@ exports.isChair = function(req, res, next) {
  * Committee authorization middleware, are you both?
  */
 exports.isChairAdmin = function(req, res, next) {
-	var chairById = req.params.chair;
+	var chairById = req.committee.chair.toString();
 	var userById = req.user._id.toString();
+	console.log(chairById);
+	console.log(userById);
 	if (chairById !== userById && req.user.role !== 'Admin') {
-		return res.status(666).send('User is not authorized, only Chairs can do this');
+		return res.status(667).send('User is not authorized, only Chairs can do this');
 	}
 	next();
 };

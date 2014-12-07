@@ -32,6 +32,7 @@ var MeetingSchema = new Schema({
 		_id: String,
 		resolved: Boolean
 	}],
+	committeeId: String,
 	membersPresent: Number,
 	noteTaker: {
 	type: String,
