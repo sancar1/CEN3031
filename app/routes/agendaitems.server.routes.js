@@ -5,7 +5,7 @@ module.exports = function(app) {
 	var agendaitems = require('../../app/controllers/agendaitems');
 
 	// Agendaitems Routes
-	app.route('/agendaitems')
+	app.route('/agendaItems')
 		.get(agendaitems.list)
 		.post(users.requiresLogin, agendaitems.create);
 

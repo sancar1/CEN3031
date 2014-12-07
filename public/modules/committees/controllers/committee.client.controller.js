@@ -12,10 +12,12 @@ angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParam
 		$scope.findCommittee().then(function(){
 			$scope.getChair();
 			// $log.debug('Entered CommitteeCtrl');
-			if(Authentication.user._id === $scope.committee.chair || Roles.get().admin) $scope.committeeTemplates.edit = true;
+			if(Authentication.user._id === $scope.committee.chair || Roles.get().admin){ 
+				$scope.committeeTemplates.edit = true;
+				$scope.committeeTemplates.reviewAgendaItems = true;
+			}
 			$scope.committeeTemplates.current = true;
 			$scope.committeeTemplates.meetings = true;
-			$scope.committeeTemplates.agendaItems = true;
 			$scope.getMembers();
 			$scope.findSchedule();
 
@@ -189,40 +191,49 @@ angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParam
 			return randomString;
 		};
 
-		$scope.createAgendaItem = function() {
-			var committee = $scope.committee;
-			var objId = $scope.randomString();
-			var agendaObj = {
-				name: $scope.agendaItem.name,
-				owner: $scope.currentUser._id,
-				_id: objId,
-				resolved: false
-			};
-			committee.agendaItems.push(agendaObj);
-			committee.$update(function() {
-				$location.path('committees/' + $scope.committee._id+'/agendaItems');
-				//$state.reload();
-			}, function(errorResponse) {
-				$scope.error = errorResponse.data.message;
-			});
-		};
+		// $scope.createAgendaItem = function() {
+		// 	var committee = $scope.committee;
+		// 	var objId = $scope.randomString();
+		// 	var agendaObj = {
+		// 		name: $scope.agendaItem.name,
+		// 		owner: $scope.currentUser._id,
+		// 		_id: objId,
+		// 		resolved: false
+		// 	};
+		// 	committee.agendaItems.push(agendaObj);
+		// 	committee.$update(function() {
+		// 		$location.path('committees/' + $scope.committee._id+'/agendaItems');
+		// 		//$state.reload();
+		// 	}, function(errorResponse) {
+		// 		$scope.error = errorResponse.data.message;
+		// 	});
+		// };
 
 		$scope.deleteCommittee = function(){
 			var committee = $scope.committee;
 			var schedule = $scope.schedule;
-			console.log(schedule);
-			schedule.$remove(function(response) {
-
-			}, function(errorResponse) { 
-				$scope.error = errorResponse.data.message;
-			});
-			committee.$remove(function(response) {
-				$location.path('');
-
-			}, function(errorResponse) { 
-				$scope.error = errorResponse.data.message;
-			});
-		};
+			var meeting = $scope.meetings[0];
+			
+				meeting.$remove(function(response) {
+				
+							}, function(errorResponse) {
+								$scope.error = errorResponse.data.message;
+							});
+						};
+			
+			// console.log(schedule);
+// 			schedule.$remove(function(response) {
+//
+// 			}, function(errorResponse) {
+// 				$scope.error = errorResponse.data.message;
+// 			});
+// 			committee.$remove(function(response) {
+// 				$location.path('');
+//
+// 			}, function(errorResponse) {
+// 				$scope.erro[0r = errorResponse.data.message;
+// 			});
+		
 		
 		
 		// $scope.updateAlert = function() {
@@ -239,7 +250,7 @@ angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParam
 			$scope.committeeTemplates.current = false;
 			$scope.committeeTemplates.edit = false;
 			$scope.committeeTemplates.meetings = false;
-			$scope.committeeTemplates.agendaItems = false;
+			$scope.committeeTemplates.reviewAgendaItems = false;
 		});
 
 	}

@@ -32,10 +32,12 @@ var MeetingSchema = new Schema({
 		_id: String,
 		resolved: Boolean
 	}],
+	committeeId: String,
 	membersPresent: Number,
 	noteTaker: {
-		type: String,
-		required: 'Please select a note taker'
+	type: String,
+	default:'',
+	required: 'Please select a note taker'
 	}
 });
 

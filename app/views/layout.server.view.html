@@ -64,7 +64,8 @@
 					  	<!-- <li ui-sref-active="active" ng-if="committeeTemplates.attendance"><a ui-sref="attendance">Attendance</a></li>
 					  	<li ui-sref-active="active" ng-if="committeeTemplates.schedule"><a ui-sref="schedule">Schedule</a></li> -->
 					  	<li ui-sref-active="active" ng-if="committeeTemplates.meetings"><a ui-sref="meetings({committeeId: committee._id})">Meetings</a></li>
-					  	<li ui-sref-active="active" ng-if="committeeTemplates.agendaItems"><a ui-sref="listAgendaItems({committeeId: committee._id})">Agenda Items</a></li>
+					  	<li ui-sref-active="active"><a ui-sref="listAgendaItems({committeeId: committee._id})">Agenda Items</a></li>
+					  	<li ui-sref-active="active" ng-if="committeeTemplates.reviewAgendaItems"><a ui-sref="reviewAgendaItems({committeeId: committee._id})">Review AI</a></li>
 				  	</ul>
 			  	</div>
 

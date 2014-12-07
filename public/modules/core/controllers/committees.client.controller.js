@@ -24,7 +24,7 @@ angular.module('core').controller('CommitteesCtrl', ['$scope', '$log', '$q', '$s
 			current : false,
 			edit : false,
 			meetings : false,
-			agendaItems : false
+			reviewAgendaItems : false
 		};
 
 		/* Application Services to be Loaded on Page Load */

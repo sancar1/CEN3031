@@ -1,23 +1,39 @@
 'use strict';
 
 // Agendaitems controller
-angular.module('agendaitems').controller('AgendaitemsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Agendaitems',
+angular.module('agendaitems').controller('AgendaItemsCtrl', ['$scope', '$stateParams', '$location', 'Authentication', 'Agendaitems',
 	function($scope, $stateParams, $location, Authentication, Agendaitems ) {
 		$scope.authentication = Authentication;
 
 		// Create new Agendaitem
-		$scope.create = function() {
-			// Create new Agendaitem object
-			var agendaitem = new Agendaitems ({
-				name: this.name
+		// $scope.create = function() {
+		// 	// Create new Agendaitem object
+		// 	var agendaitem = new Agendaitems ({
+		// 		name: this.name
+		// 	});
+
+		// 	// Redirect after save
+		// 	agendaitem.$save(function(response) {
+		// 		$location.path('agendaitems/' + response._id);
+
+		// 		// Clear form fields
+		// 		$scope.name = '';
+		// 	}, function(errorResponse) {
+		// 		$scope.error = errorResponse.data.message;
+		// 	});
+		// };
+
+		$scope.createAgendaItem = function() {
+
+			var agendaObj = new Agendaitems({
+				name: $scope.agendaItem.name,
+				owner: $scope.currentUser._id,
+				committee: $scope.agendaItem.committee,
+				description: null
 			});
-
-			// Redirect after save
-			agendaitem.$save(function(response) {
-				$location.path('agendaitems/' + response._id);
-
-				// Clear form fields
-				$scope.name = '';
+			agendaObj.$save(function() {
+				$location.path('/agendaItems');
+				//$state.reload();
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
 			});
