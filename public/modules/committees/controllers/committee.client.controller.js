@@ -210,19 +210,28 @@ angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParam
 		$scope.deleteCommittee = function(){
 			var committee = $scope.committee;
 			var schedule = $scope.schedule;
-			console.log(schedule);
-			schedule.$remove(function(response) {
-
-			}, function(errorResponse) { 
-				$scope.error = errorResponse.data.message;
-			});
-			committee.$remove(function(response) {
-				$location.path('');
-
-			}, function(errorResponse) { 
-				$scope.error = errorResponse.data.message;
-			});
-		};
+			var meeting = $scope.meetings[0];
+			
+				meeting.$remove(function(response) {
+				
+							}, function(errorResponse) {
+								$scope.error = errorResponse.data.message;
+							});
+						};
+			
+			// console.log(schedule);
+// 			schedule.$remove(function(response) {
+//
+// 			}, function(errorResponse) {
+// 				$scope.error = errorResponse.data.message;
+// 			});
+// 			committee.$remove(function(response) {
+// 				$location.path('');
+//
+// 			}, function(errorResponse) {
+// 				$scope.erro[0r = errorResponse.data.message;
+// 			});
+		
 		
 		
 		// $scope.updateAlert = function() {
