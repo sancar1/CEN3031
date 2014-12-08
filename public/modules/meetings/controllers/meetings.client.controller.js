@@ -236,6 +236,8 @@ angular.module('meetings').controller('MeetingsController', ['$scope', '$statePa
 
         $scope.saveAttendance = function() {
         	var meeting = $scope.meeting ;
+        	console.log('Current Meeting Object:');
+        	console.log($scope.meeting);
         	var now = new Date();
 
         	var currentTime = {
@@ -273,10 +275,11 @@ angular.module('meetings').controller('MeetingsController', ['$scope', '$statePa
 
         $scope.agendaItemInMeeting = function() {
         	console.log('here in agenda');
-        	for(var i = 0; i < $scope.committee.agendaItems.length; i++){
-        		for(var j = 0; j < $scope.meeting.agendaItems.length; j++){
-	        		if($scope.meeting.agendaItems[j]._id === $scope.committee.agendaItems[i]._id)
-	        			$scope.committee.agendaItems[i].inMeeting = true;
+        	for(var i = 0; i < $scope.agendaitems.length; i++){
+        		for(var j = 0; j < $scope.meeting.agendaitems.length; j++){
+	        		if($scope.meeting.agendaitems[j] === $scope.agendaitems[i]._id)
+	        			$scope.agendaitems[i].inMeeting = true;
+	        		else $scope.agendaitems[i].inMeeting = false;
 	        	}
         	}
         };
@@ -285,30 +288,30 @@ angular.module('meetings').controller('MeetingsController', ['$scope', '$statePa
         	console.log('meeting object NOW!');
         	console.log($scope.meeting);
         	var meeting = $scope.meeting ;
-        	console.log($scope.committee.agendaItems.length);
-        	for(var i = 0; i < $scope.committee.agendaItems.length; i++){
+        	console.log($scope.agendaitems.length);
+        	for(var i = 0; i < $scope.agendaitems.length; i++){
         		var index = -1;
-				for(var j = 0; j < meeting.agendaItems.length; j++){
-					if($scope.committee.agendaItems[i]._id === meeting.agendaItems[j]._id){
+				for(var j = 0; j < meeting.agendaitems.length; j++){
+					if($scope.agendaitems[i]._id === meeting.agendaitems[j]){
 						index = j;
 					}
 				}
 
-				if($scope.committee.agendaItems[i].inMeeting && index === -1) {
+				if($scope.agendaitems[i].inMeeting && index === -1) {
 					console.log('inside inMeeting');
-					meeting.agendaItems.push($scope.committee.agendaItems[i]);
+					meeting.agendaitems.push($scope.agendaitems[i]);
 				}
-				else if(index !== -1 && !$scope.committee.agendaItems[i].inMeeting) {
-					var length = meeting.agendaItems.length;
-					meeting.agendaItems.splice(index, 1);
-					console.log(meeting.agendaItems);
+				else if(index !== -1 && !$scope.agendaitems[i].inMeeting) {
+					var length = meeting.agendaitems.length;
+					meeting.agendaitems.splice(index, 1);
+					console.log(meeting.agendaitems);
 				}
 
 
 			}
 
 			console.log('agenda items to be saved');
-			console.log(meeting.agendaItems);
+			console.log(meeting.agendaitems);
 
         	// $scope.saveMessage = 'Attendance last saved at ' + currentTime.hour + ':' + currentTime.minutes + currentTime.period;
 

@@ -168,8 +168,8 @@ exports.update = function(req, res) {
 			});
 		},
 		function(done){
-			console.log(meeting.agendaItems);
-			Meeting.update({'_id': meeting._id},{$set:{'agendaItems': meeting.agendaItems}}).exec(function(err) {
+			console.log(meeting.agendaitems);
+			Meeting.update({'_id': meeting._id},{$set:{'agendaitems': meeting.agendaitems}}).exec(function(err) {
 				if (err) {
 					return res.status(400).send({
 						message: errorHandler.getErrorMessage(err)

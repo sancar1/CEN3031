@@ -28,6 +28,7 @@ angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParam
                 $scope.meetings = data;
                 $log.info('List of Meetings Loaded');
 	        });
+
 		});
 
 		/* Committee Functions */
