@@ -27,5 +27,5 @@ https://trello.com/b/vqyJDPmN/user-stories
 Trello Sprint 1 Board:<br>
 https://trello.com/b/pW8p2UDQ/sprint-1<br>
 https://trello.com/b/htYLW8Rx/sprint-2<br>
-<br><br>
-<h5>Protractor Note: For protractor tests to run, a user with Username "Protractor1" and "Protractor2" with names "Protractor Test 1" and "Protractor Test 2" are necessary. Required password can be found in code.</h5>
+<br>
+<p>Protractor Note: For protractor tests to run, a user with Username "Protractor1" and "Protractor2" with names "Protractor Test 1" and "Protractor Test 2" are necessary. Required password can be found in code.</p>
