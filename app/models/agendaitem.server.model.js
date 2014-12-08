@@ -17,10 +17,6 @@ var AgendaitemSchema = new Schema({
 		trim: true
 	},
 	owner: String,
-	Public: {
-		type: Boolean,
-		default: false
-	},
 	voteable: Boolean,
 	votesYes: {
 		type: Number,

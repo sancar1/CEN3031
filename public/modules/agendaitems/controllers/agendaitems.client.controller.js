@@ -91,6 +91,7 @@ angular.module('agendaitems').controller('AgendaItemsCtrl', ['$scope', '$statePa
 		$scope.viewPublicItems = function(item){
 			if($scope.committee._id === item.committee){
 				if((Roles.get().admin === true || $scope.committee.chair === $scope.currentUser._id) && item.status === 1){
+					item.Public = true;
 					return true;
 				}
 				return false;
@@ -101,6 +102,7 @@ angular.module('agendaitems').controller('AgendaItemsCtrl', ['$scope', '$statePa
 		$scope.viewPrivateItems = function(item){
 			if($scope.committee._id === item.committee){
 				if((Roles.get().admin === true || $scope.committee.chair === $scope.currentUser._id) && item.status === 2){
+					item.Private = true;
 					return true;
 				}
 				return false;
@@ -111,6 +113,7 @@ angular.module('agendaitems').controller('AgendaItemsCtrl', ['$scope', '$statePa
 		$scope.viewRejectedItems = function(item){
 			if($scope.committee._id === item.committee){
 				if((Roles.get().admin === true || $scope.committee.chair === $scope.currentUser._id) && item.status === 3){
+					item.reject = true;
 					return true;
 				}
 				return false;
@@ -121,12 +124,15 @@ angular.module('agendaitems').controller('AgendaItemsCtrl', ['$scope', '$statePa
 		$scope.uncheck = function(item){
 			if(item.reject === false){
 				item.Public = item.oldPublic;
+				item.Private = item.oldPrivate;
 				item.voteable = item.oldVoteable;
 			}
 			else{
 				item.oldPublic = item.Public;
+				item.oldPrivate = item.Private;
 				item.oldVoteable = item.voteable;
 				item.Public = false; 
+				item.Private = false;
 				item.voteable = false;
 			}
 		};
@@ -138,7 +144,7 @@ angular.module('agendaitems').controller('AgendaItemsCtrl', ['$scope', '$statePa
 					$scope.agendaitems[i].status = 3;
 				else if($scope.agendaitems[i].Public)
 					$scope.agendaitems[i].status = 1;
-				else
+				else if($scope.agendaitems[i].Private)
 					$scope.agendaitems[i].status = 2;
 
 				var agendaItems = $scope.agendaitems[i];
