@@ -1,8 +1,8 @@
 'use strict';
 
 // Agendaitems controller
-angular.module('agendaitems').controller('AgendaItemsCtrl', ['$scope', '$stateParams', '$location', 'Authentication', 'Agendaitems', 'Roles',
-	function($scope, $stateParams, $location, Authentication, Agendaitems, Roles ) {
+angular.module('agendaitems').controller('AgendaItemsCtrl', ['$scope', '$stateParams', '$location', 'Authentication', 'Agendaitems', 'Roles', '$state',
+	function($scope, $stateParams, $location, Authentication, Agendaitems, Roles, $state ) {
 		$scope.authentication = Authentication;
 
 		// Create new Agendaitem
@@ -139,8 +139,14 @@ angular.module('agendaitems').controller('AgendaItemsCtrl', ['$scope', '$statePa
 				else if($scope.agendaitems[i].Public)
 					$scope.agendaitems[i].status = 1;
 				else
-					$scope.agendaItems[i].status = 2;
+					$scope.agendaitems[i].status = 2;
+
+				var agendaItems = $scope.agendaitems[i];
+
+				agendaItems.$update();
 			}
+
+			$state.reload();
 		};
 	}
 ]);
