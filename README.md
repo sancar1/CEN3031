@@ -1,5 +1,5 @@
 <h1>CEN3031</h1>
-Team:<br>
+<b>Team:</b><br>
 1. Antonio (TJ) Sanchez - sancar1<br>
 2. Clay Brooks - brks9622<br>
 3. Katelyn Smith - katelynicole<br>
@@ -7,10 +7,10 @@ Team:<br>
 5. Stephen Soohoo - ss083193<br>
 6. Zachary Burke - zburke1
 <br><br>
-Project description:<br>
+<b>Project description:</b><br>
 The CISE Committee Manager is a web application intended to assist the Computer Science Engineering Department faculty and staff in managing committees. Each user of this web application will have a unique log in that allows them to view their committee information, including a description, schedule, members list and agenda for specific meeting. This project was assigned by Alin Dobra for a Software Engineering Course at the University of Florida. 
 <br><br>
-Features:<br>
+<b>Features:</b><br>
 The features implemented in this application include:
 
 - <b>Log in:</b> Admin, Staff and Faculty log in ability. Each of the three roles allow for different functionality based on the level of access the specific user has.
