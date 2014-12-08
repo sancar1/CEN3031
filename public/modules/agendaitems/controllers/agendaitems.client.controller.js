@@ -78,9 +78,40 @@ angular.module('agendaitems').controller('AgendaItemsCtrl', ['$scope', '$statePa
 			});
 		};
 
-		$scope.viewItemsToApprove = function(item){
+		$scope.viewPendingItems = function(item){
 			if($scope.committee._id === item.committee){
-				if(Roles.get().admin === true || item.status === 0){
+				if((Roles.get().admin === true || $scope.committee.chair === $scope.currentUser._id) && item.status === 0){
+					return true;
+				}
+				return false;
+			}
+			return false;
+		};
+
+		$scope.viewPublicItems = function(item){
+			if($scope.committee._id === item.committee){
+				if((Roles.get().admin === true || $scope.committee.chair === $scope.currentUser._id) && item.status === 1){
+					return true;
+				}
+				}
+				return false;
+			}
+			return false;
+		};
+
+		$scope.viewPrivateItems = function(item){
+			if($scope.committee._id === item.committee){
+				if((Roles.get().admin === true || $scope.committee.chair === $scope.currentUser._id) && item.status === 2){
+					return true;
+				}
+				return false;
+			}
+			return false;
+		};
+
+		$scope.viewRejectedItems = function(item){
+			if($scope.committee._id === item.committee){
+				if((Roles.get().admin === true || $scope.committee.chair === $scope.currentUser._id) && item.status === 3){
 					return true;
 				}
 				return false;
@@ -103,6 +134,14 @@ angular.module('agendaitems').controller('AgendaItemsCtrl', ['$scope', '$statePa
 
 		$scope.updateApprovals = function(){
 			console.log($scope.agendaitems);
+			for(var i = 0; i < $scope.agendaitems.length; i++){
+				if($scope.agendaitems[i].reject)
+					$scope.agendaitems[i].status = 3;
+				else if($scope.agendaitems[i].Public)
+					$scope.agendaitems[i].status = 1;
+				else
+					$scope.agendaItems[i].status = 2;
+			}
 		};
 	}
 ]);
