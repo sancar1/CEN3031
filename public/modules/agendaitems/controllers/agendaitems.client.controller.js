@@ -80,7 +80,7 @@ angular.module('agendaitems').controller('AgendaItemsCtrl', ['$scope', '$statePa
 
 		$scope.viewPendingItems = function(item){
 			if($scope.committee._id === item.committee){
-				if((Roles.get().admin === true || $scope.committee.chair === $scope.currentUser._id) && item.status === 0){
+				if((Roles.get().admin === true || $scope.committee.chair === $scope.currentUser._id) && item.Status === 0){
 					return true;
 				}
 				return false;
@@ -89,9 +89,10 @@ angular.module('agendaitems').controller('AgendaItemsCtrl', ['$scope', '$statePa
 		};
 
 		$scope.viewPublicItems = function(item){
+			console.log('here');
 			if($scope.committee._id === item.committee){
-				if((Roles.get().admin === true || $scope.committee.chair === $scope.currentUser._id) && item.status === 1){
-					// item.Public = true;
+				if((Roles.get().admin === true || $scope.committee.chair === $scope.currentUser._id) && item.Status === 1){
+					item.Public = true;
 					return true;
 				}
 				return false;
@@ -101,7 +102,7 @@ angular.module('agendaitems').controller('AgendaItemsCtrl', ['$scope', '$statePa
 
 		$scope.viewPrivateItems = function(item){
 			if($scope.committee._id === item.committee){
-				if((Roles.get().admin === true || $scope.committee.chair === $scope.currentUser._id) && item.status === 2){
+				if((Roles.get().admin === true || $scope.committee.chair === $scope.currentUser._id) && item.Status === 2){
 					// item.Private = true;
 					return true;
 				}
@@ -112,7 +113,7 @@ angular.module('agendaitems').controller('AgendaItemsCtrl', ['$scope', '$statePa
 
 		$scope.viewRejectedItems = function(item){
 			if($scope.committee._id === item.committee){
-				if((Roles.get().admin === true || $scope.committee.chair === $scope.currentUser._id) && item.status === 3){
+				if((Roles.get().admin === true || $scope.committee.chair === $scope.currentUser._id) && item.Status === 3){
 					// item.reject = true;
 					return true;
 				}
@@ -141,11 +142,11 @@ angular.module('agendaitems').controller('AgendaItemsCtrl', ['$scope', '$statePa
 			console.log($scope.agendaitems);
 			for(var i = 0; i < $scope.agendaitems.length; i++){
 				if($scope.agendaitems[i].reject)
-					$scope.agendaitems[i].status = 3;
+					$scope.agendaitems[i].Status = 3;
 				else if($scope.agendaitems[i].Public)
-					$scope.agendaitems[i].status = 1;
+					$scope.agendaitems[i].Status = 1;
 				else if($scope.agendaitems[i].Private)
-					$scope.agendaitems[i].status = 2;
+					$scope.agendaitems[i].Status = 2;
 
 				var agendaItems = $scope.agendaitems[i];
 

@@ -75,6 +75,16 @@ angular.module('meetings').controller('MeetingsController', ['$scope', '$statePa
 			}
 		};
 
+		$scope.function = function(){
+			$scope.currentItems = [];
+			for(var i = 0; i < $scope.meetings.agendaitems.length; i++){
+				for(var k = 0; k < $scope.agendaitems.length; i++){
+					if($scope.meetings.agendaitems[i]._id === $scope.agendaitems[i]._id)	
+						$scope.currentItems[i] = $scope.agendaitems[i];
+				}
+			}
+		};
+
 		// Update existing Meeting
 		$scope.updateMeeting = function() {
 			var meeting = $scope.meeting;

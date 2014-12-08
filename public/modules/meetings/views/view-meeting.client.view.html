@@ -11,9 +11,9 @@
 				<i class="glyphicon glyphicon-trash"></i>
 			</a>
 		</div>
-		<div>
+		<div data ng-init = "function()">
 	   		<div>Agenda Items</div>
-			<div data-ng-repeat="item in meeting.agendaItems">
+			<div data-ng-repeat="item in currentItems">
 				<label class="agendalabel">
 					<span data-ng-bind="item.name"></span>
 				</label>

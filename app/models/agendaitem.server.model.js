@@ -32,7 +32,7 @@ var AgendaitemSchema = new Schema({
 	},
 	meetings: [String],
 	committee: String,
-	status: {
+	Status: {
 		type: Number,
 		default: 0
 	},
