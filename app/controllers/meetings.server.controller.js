@@ -305,7 +305,7 @@ exports.list = function(req, res) {
 			});
 		},function(schedule, done){
 			var meetings = [];
-			console.log(schedule.events.length);
+			
 			for(var i = 0; i < schedule.events.length; i++){
 				var temp = schedule.events[i].meeting;
 				meetings[i] = mongoose.Types.ObjectId(temp);
