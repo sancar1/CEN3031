@@ -21,6 +21,57 @@
 			        </tr>
 		        </table>
 		    </div>
+		    <div>
+		    	<h3>Public Items</h3>
+		        <table style="width:100%">
+		        	<tr>
+			        	<th>Agenda Item</th>
+			        	<th>Public</th>
+			        	<th>Votable</th>
+			        	<th>Reject</th>
+			        </tr>
+			        <tr data-ng-repeat="item in agendaitems" data-ng-if="viewPublicItems(item)">
+			        	<td data-ng-bind="item.name"></td>
+						<td><label><input type="checkbox" data-ng-disabled="item.reject" data-ng-model="item.Public"><span></span></label></td>
+			        	<td><label><input type="checkbox" data-ng-disabled="item.reject" data-ng-model="item.voteable"><span></span></label></td>
+			        	<td><label><input type="checkbox" data-ng-change="uncheck(item)" data-ng-model="item.reject"><span></span></label></td>
+			        </tr>
+		        </table>
+		    </div>
+		    <div>
+		    	<h3>Private Items</h3>
+		        <table style="width:100%">
+		        	<tr>
+			        	<th>Agenda Item</th>
+			        	<th>Public</th>
+			        	<th>Votable</th>
+			        	<th>Reject</th>
+			        </tr>
+			        <tr data-ng-repeat="item in agendaitems" data-ng-if="viewPrivateItems(item)">
+			        	<td data-ng-bind="item.name"></td>
+						<td><label><input type="checkbox" data-ng-disabled="item.reject" data-ng-model="item.Public"><span></span></label></td>
+			        	<td><label><input type="checkbox" data-ng-disabled="item.reject" data-ng-model="item.voteable"><span></span></label></td>
+			        	<td><label><input type="checkbox" data-ng-change="uncheck(item)" data-ng-model="item.reject"><span></span></label></td>
+			        </tr>
+		        </table>
+		    </div>
+		    <div>
+		    	<h3>Rejected Items</h3>
+		        <table style="width:100%">
+		        	<tr>
+			        	<th>Agenda Item</th>
+			        	<th>Public</th>
+			        	<th>Votable</th>
+			        	<th>Reject</th>
+			        </tr>
+			        <tr data-ng-repeat="item in agendaitems" data-ng-if="viewRejectedItems(item)">
+			        	<td data-ng-bind="item.name"></td>
+						<td><label><input type="checkbox" data-ng-disabled="item.reject" data-ng-model="item.Public"><span></span></label></td>
+			        	<td><label><input type="checkbox" data-ng-disabled="item.reject" data-ng-model="item.voteable"><span></span></label></td>
+			        	<td><label><input type="checkbox" data-ng-change="uncheck(item)" data-ng-model="item.reject"><span></span></label></td>
+			        </tr>
+		        </table>
+		    </div>
 		    <div><button class="btn btn-blue" data-ng-click="updateApprovals()">Update</button></div>
 		</div>
 	</section>

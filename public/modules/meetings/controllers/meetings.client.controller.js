@@ -279,6 +279,7 @@ angular.module('meetings').controller('MeetingsController', ['$scope', '$statePa
         		for(var j = 0; j < $scope.meeting.agendaitems.length; j++){
 	        		if($scope.meeting.agendaitems[j] === $scope.agendaitems[i]._id)
 	        			$scope.agendaitems[i].inMeeting = true;
+	        		else $scope.agendaitems[i].inMeeting = false;
 	        	}
         	}
         };
