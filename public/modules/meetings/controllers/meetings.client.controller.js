@@ -17,6 +17,7 @@ angular.module('meetings').controller('MeetingsController', ['$scope', '$statePa
 			console.log('data: '+data);
 			$scope.getNotetaker();
 			$scope.agendaItemInMeeting();
+			$scope.getAgendas();
 		});
 
 		// Create new Meeting
@@ -75,12 +76,19 @@ angular.module('meetings').controller('MeetingsController', ['$scope', '$statePa
 			}
 		};
 
-		$scope.function = function(){
+		$scope.getAgendas = function(){
+			var meeting = $scope.meeting;
 			$scope.currentItems = [];
-			for(var i = 0; i < $scope.meetings.agendaitems.length; i++){
-				for(var k = 0; k < $scope.agendaitems.length; i++){
-					if($scope.meetings.agendaitems[i]._id === $scope.agendaitems[i]._id)	
-						$scope.currentItems[i] = $scope.agendaitems[i];
+			console.log('here'+meeting.agendaitems);
+			for(var i = 0; i < meeting.agendaitems.length; i++){
+				for(var k = 0; k < $scope.agendaitems.length; k++){
+					console.log(meeting.agendaitems[i]);
+					console.log($scope.agendaitems[k]._id);
+					if(meeting.agendaitems[i]=== $scope.agendaitems[k]._id){
+						$scope.currentItems[i] = $scope.agendaitems[k];
+						console.log('i: '+$scope.currentItems[i]);
+					}	
+						
 				}
 			}
 		};
