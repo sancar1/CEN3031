@@ -1,5 +1,6 @@
 <section data-ng-controller="CommitteeCtrl">
 	<section data-ng-controller="MeetingsController" class="addspace">
+		<section data-ng-controller="AgendaItemsCtrl">
 		<div class="page-header">
 			<h1 data-ng-bind="meeting.name"></h1>
 		</div>
@@ -18,90 +19,106 @@
 					<span data-ng-bind="item.name"></span>
 				</label>
 			</div>
-	   	</div>
-		<div data-ng-if="authentication.user._id == committee.chair">
-			<section>
-		        <form name="meetingForm" class="form-horizontal" novalidate>
-					<div class = "list-group" class = "list-group-item">
-						<h1 class = "list-group-item-text">Notetaker</h1>
-						<div class="list-group"> 
-							<a class="list-group-item">
-								<small class="list-group-item-text">
-									<span data-ng-bind="noteTaker.displayName"></span>
-								</small> 
-							</a>
-						</div>
-				    </div>
-				</form>
-		   	</section>
-		   	<div>
-		   		<div>
-			   		<div>
-			   			<span class="memberspresent">Members Present: </span>
-						<span data-ng-bind="meeting.membersPresent"></span>
-			   		</span>
-			   		<br>
-			   		<div>
-			   			<span>Total members: </span>
-			   			<span data-ng-bind="meeting.members.length"></span>
-			   		</div>
-			   	</div>
-			   	<br>
-			   	<div>
-					<div data-ng-if="meeting.members.length">Take Attendance</div>
-					<div data-ng-repeat="member in meeting.members">
-						<label class="memberlabel">
-							<input type="checkbox" data-ng-model="member.isPresent" data-ng-change="checkMembersPresent(member.isPresent)">
-							<span data-ng-bind="member.displayName"></span>
-						</label>
-					</div>
-					<br>
-					<div>
-						<div>
-							<button class="btn btn-blue" data-ng-click="saveAttendance()">Save Attendance</button>
-						</div>
-						<br>
-						<div data-ng-bind="saveMessage"></div>
-					</div>
-				</div>
-		   	</div>
-		   	<div data-ng-show="agendaitems.length">
-		   		<div>Agenda Items to Add</div>
-				<div data-ng-repeat="item in agendaitems">
+			<div class="pull-right" data-ng-show="authentication.user._id == meeting.user._id">
+				<a class="btn btn-primary" href="/#!/meetings/{{meeting._id}}/edit">
+					<i class="glyphicon glyphicon-edit"></i>
+				</a>
+				<a class="btn btn-primary" data-ng-click="remove();">
+					<i class="glyphicon glyphicon-trash"></i>
+				</a>
+			</div>
+			<div>
+		   		<div>Agenda Items</div>
+				<div data-ng-repeat="item in meeting.agendaItems">
 					<label class="agendalabel">
-						<input type="checkbox" data-ng-model="item.inMeeting">
 						<span data-ng-bind="item.name"></span>
 					</label>
-
-				</div>
-				<div>
-					<button class="btn btn-blue" data-ng-click="saveAgendaItems()">Save Agenda Items</button>
 				</div>
 		   	</div>
-		</div>
-		<br>
-	   	<div data-ng-show = "authentication.user._id == meeting.noteTaker">
-			<form name="meetingForm" class="form-horizontal" data-ng-submit="updateMeeting(meetingForm.$valid)" novalidate>
-				<fieldset>
-					<div ng-class="{ 'has-error' : submitted && meetingForm.notes.$invalid}">
-						<label class="control-label" for="notes">Notes</label>
-						<div class="controls">
-							<textarea name="notes" data-ng-model="meeting.notes" id="notes" class="form-control" cols="30" rows="10" placeholder="Notes" required></textarea>
+			<div data-ng-if="authentication.user._id == committee.chair">
+				<section>
+			        <form name="meetingForm" class="form-horizontal" novalidate>
+						<div class = "list-group" class = "list-group-item">
+							<h1 class = "list-group-item-text">Notetaker</h1>
+							<div class="list-group"> 
+								<a class="list-group-item">
+									<small class="list-group-item-text">
+										<span data-ng-bind="noteTaker.displayName"></span>
+									</small> 
+								</a>
+							</div>
+					    </div>
+					</form>
+			   	</section>
+			   	<div>
+			   		<div>
+				   		<div>
+				   			<span class="memberspresent">Members Present: </span>
+							<span data-ng-bind="meeting.membersPresent"></span>
+				   		</span>
+				   		<br>
+				   		<div>
+				   			<span>Total members: </span>
+				   			<span data-ng-bind="meeting.members.length"></span>
+				   		</div>
+				   	</div>
+				   	<br>
+				   	<div>
+						<div data-ng-if="meeting.members.length">Take Attendance</div>
+						<div data-ng-repeat="member in meeting.members">
+							<label class="memberlabel">
+								<input type="checkbox" data-ng-model="member.isPresent" data-ng-change="checkMembersPresent(member.isPresent)">
+								<span data-ng-bind="member.displayName"></span>
+							</label>
 						</div>
-						<div ng-show="submitted && meetingForm.notes.$invalid" class="help-block">
-							<p ng-show="meetingForm.notes.$error.required" class="text-danger">Content is required</p>
+						<br>
+						<div>
+							<div>
+								<button class="btn btn-blue" data-ng-click="saveAttendance()">Save Attendance</button>
+							</div>
+							<br>
+							<div data-ng-bind="saveMessage"></div>
 						</div>
 					</div>
-					<br>
-					<div>
-						<input type="submit" value="Update" class="btn btn-blue">
-					</div>
+			   	</div>
+			   	<div data-ng-show="agendaitems.length">
+			   		<div>Agenda Items to Add</div>
+					<div data-ng-repeat="item in agendaitems">
+						<label class="agendalabel" data-ng-if="AIMeetView(item)">
+							<input type="checkbox" data-ng-model="item.inMeeting">
+							<span data-ng-bind="item.name"></span>
+						</label>
 
-					<div data-ng-show="error" class="text-danger">
-						<strong data-ng-bind="error"></strong>
 					</div>
-				</fieldset>
-			</form>
-		</div>
+					<div>
+						<button class="btn btn-blue" data-ng-click="saveAgendaItems()">Save Agenda Items</button>
+					</div>
+			   	</div>
+			</div>
+			<br>
+		   	<div data-ng-show = "authentication.user._id == meeting.noteTaker">
+				<form name="meetingForm" class="form-horizontal" data-ng-submit="updateMeeting(meetingForm.$valid)" novalidate>
+					<fieldset>
+						<div ng-class="{ 'has-error' : submitted && meetingForm.notes.$invalid}">
+							<label class="control-label" for="notes">Notes</label>
+							<div class="controls">
+								<textarea name="notes" data-ng-model="meeting.notes" id="notes" class="form-control" cols="30" rows="10" placeholder="Notes" required></textarea>
+							</div>
+							<div ng-show="submitted && meetingForm.notes.$invalid" class="help-block">
+								<p ng-show="meetingForm.notes.$error.required" class="text-danger">Content is required</p>
+							</div>
+						</div>
+						<br>
+						<div>
+							<input type="submit" value="Update" class="btn btn-blue">
+						</div>
+
+						<div data-ng-show="error" class="text-danger">
+							<strong data-ng-bind="error"></strong>
+						</div>
+					</fieldset>
+				</form>
+			</div>
+		</section>
 	</section>
 </section>

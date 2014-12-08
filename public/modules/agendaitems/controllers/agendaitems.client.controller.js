@@ -155,5 +155,14 @@ angular.module('agendaitems').controller('AgendaItemsCtrl', ['$scope', '$statePa
 
 			$state.reload();
 		};
+
+		$scope.AIMeetView = function(item){
+			var pub = $scope.viewPublicItems(item);
+			var pri = $scope.viewPrivateItems(item);
+
+			if(pub === true || pri === true)
+				return true;
+			return false;
+		};
 	}
 ]);
