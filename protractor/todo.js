@@ -73,31 +73,31 @@ it('Should load up the edit page', function(){
 	expect(element(by.model('committee.description')).getAttribute('value')).toEqual('Test Protractor Description');
 });
 
-// it('Should have pre-populated the member list with the chair',function(){
-// 	browser.waitForAngular();
-// 	element.all(by.css('[data-ng-bind="member.displayName"]')).then(function(arr){
-// 		expect(arr[0].getText()).toBe('Protractor Test 1');});
-// });
-// it('Should select protractor 2 to add as a member',function(){
-// 	element(by.id('addMember')).click();
-// 	element(by.xpath("//*[contains(text(),'Protractor Test 2')]")).click();
-// 	browser.waitForAngular();
-// 	browser.refresh();
-// 	element.all(by.css('[data-ng-bind="member.displayName"]')).then(function(arr){
-// 		expect(arr[1].getText()).toBe('Protractor Test 2');
-// 	});
-// });
-// it('Should select protractor 2 to remove as a member',function(){
-// 	element(by.id('deleteMember')).click();
-//
-// 	element(by.xpath("/html/body/div/div/div[2]/div/section/section[1]/div[2]/form/section/div[2]/ul/li/a[2]/span")).click();
-// 	browser.waitForAngular();
-// 	browser.refresh();
-//
-// 	element.all(by.css('[data-ng-bind="member.displayName"]')).then(function(arr){
-// 		expect(arr[1].getText()).toBe('');
-// 	});
-// });
+it('Should have pre-populated the member list with the chair',function(){
+	browser.waitForAngular();
+	element.all(by.css('[data-ng-bind="member.displayName"]')).then(function(arr){
+		expect(arr[0].getText()).toBe('Protractor Test 1');});
+});
+it('Should select protractor 2 to add as a member',function(){
+	element(by.id('addMember')).click();
+	element(by.xpath("//*[contains(text(),'Protractor Test 2')]")).click();
+	browser.waitForAngular();
+	browser.refresh();
+	element.all(by.css('[data-ng-bind="member.displayName"]')).then(function(arr){
+		expect(arr[1].getText()).toBe('Protractor Test 2');
+	});
+});
+it('Should select protractor 2 to remove as a member',function(){
+	element(by.id('deleteMember')).click();
+
+	element(by.xpath("/html/body/div/div/div[2]/div/section/section[1]/div[2]/form/section/div[2]/ul/li/a[2]/span")).click();
+	browser.waitForAngular();
+	browser.refresh();
+
+	element.all(by.css('[data-ng-bind="member.displayName"]')).then(function(arr){
+		expect(arr[1].getText()).toBe('');
+	});
+});
 it('Should re-add protractor 2 and move to meetings page',function(){
 	element(by.id('addMember')).click();
 	element(by.xpath("//*[contains(text(),'Protractor Test 2')]")).click();

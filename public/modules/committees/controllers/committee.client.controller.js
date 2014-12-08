@@ -223,30 +223,27 @@ angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParam
 		 						  };
 						  		$scope.deleteCommittee = function(){
 									console.log('id'+committee._id);
-									meetings[0].committeeId = committee._id;
-									meetings[0].$remove(function(response){
-												}, function(errorResponse) {
-													$scope.error = errorResponse.data.message;});
-										
-										//Removes all associated meetings
-									// for(var i=0;i<meetings.length;i++){
-// 										console.log(meetings[i]);
-// 										meetings[i].$remove(function(response){
-// 													}, function(errorResponse) {
-// 														$scope.error = errorResponse.data.message;});
-// 									};
-									console.log(meetings.length);
-										// //Removes associated Schedule
-// 										schedule.$remove(function(response){
-// 						  				}, function(errorResponse) {
-// 						  						$scope.error = errorResponse.data.message;})
-// 										//Removes associated Committee
-// 										committee.$remove(function(response) {
-// 											$location.path('');
-// 											 $modalInstance.dismiss('Test');
-// 						  							}, function(errorResponse) {
-// 						  								$scope.error = errorResponse.data.message;
-// 						  							});
+									//Removes all associated meetings
+								console.log(meetings.length);
+									if(meetings.length!=0){
+									for(var i=0;i<meetings.length;i++){
+										meetings[i].committeeId = committee._id;
+									meetings[i].$remove(function(response){}, function(errorResponse) {
+										$scope.error = errorResponse.data.message;});
+									};
+								};
+
+										//Removes associated Schedule
+										schedule.$remove(function(response){
+						  				}, function(errorResponse) {
+						  						$scope.error = errorResponse.data.message;})
+										//Removes associated Committee
+										committee.$remove(function(response) {
+											$location.path('');
+											 $modalInstance.dismiss('Test');
+						  							}, function(errorResponse) {
+						  								$scope.error = errorResponse.data.message;
+						  							});
 						  						};
 								 
 						      },
