@@ -11,8 +11,11 @@ var init = require('./config/init')(),
  * Please note that the order of loading is important.
  */
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 1b1172e29b7ae869616ee3fc5170693254a68f26
 // Bootstrap db connection
 var db = mongoose.connect(config.db, function(err) {
 	if (err) {
