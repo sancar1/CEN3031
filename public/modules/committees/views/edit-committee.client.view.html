@@ -82,7 +82,7 @@
 					 
 					 
 				 
-				    <button class="btn btn-danger" ng-click="open()">Delete Committee!</button>
+				    <button class="btn btn-danger" ng-click="open()" ng-if="authentication.user.role === 'Admin'">Delete Committee!</button>
 				    
 				</div>
 					 
