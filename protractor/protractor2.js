@@ -14,7 +14,11 @@ describe('Testing Sign-in functionality', function() {
 	  expect(ptor.getCurrentUrl()).toEqual('http://localhost:3000/#!/');
   });
   it('Should click on the committee it is a member of',function(){
-	  element(by.xpath('/html/body/div/div/div[2]/div/section/section/div/div[2]/a[2]')).click();
+  	element.all(by.css('[data-ng-bind="committee.name"]')).then(function(arr){
+  		expect(arr.length).toBe(1);
+		browser.waitForAngular();
+		arr[0].click();
+  	});
 	browser.waitForAngular();
 	expect(ptor.getCurrentUrl()).toContain('/committees');
   });
