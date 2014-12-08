@@ -80,7 +80,7 @@
 			$stateParams.meetingId = '525a8422f6d0f87f0e407a33';
 
 			// Set GET response
-			$httpBackend.expectGET(/meetings\/([0-9a-fA-F]{24})$/).respond(sampleMeeting);
+			$httpBackend.expectGET('meetings').respond(sampleMeeting);
 
 			// Run controller functionality
 			scope.findOne();
