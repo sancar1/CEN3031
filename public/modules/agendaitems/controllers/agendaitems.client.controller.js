@@ -93,7 +93,6 @@ angular.module('agendaitems').controller('AgendaItemsCtrl', ['$scope', '$statePa
 				if((Roles.get().admin === true || $scope.committee.chair === $scope.currentUser._id) && item.status === 1){
 					return true;
 				}
-				}
 				return false;
 			}
 			return false;
