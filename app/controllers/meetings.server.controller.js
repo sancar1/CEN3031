@@ -214,7 +214,7 @@ exports.update = function(req, res) {
  * Delete an Meeting
  */
 exports.delete = function(req, res) {
-	var meeting = req.meeting ;
+	var meeting = req.meeting;
 
 	meeting.remove(function(err) {
 		if (err) {

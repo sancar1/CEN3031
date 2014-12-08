@@ -222,7 +222,8 @@ angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParam
 		 							  $modalInstance.dismiss('Test');
 		 						  };
 						  		$scope.deleteCommittee = function(){
-									console.log(committee);
+									console.log('id'+committee._id);
+									meetings[0].committeeId = committee._id;
 									meetings[0].$remove(function(response){
 												}, function(errorResponse) {
 													$scope.error = errorResponse.data.message;});

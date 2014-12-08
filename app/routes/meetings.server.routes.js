@@ -13,7 +13,8 @@ module.exports = function(app) {
 		
 	app.route('/meetings/:committeeId/:meetingId')
 		.get(users.requiresLogin, meetings.read)
-		.delete(users.requiresLogin, meetings.isChair, meetings.delete);
+		.delete(users.requiresLogin, meetings.isChairAdmin, meetings.delete);
+		
 
 	app.route('/meetings/:committeeId/:meetingId/:userId')
 		.get(meetings.getNotetaker)
