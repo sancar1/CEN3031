@@ -91,7 +91,7 @@ angular.module('agendaitems').controller('AgendaItemsCtrl', ['$scope', '$statePa
 		$scope.viewPublicItems = function(item){
 			if($scope.committee._id === item.committee){
 				if((Roles.get().admin === true || $scope.committee.chair === $scope.currentUser._id) && item.status === 1){
-					item.Public = true;
+					// item.Public = true;
 					return true;
 				}
 				return false;
@@ -102,7 +102,7 @@ angular.module('agendaitems').controller('AgendaItemsCtrl', ['$scope', '$statePa
 		$scope.viewPrivateItems = function(item){
 			if($scope.committee._id === item.committee){
 				if((Roles.get().admin === true || $scope.committee.chair === $scope.currentUser._id) && item.status === 2){
-					item.Private = true;
+					// item.Private = true;
 					return true;
 				}
 				return false;
@@ -113,7 +113,7 @@ angular.module('agendaitems').controller('AgendaItemsCtrl', ['$scope', '$statePa
 		$scope.viewRejectedItems = function(item){
 			if($scope.committee._id === item.committee){
 				if((Roles.get().admin === true || $scope.committee.chair === $scope.currentUser._id) && item.status === 3){
-					item.reject = true;
+					// item.reject = true;
 					return true;
 				}
 				return false;
