@@ -26,12 +26,7 @@ var MeetingSchema = new Schema({
 		userId: String,
 		isPresent: Boolean
 	}],
-	agendaItems:[{
-		name: String,
-		owner:String,
-		_id: String,
-		resolved: Boolean
-	}],
+	agendaitems:[String],
 	committeeId: String,
 	membersPresent: Number,
 	noteTaker: {

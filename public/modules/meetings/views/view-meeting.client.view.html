@@ -65,9 +65,9 @@
 					</div>
 				</div>
 		   	</div>
-		   	<div>
+		   	<div data-ng-show="agendaitems.length">
 		   		<div>Agenda Items to Add</div>
-				<div data-ng-repeat="item in committee.agendaItems">
+				<div data-ng-repeat="item in agendaitems">
 					<label class="agendalabel">
 						<input type="checkbox" data-ng-model="item.inMeeting">
 						<span data-ng-bind="item.name"></span>

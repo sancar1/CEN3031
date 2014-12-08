@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('core').controller('CommitteesCtrl', ['$scope', '$log', '$q', '$stateParams', '$location', '$filter', 'Authentication', 'Committees', 'Users', 'Roles',
-	function($scope, $log, $q, $stateParams, $location, $filter, Authentication, Committees, Users, Roles) {
+angular.module('core').controller('CommitteesCtrl', ['$scope', '$log', '$q', '$stateParams', '$location', '$filter', 'Authentication', 'Committees', 'Users', 'Roles', 'Agendaitems',
+	function($scope, $log, $q, $stateParams, $location, $filter, Authentication, Committees, Users, Roles, Agendaitems) {
 		// Redirect to home page if logged in
 		if(Authentication.user) {
 			if($location.path() === '/prelogin') {
@@ -32,6 +32,10 @@ angular.module('core').controller('CommitteesCtrl', ['$scope', '$log', '$q', '$s
 		Committees.Committees.query().$promise.then(function(data) {
 			$scope.committees = data;
 			$log.info('List of Committees Loaded');
+		});
+
+		Agendaitems.query().$promise.then(function(data){
+			$scope.agendaitems = data;
 		});
 
 		/* Application Functions */

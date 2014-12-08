@@ -1,8 +1,8 @@
 'use strict';
 
 // Agendaitems controller
-angular.module('agendaitems').controller('AgendaItemsCtrl', ['$scope', '$stateParams', '$location', 'Authentication', 'Agendaitems',
-	function($scope, $stateParams, $location, Authentication, Agendaitems ) {
+angular.module('agendaitems').controller('AgendaItemsCtrl', ['$scope', '$stateParams', '$location', 'Authentication', 'Agendaitems', 'Roles', '$state',
+	function($scope, $stateParams, $location, Authentication, Agendaitems, Roles, $state ) {
 		$scope.authentication = Authentication;
 
 		// Create new Agendaitem
@@ -67,15 +67,92 @@ angular.module('agendaitems').controller('AgendaItemsCtrl', ['$scope', '$statePa
 		};
 
 		// Find a list of Agendaitems
-		$scope.find = function() {
-			$scope.agendaitems = Agendaitems.query();
-		};
+		// $scope.find = function() {
+		// 	$scope.agendaitems = Agendaitems.query();
+		// };
 
 		// Find existing Agendaitem
 		$scope.findOne = function() {
 			$scope.agendaitem = Agendaitems.get({ 
 				agendaitemId: $stateParams.agendaitemId
 			});
+		};
+
+		$scope.viewPendingItems = function(item){
+			if($scope.committee._id === item.committee){
+				if((Roles.get().admin === true || $scope.committee.chair === $scope.currentUser._id) && item.status === 0){
+					return true;
+				}
+				return false;
+			}
+			return false;
+		};
+
+		$scope.viewPublicItems = function(item){
+			if($scope.committee._id === item.committee){
+				if((Roles.get().admin === true || $scope.committee.chair === $scope.currentUser._id) && item.status === 1){
+					// item.Public = true;
+					return true;
+				}
+				return false;
+			}
+			return false;
+		};
+
+		$scope.viewPrivateItems = function(item){
+			if($scope.committee._id === item.committee){
+				if((Roles.get().admin === true || $scope.committee.chair === $scope.currentUser._id) && item.status === 2){
+					// item.Private = true;
+					return true;
+				}
+				return false;
+			}
+			return false;
+		};
+
+		$scope.viewRejectedItems = function(item){
+			if($scope.committee._id === item.committee){
+				if((Roles.get().admin === true || $scope.committee.chair === $scope.currentUser._id) && item.status === 3){
+					// item.reject = true;
+					return true;
+				}
+				return false;
+			}
+			return false;
+		};
+
+		$scope.uncheck = function(item){
+			if(item.reject === false){
+				item.Public = item.oldPublic;
+				item.Private = item.oldPrivate;
+				item.voteable = item.oldVoteable;
+			}
+			else{
+				item.oldPublic = item.Public;
+				item.oldPrivate = item.Private;
+				item.oldVoteable = item.voteable;
+				item.Public = false; 
+				item.Private = false;
+				item.voteable = false;
+			}
+		};
+
+		$scope.updateApprovals = function(){
+			console.log($scope.agendaitems);
+			for(var i = 0; i < $scope.agendaitems.length; i++){
+				if($scope.agendaitems[i].reject)
+					$scope.agendaitems[i].status = 3;
+				else if($scope.agendaitems[i].Public)
+					$scope.agendaitems[i].status = 1;
+				else if($scope.agendaitems[i].Private)
+					$scope.agendaitems[i].status = 2;
+
+				var agendaItems = $scope.agendaitems[i];
+
+				agendaItems.$update();
+			}
+
+			$state.reload();
 		};
 	}
 ]);
