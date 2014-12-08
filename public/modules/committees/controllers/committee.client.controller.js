@@ -1,8 +1,8 @@
 'use strict';
 
 // Committees controller
-angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParams', '$location', 'Authentication','Committees', '$log', 'Schedules', 'Roles', 'Meetings', '$state',
-	function($scope, $stateParams, $location,Authentication, Committees, $log, Schedules, Roles, Meetings, $state) {
+angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParams', '$location', 'Authentication','Committees', '$log', 'Schedules', 'Roles', 'Meetings', '$state','$modal',
+	function($scope, $stateParams, $location,Authentication, Committees, $log, Schedules, Roles, Meetings, $state,$modal) {
 
 
 		/* Committee vars to be set */
@@ -12,7 +12,7 @@ angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParam
 		$scope.findCommittee().then(function(){
 			$scope.getChair();
 			// $log.debug('Entered CommitteeCtrl');
-			if(Authentication.user._id === $scope.committee.chair || Roles.get().admin){ 
+			if(Authentication.user._id === $scope.committee.chair || Roles.get().admin){
 				$scope.committeeTemplates.edit = true;
 				$scope.committeeTemplates.reviewAgendaItems = true;
 			}
@@ -210,17 +210,42 @@ angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParam
 		// 	});
 		// };
 
-		$scope.deleteCommittee = function(){
-			var committee = $scope.committee;
-			var schedule = $scope.schedule;
-			var meeting = $scope.meetings[0];
 			
-				meeting.$remove(function(response) {
-				
-							}, function(errorResponse) {
-								$scope.error = errorResponse.data.message;
-							});
-						};
+						$scope.open = function () {
+							var committee = $scope.committee;
+						    var modalInstance = $modal.open({
+						      templateUrl: '/modules/committees/views/settings/modal.html',
+						      controller: function ($scope, $modalInstance,$location,$state){
+		 						  $scope.close = function(){
+		 							  $modalInstance.dismiss('Test');
+		 						  };
+						  		$scope.deleteCommittee = function(){
+									console.log(committee);
+						  				committee.$remove(function(response) {
+											$location.path('');
+											 $modalInstance.dismiss('Test');
+						  							}, function(errorResponse) {
+						  								$scope.error = errorResponse.data.message;
+						  							});
+						  						};
+								 
+						      },
+						      size: 'sm',
+						      resolve: {
+						        
+						      }
+						    });
+
+						    modalInstance.result.then(function (selectedItem) {
+						      $scope.selected = selectedItem;
+						    }, function () {
+						      $log.info('Modal dismissed at: ' + new Date());
+						    });
+						 };
+						
+			
+			
+	
 			
 			// console.log(schedule);
 // 			schedule.$remove(function(response) {
