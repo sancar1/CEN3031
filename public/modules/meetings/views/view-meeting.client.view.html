@@ -48,7 +48,7 @@
 			   	</div>
 			   	<br>
 			   	<div>
-					<div data-ng-show="meeting.members.length">Take Attendance</div>
+					<div data-ng-if="meeting.members.length">Take Attendance</div>
 					<div data-ng-repeat="member in meeting.members">
 						<label class="memberlabel">
 							<input type="checkbox" data-ng-model="member.isPresent" data-ng-change="checkMembersPresent(member.isPresent)">

@@ -4,9 +4,7 @@ describe('Testing Sign-in functionality', function() {
 	  ptor = protractor.getInstance();
   });
  it('sign in pass',function(){ 
-	 browser.get('http://localhost:3000/');
-	  element(by.model('credentials.username')).clear();
-	  element(by.model('credentials.password')).clear();
+	  browser.get('http://localhost:3000/');
      element(by.model('credentials.username')).sendKeys('Protractor2');
      element(by.model('credentials.password')).sendKeys('123456789');
      element(by.css('[id="loginSubmitButton"]')).click();
@@ -25,9 +23,9 @@ describe('Testing Sign-in functionality', function() {
   it('Should not see edit tab',function(){
   	expect(element(by.css('[ng-if="committeeTemplates.edit"]')).isPresent()).toBe(false);
   });
-  it('Should sign-out when finished',function(){
-	  element(by.xpath(' /html/body/header/div/ul[2]/li/a/span')).click();
-	  element(by.xpath('/html/body/header/div/ul[2]/li/ul/li[5]/a')).click();
-	  browser.waitForAngular();
-  });
+	it('Should log out for next set of tests',function(){
+  	  element(by.css('[data-ng-bind="authentication.user.displayName"]')).click();
+  	  element(by.css('[href="/auth/signout"]')).click();
+ 		expect(ptor.getCurrentUrl()).toEqual('http://localhost:3000/#!/prelogin');
+});
 });

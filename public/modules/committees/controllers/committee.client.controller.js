@@ -176,7 +176,6 @@ angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParam
 			  	$scope.eventSources.push(data.events);
 				console.log(data.events);
 				
-
 			});
 
 		};
@@ -209,8 +208,6 @@ angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParam
 		// 		$scope.error = errorResponse.data.message;
 		// 	});
 		// };
-
-			
 						$scope.open = function () {
 							var committee = $scope.committee;
 							var schedule = $scope.schedule;
@@ -219,31 +216,36 @@ angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParam
 						      templateUrl: '/modules/committees/views/settings/modal.html',
 						      controller: function ($scope, $modalInstance,$location,$state){
 		 						  $scope.close = function(){
-		 							  $modalInstance.dismiss('Test');
+		 							  $modalInstance.dismiss('Cancel Delete');
 		 						  };
+								  //Brought delete out for meetings to avoid grunt warnings
+							 	 $scope.deleteMeetingLoop = function(meeting){
+							 		 meeting.$remove(function(response){}, function(errorResponse) {
+							 		$scope.error = errorResponse.data.message;});
+							 	 };
+								  
 						  		$scope.deleteCommittee = function(){
 									console.log('id'+committee._id);
 									//Removes all associated meetings
 								console.log(meetings.length);
-									if(meetings.length!=0){
+									if(meetings.length!==0||meetings.length!=='undefined'){
 									for(var i=0;i<meetings.length;i++){
 										meetings[i].committeeId = committee._id;
-									meetings[i].$remove(function(response){}, function(errorResponse) {
-										$scope.error = errorResponse.data.message;});
-									};
-								};
-
+										$scope.deleteMeetingLoop(meetings[i]);
+									}
+								}
 										//Removes associated Schedule
 										schedule.$remove(function(response){
-						  				}, function(errorResponse) {
-						  						$scope.error = errorResponse.data.message;})
+										}, function(errorResponse) {
+											$scope.error = errorResponse.data.message;});
 										//Removes associated Committee
 										committee.$remove(function(response) {
+											$modalInstance.dismiss('Committee fully deleted');
 											$location.path('');
-											 $modalInstance.dismiss('Test');
-						  							}, function(errorResponse) {
-						  								$scope.error = errorResponse.data.message;
-						  							});
+										
+													}, function(errorResponse) {
+											$scope.error = errorResponse.data.message;
+											});
 						  						};
 								 
 						      },
@@ -259,32 +261,7 @@ angular.module('committees').controller('CommitteeCtrl', ['$scope', '$stateParam
 						      $log.info('Modal dismissed at: ' + new Date());
 						    });
 						 };
-						
-			
-			
-	
-			
-			// console.log(schedule);
-// 			schedule.$remove(function(response) {
-//
-// 			}, function(errorResponse) {
-// 				$scope.error = errorResponse.data.message;
-// 			});
-// 			committee.$remove(function(response) {
-// 				$location.path('');
-//
-// 			}, function(errorResponse) {
-// 				$scope.erro[0r = errorResponse.data.message;
-// 			});
-		
-		
-		
-		// $scope.updateAlert = function() {
-	// 	    $('#alert_updateDescription').html('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><span>Your description has been updated.</span></div>');
-	// 	    setTimeout(function() {
-	// 	        $('div.alert').remove();
-	// 	    }, 3000);
-	// 	};
+
 
 		/* Committee Function Calls */
 
