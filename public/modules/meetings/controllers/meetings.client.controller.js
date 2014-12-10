@@ -303,8 +303,6 @@ angular.module('meetings').controller('MeetingsController', ['$scope', '$statePa
         };
 
         $scope.saveAgendaItems = function() {
-        	console.log('meeting object NOW!');
-        	console.log($scope.meeting);
         	var meeting = $scope.meeting ;
         	console.log($scope.agendaitems.length);
         	for(var i = 0; i < $scope.agendaitems.length; i++){
@@ -324,8 +322,6 @@ angular.module('meetings').controller('MeetingsController', ['$scope', '$statePa
 					meeting.agendaitems.splice(index, 1);
 					console.log(meeting.agendaitems);
 				}
-
-
 			}
 
 			console.log('agenda items to be saved');

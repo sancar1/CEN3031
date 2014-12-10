@@ -32,7 +32,12 @@ describe('It should test the committee creation functionality', function() {
    beforeEach(function(){
  	  ptor = protractor.getInstance();
    });
-
+  it('Should not show current committee, edit committee, or Review AI',function(){
+	  expect(element(by.css('[ng-if="committeeTemplates.edit"]')).isPresent()).toBe(false);
+	  expect(element(by.css('[ng-if="committeeTemplates.current"]')).isPresent()).toBe(false);
+	  expect(element(by.css('[ng-if="committeeTemplates.meetings"]')).isPresent()).toBe(false);
+	  expect(element(by.css('[ng-if="committeeTemplates.reviewAgendaItems"]')).isPresent()).toBe(false);
+  });
   it('Should redirect to create page', function() {
 	  element(by.css('[href="/#!/committees/create"]')).click();
 	  	 browser.waitForAngular();
@@ -203,6 +208,63 @@ it('Should test the calendar to see if the meeting is showing',function(){
 	});
 	expect(element(by.css('[class="fc-title"]')).getText()).toBe('Protractor Meeting 1');
 });
+});
+describe("Test Agenda Items",function(){
+   it('Should go to the create agenda items page',function(){
+   	browser.get('http://localhost:3000/#!/agendaItems');
+		expect(ptor.getCurrentUrl()).toEqual('http://localhost:3000/#!/agendaItems');
+   });
+	
+	it('Should not show current committee, edit committee, or Review AI',function(){
+ 	  expect(element(by.css('[ng-if="committeeTemplates.edit"]')).isPresent()).toBe(false);
+ 	  expect(element(by.css('[ng-if="committeeTemplates.current"]')).isPresent()).toBe(false);
+ 	  expect(element(by.css('[ng-if="committeeTemplates.meetings"]')).isPresent()).toBe(false);
+ 	  expect(element(by.css('[ng-if="committeeTemplates.reviewAgendaItems"]')).isPresent()).toBe(false);
+   });
+	
+	it('Should create a new agenda item and put it towards the new test committee',function(){
+		element(by.css('[ui-sref="createAgendaItem()"]')).click();
+		expect(ptor.getCurrentUrl()).toContain('/create');
+
+	});
+	it('Select committee to apply agenda item to and create agenda item',function(){
+		element(by.cssContainingText('option','Protractor Test')).click();
+		element(by.css('[type="submit"]')).click();
+		expect(element(by.css('[data-ng-show="error"]')).getText()).toBe('Please fill Agendaitem name');
+		element(by.model('agendaItem.name')).sendKeys('Protractor Agenda Item');
+		element(by.css('[type="submit"]')).click();
+		expect(ptor.getCurrentUrl()).toContain('/#!/agendaItems');
+		browser.refresh();
+		element.all(by.css('[data-ng-bind="item.name"]')).then(function(arr){
+			expect(arr[arr.length-1].getText()).toBe('Protractor Agenda Item');});
+	});
+	it('Should relocate to the review agenda item page',function(){
+		element(by.css('[ui-sref="home"]')).click();
+		element.all(by.css('[data-ng-bind="committee.name"]')).then(function(arr){
+		arr[0].click();});
+		expect(ptor.getCurrentUrl()).toContain('/committees/');
+		element(by.css('[ng-if="committeeTemplates.reviewAgendaItems"]')).click();	
+	});
+	it('Should move the item to public',function(){
+		element(by.xpath('/html/body/div/div/div[2]/div/section/section/section/div/div[2]/table/tbody/tr[2]/td[2]/label/span')).click();
+		browser.waitForAngular();
+		element(by.buttonText('Update')).click();
+	});
+	it('Should go to the meeting and make sure the agenda item is present',function(){
+		element(by.css('[ng-if="committeeTemplates.meetings"]')).click();
+		element.all(by.css('[data-ng-bind="meeting.name"]')).then(function(arr){
+			arr[0].click();});
+		expect(ptor.getCurrentUrl()).toContain('/meetings/');
+		browser.refresh();
+	});
+	it('Should make the agneda item public to all members',function(){
+		element(by.css('[data-ng-bind="item.name"]')).click();
+		element(by.css('[data-ng-click="saveAgendaItems()"]')).click();
+		browser.waitForAngular();
+		browser.refresh();
+		element.all(by.css('[data-ng-bind="item.name"]')).then(function(arr){
+			expect(arr[0].getText()).toBe('Protractor Agenda Item');});			
+	});
 });
 describe("Log out for next test set",function(){
 	it('Should log out for next set of tests',function(){
