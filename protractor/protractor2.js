@@ -11,6 +11,12 @@ describe('Testing Sign-in functionality', function() {
 	  browser.waitForAngular();
 	  expect(ptor.getCurrentUrl()).toEqual('http://localhost:3000/#!/');
   });
+  it('Should not see any of the navbar tabs other then home and agenda',function(){
+	  expect(element(by.css('[ng-if="committeeTemplates.edit"]')).isPresent()).toBe(false);
+	  expect(element(by.css('[ng-if="committeeTemplates.current"]')).isPresent()).toBe(false);
+	  expect(element(by.css('[ng-if="committeeTemplates.meetings"]')).isPresent()).toBe(false);
+	  expect(element(by.css('[ng-if="committeeTemplates.reviewAgendaItems"]')).isPresent()).toBe(false);
+  });
   it('Should click on the committee it is a member of',function(){
   	element.all(by.css('[data-ng-bind="committee.name"]')).then(function(arr){
   		expect(arr.length).toBe(1);
